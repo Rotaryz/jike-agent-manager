@@ -4,10 +4,12 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import 'common/stylus/index.styl'
-import fastclick from 'fastclick'
+// import fastclick from 'fastclick'
 import store from './store'
+import echarts from 'echarts'
+Vue.prototype.$echarts = echarts
 
-fastclick.attach(document.body)
+// fastclick.attach(document.body)
 
 /* eslint-disable no-new */
 new Vue({

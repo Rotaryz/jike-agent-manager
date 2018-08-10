@@ -1,22 +1,47 @@
 <template>
   <div id="app">
-    <router-view/>
+    <transition :name="entryAnimation">
+      <keep-alive v-if="keepAlive">
+        <router-view/>
+      </keep-alive>
+      <router-view v-else></router-view>
+    </transition>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
-export default {
-  name: 'App'
-}
+  const COMPONENT_NAME = 'App'
+
+  export default {
+    name: COMPONENT_NAME,
+    data() {
+      return {
+        keepAlive: false,
+        routerArr: [],
+        entryAnimation: 'slide',
+        index: 0
+      }
+    },
+    created() {
+      console.log(this.$router)
+    },
+    watch: {
+      '$route'(to, from) {
+        this.keepAlive = to.meta.keepAlive
+        let path = to.path
+        let flag = this.routerArr.some(val => val === path)
+        if (flag) {
+          this.routerArr.pop()
+          this.entryAnimation = 'out'
+        } else {
+          this.routerArr.push(path)
+          this.entryAnimation = 'slide'
+        }
+      }
+    }
+  }
 </script>
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
-  #app
-    font-family: 'Avenir', Helvetica, Arial, sans-serif
-    -webkit-font-smoothing: antialiased
-    -moz-osx-font-smoothing: grayscale
-    text-align: center
-    color: #2c3e50
-    margin-top: 60px
-
+  @import "~common/stylus/index"
 </style>
