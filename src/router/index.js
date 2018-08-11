@@ -7,6 +7,9 @@ const Login = () => import('pages/login/login')
 const Home = () => import('pages/home/home')
 const Account = () => import('pages/account/account')
 const ChangeProject = () => import('pages/change-project/change-project')
+const ManageCustom = () => import('pages/manage-custom/manage-custom')
+const CustomDetail = () => import('pages/custom-detail/custom-detail')
+const CustomCreate = () => import('pages/custom-create/custom-create')
 
 Vue.use(Router)
 
@@ -39,6 +42,24 @@ const route = new Router({
       component: ChangeProject,
       meta: {
         title: '切换项目'
+      }
+    }, {
+      path: '/manage-custom',
+      component: ManageCustom,
+      meta: {
+        title: '客户列表'
+      }
+    }, {
+      path: '/custom-detail',
+      component: CustomDetail,
+      meta: {
+        title: '客户详情'
+      }
+    }, {
+      path: '/custom-create',
+      component: CustomCreate,
+      meta: {
+        title: '客户资料'
       }
     }
   ]
