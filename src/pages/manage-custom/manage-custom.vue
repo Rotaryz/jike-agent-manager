@@ -1,31 +1,31 @@
 <template>
-    <div class="manage-custom">
-      <header class="header">
-        <p class="custom">客户</p>
-        <p class="money">总交易额/元</p>
-        <p class="percent">开通率</p>
-      </header>
-      <section class="custom-list">
-        <ul class="main">
-          <li v-for="(item,index) in msg" :key="index" class="list">
-            <div class="msg">
-              <div class="cus">
-                <h4 class="title">{{ item.title }}</h4>
-                <p class="count">购买账号数 {{ item.count }}个</p>
-              </div>
-              <div class="mon">{{ item.money }}</div>
-              <div class="per">{{ item.percent }}%</div>
+  <div class="manage-custom">
+    <header class="header">
+      <p class="custom">客户</p>
+      <p class="money">总交易额/元</p>
+      <p class="percent">开通率</p>
+    </header>
+    <section class="custom-list">
+      <ul class="main">
+        <li v-for="(item,index) in msg" :key="index" class="list" @click="jump(item.title)">
+          <div class="msg">
+            <div class="cus">
+              <h4 class="title">{{ item.title }}</h4>
+              <p class="count">购买账号数 {{ item.count }}个</p>
             </div>
-            <div class="progress">
-              <div class="gress" :style="{ width:`${item.percent}%`}"></div>
-            </div>
-          </li>
-        </ul>
-      </section>
-      <footer class="bot-btn">
-        <a href="/manage-custom/custom-create" class="btn">新建客户</a>
-      </footer>
-    </div>
+            <div class="mon">{{ item.money }}</div>
+            <div class="per">{{ item.percent }}%</div>
+          </div>
+          <div class="progress">
+            <div class="gress" :style="{ width:`${item.percent}%`}"></div>
+          </div>
+        </li>
+      </ul>
+    </section>
+    <footer class="bot-btn">
+      <a href="/manage-custom/custom-create" class="btn">新建客户</a>
+    </footer>
+  </div>
 </template>
 
 <script type="text/ecmascript-6">
@@ -67,10 +67,11 @@
     computed: {
     },
     methods: {
+      jump(name) {
+        this.$router.push({path: '/custom-detail', query: {name}})
+      }
     },
     watch: {
-    },
-    components: {
     }
   }
 </script>

@@ -1,13 +1,13 @@
 <template>
-    <div class="demo">
-        <p>我什么都不知道</p>
-        <router-link to="/hello-world">点击跳转</router-link>
-    </div>
+  <div class="custom-create">
+    <p>我什么都不知道</p>
+    <router-link to="/hello-world">点击跳转</router-link>
+  </div>
 </template>
 
 <script type="text/ecmascript-6">
   export default {
-    name: 'Demo',
+    name: 'custom-create',
     props: {
     },
     data() {
@@ -22,10 +22,6 @@
     computed: {
     },
     methods: {
-    },
-    watch: {
-    },
-    components: {
     }
   }
 </script>
