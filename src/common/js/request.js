@@ -2,6 +2,7 @@
 
 import axios from 'axios'
 import { BASE_URL } from './config'
+import storage from 'storage-controller'
 
 const TIME_OUT = 10000
 const COMMON_HEADER = {}
@@ -15,7 +16,11 @@ const http = axios.create({
 })
 
 http.interceptors.request.use(config => {
-  config.baseURL = BASE_URL.api // 切换项目路由
+  const commonHeader = {
+    'Current-Application': storage.get('project', 'weishang'),
+    'Authorization': storage.get('token', '')
+  }
+  config.headers = {...commonHeader, ...config.headers}
   // 请求数据前的拦截
   return config
 }, error => {
