@@ -1,7 +1,7 @@
 'use strict'
 
 import axios from 'axios'
-import {baseUrl} from './config'
+import { BASE_URL } from './config'
 
 const TIME_OUT = 10000
 const COMMON_HEADER = {}
@@ -9,12 +9,13 @@ const ERR_OK = 0
 const ERR_NO = -404
 
 const http = axios.create({
-  baseURL: baseUrl.api,
+  baseURL: BASE_URL.api,
   timeout: TIME_OUT,
   headers: COMMON_HEADER
 })
 
 http.interceptors.request.use(config => {
+  config.baseURL = BASE_URL.api // 切换项目路由
   // 请求数据前的拦截
   return config
 }, error => {

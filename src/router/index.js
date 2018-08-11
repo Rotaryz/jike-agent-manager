@@ -14,7 +14,7 @@ const route = new Router({
   mode: 'history',
   routes: [
     {
-      path: '/',
+      path: '/login',
       component: Login,
       meta: {
         title: '登录'
