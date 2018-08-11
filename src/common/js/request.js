@@ -3,6 +3,8 @@
 import axios from 'axios'
 import { BASE_URL } from './config'
 import storage from 'storage-controller'
+import { WEI_SHANG } from 'common/js/constant'
+import utils from 'common/js/utils'
 
 const TIME_OUT = 10000
 const COMMON_HEADER = {}
@@ -17,7 +19,7 @@ const http = axios.create({
 
 http.interceptors.request.use(config => {
   const commonHeader = {
-    'Current-Application': storage.get('project', 'weishang'),
+    'Current-Application': storage.get('project', WEI_SHANG.project),
     'Authorization': storage.get('token', '')
   }
   config.headers = {...commonHeader, ...config.headers}
@@ -54,6 +56,8 @@ function checkCode(res) {
   }
   // 如果网络请求成功，而提交的数据，或者是后端的一些未知错误所导致的，可以根据实际情况进行捕获异常
   if (res.data && (res.data.code !== ERR_OK)) {
+    const code = +res.data.code
+    utils._handleErrorType(code)
     throw requestException(res)
   }
   return res.data

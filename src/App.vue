@@ -10,6 +10,8 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import storage from 'storage-controller'
+
   const COMPONENT_NAME = 'App'
 
   export default {
@@ -23,7 +25,20 @@
       }
     },
     created() {
-      console.log(this.$router)
+      console.log(process.env)
+      this._checkAuthorize()
+    },
+    methods: {
+      _checkAuthorize() {
+        if (this.hasToken) {
+          this.$router.replace({path: '/home'})
+        }
+      }
+    },
+    computed: {
+      hasToken() {
+        return storage.has('token')
+      }
     },
     watch: {
       '$route'(to, from) {

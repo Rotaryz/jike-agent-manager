@@ -12,7 +12,7 @@ Vue.prototype.$echarts = echarts
 // fastclick.attach(document.body)
 
 /* eslint-disable no-new */
-new Vue({
+export default new Vue({
   el: '#app',
   router,
   store,
