@@ -6,6 +6,8 @@ const Login = () => import('pages/login/login')
 const Home = () => import('pages/home/home')
 const Account = () => import('pages/account/account')
 const ChangeProject = () => import('pages/change-project/change-project')
+const MoneyWallet = () => import('pages/money-wallet/money-wallet')
+const DepositDetail = () => import('pages/deposit-detail/deposit-detail')
 
 Vue.use(Router)
 
@@ -42,6 +44,19 @@ const route = new Router({
       component: ChangeProject,
       meta: {
         title: '切换项目'
+      }
+    }, {
+      path: '/money-wallet',
+      component: MoneyWallet,
+      meta: {
+        title: '我的钱包'
+      }
+    },
+    {
+      path: '/deposit-detail',
+      component: DepositDetail,
+      meta: {
+        title: '提现详情'
       }
     }
   ]

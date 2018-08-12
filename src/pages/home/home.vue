@@ -67,10 +67,10 @@
             <div class="icon profit-details"></div>
             <p class="txt">收益明细</p>
           </div>
-          <div class="item">
+          <router-link class="item" to="/money-wallet">
             <div class="icon my-wallet"></div>
             <p class="txt">我的钱包</p>
-          </div>
+          </router-link>
         </li>
       </ul>
     </section>
