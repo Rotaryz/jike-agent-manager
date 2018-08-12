@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import storage from 'storage-controller'
+// import storage from 'storage-controller'
 
 const Login = () => import('pages/login/login')
 const Home = () => import('pages/home/home')
@@ -27,7 +27,7 @@ const route = new Router({
       path: '/home',
       component: Home,
       meta: {
-        title: '首页'
+        title: ''
       }
     },
     {
