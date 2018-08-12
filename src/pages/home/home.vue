@@ -40,24 +40,57 @@
       <ul class="entry-wrapper" :style="'transform :translate3d('+ -tabIndex*100/3 +'%,0,0)'">
         <li class="entry-item one">
           <div class="item">
-            <div class="icon"></div>
+            <div class="icon open-home"></div>
             <p class="txt">开单销售</p>
           </div>
           <div class="item">
-            <div class="icon"></div>
+            <div class="icon record-home"></div>
             <p class="txt">销售记录</p>
           </div>
         </li>
-        <li class="entry-item two"></li>
-        <li class="entry-item three"></li>
+        <li class="entry-item two">
+          <div class="item">
+            <div class="icon customer-home"></div>
+            <p class="txt">客户管理</p>
+          </div>
+          <div class="item">
+            <div class="icon agent-home"></div>
+            <p class="txt">推荐代理商</p>
+          </div>
+          <div class="item">
+            <div class="icon my-team"></div>
+            <p class="txt">我的团队</p>
+          </div>
+        </li>
+        <li class="entry-item three">
+          <div class="item">
+            <div class="icon profit-details"></div>
+            <p class="txt">收益明细</p>
+          </div>
+          <div class="item">
+            <div class="icon my-wallet"></div>
+            <p class="txt">我的钱包</p>
+          </div>
+        </li>
       </ul>
+    </section>
+    <div class="f3"></div>
+    <section class="charts">
+      <div class="title">
+        <div class="txt">生意概览</div>
+        <div class="more">更多</div>
+      </div>
+      <article class="charts-container">
+        <div class="c-title">我的收入</div>
+        <div class="c-wrapper"></div>
+      </article>
     </section>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
-  import {BASE_URL} from 'common/js/config'
-  import {Jwt} from 'api'
+  import { BASE_URL } from 'common/js/config'
+  import { Jwt } from 'api'
   import storage from 'storage-controller'
   import Toast from 'components/toast/toast'
 
@@ -75,11 +108,9 @@
     },
     methods: {
       changeTab(index) {
-        console.log(index)
         this.tabIndex = index
       },
       show() {
-        this.$refs.toast.show('asdhaskjda')
       },
       changeWS() {
         storage.set('project', 'ws')
@@ -220,8 +251,73 @@
           height: 100%
           width: 100vw
           float: left
-          layout(row,block,nowrap)
+          layout(row, block, nowrap)
           .item
-            height :100%
-            width :33.33%
+            height: 100%
+            width: 33.33333%
+            layout()
+            justify-content: center
+            align-items: center
+            .icon
+              width: 30px
+              height: 30px
+              &.open-home
+                icon-image(icon-open_home)
+              &.record-home
+                icon-image(icon-record_home)
+              &.customer-home
+                icon-image(icon-customer_home)
+              &.agent-home
+                icon-image(icon-recommender_home)
+              &.my-team
+                icon-image(icon-myteam_home)
+              &.profit-details
+                icon-image(icon-profitdetails_home)
+              &.my-wallet
+                icon-image(icon-mywallet_home)
+            .txt
+              font-family: $font-family-light
+              font-size: $font-size-12
+              color: $color-AA905D
+              text-align: center
+              margin-top: 8px
+    .f3
+      height: 7px
+      background: $color-F3F3F3
+    .charts
+      .title
+        layout(row)
+        justify-content: space-between
+        padding: 20.5px 0 15px
+        font-family: $font-family-regular
+        .txt
+          font-size: $font-size-16
+          color: $color-343439
+          padding-left: 15px
+          position: relative
+          &:before
+            content: ''
+            col-center()
+            width: 3.5px
+            height: 22px
+            background: $color-C3A66C
+            left: 0
+        .more
+          font-size: 13px
+          color: $color-CFCFCF
+          padding-right: 10.85px
+          margin-right: 11.65px
+          bg-image(icon-arrow_home)
+          background-size: 9.4px 9.4px
+          background-position: right 1.6px
+          background-repeat: no-repeat
+      .charts-container
+        .c-title
+          font-family: $font-family-regular
+          font-size: $font-size-12
+          color: $color-343439
+          text-align: center
+          padding-bottom: 11px
+        .c-wrapper
+          height: 217.5px
 </style>
