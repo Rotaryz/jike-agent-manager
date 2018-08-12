@@ -19,9 +19,9 @@
           <div class="bottom">分销单数/单</div>
         </li>
       </ul>
-      <div class="account">
+      <router-link to="/account" class="account">
         <div class="icon-a"></div>
-      </div>
+      </router-link>
     </header>
     <section class="content">
       <div class="tab-container">
