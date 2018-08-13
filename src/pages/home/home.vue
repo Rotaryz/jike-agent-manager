@@ -1,21 +1,21 @@
 <template>
   <div class="home">
     <header class="header">
-      <h3 class="company">广州波士卡汽车有限公司</h3>
-      <h4 class="position">创业合伙人</h4>
-      <div class="money">289.00</div>
+      <h3 class="company">{{userInfo?userInfo.company_name:''}}</h3>
+      <h4 class="position">{{userInfo?userInfo.role_name:''}}</h4>
+      <div class="money">{{userInfo?userInfo.real_income:0}}</div>
       <div class="explain">今日实际收入</div>
       <ul class="data-wrapper">
         <li class="data-item">
-          <div class="top">10222</div>
+          <div class="top">{{userInfo?userInfo.account_sale:0}}</div>
           <div class="bottom">账号销售/个</div>
         </li>
         <li class="data-item">
-          <div class="top">1022222</div>
+          <div class="top">{{userInfo?userInfo.invite_join:0}}</div>
           <div class="bottom">推荐加盟/人</div>
         </li>
         <li class="data-item">
-          <div class="top">102222</div>
+          <div class="top">{{userInfo?userInfo.sale_count:0}}</div>
           <div class="bottom">分销单数/单</div>
         </li>
       </ul>
@@ -85,14 +85,16 @@
         <div class="c-wrapper"></div>
       </article>
     </section>
+    <toast ref="toast"></toast>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
-  import { BASE_URL } from 'common/js/config'
-  import { Jwt } from 'api'
-  import storage from 'storage-controller'
+  // import { BASE_URL } from 'common/js/config'
+  import { Home } from 'api'
+  // import storage from 'storage-controller'
   import Toast from 'components/toast/toast'
+  import { ERR_OK } from '../../common/js/config'
 
   const tabInfo = ['管账号', '管人', '管钱']
   export default {
@@ -103,8 +105,12 @@
     data() {
       return {
         tabInfo,
-        tabIndex: 0
+        tabIndex: 0,
+        userInfo: null
       }
+    },
+    created() {
+      this._getHomeInfo()
     },
     methods: {
       changeTab(index) {
@@ -112,16 +118,14 @@
       },
       show() {
       },
-      changeWS() {
-        storage.set('project', 'ws')
-        BASE_URL.api = BASE_URL.api.replace(/(ws|business)/g, 'ws')
-        Jwt.login(123, 123321)
-      },
-      changeZT() {
-        storage.set('project', 'business')
-        BASE_URL.api = BASE_URL.api.replace(/(ws|business)/g, 'business')
-        console.log(BASE_URL.api)
-        Jwt.getCode(9823)
+      _getHomeInfo() {
+        Home.getHomeInfo().then(res => {
+          if (res.error !== ERR_OK) {
+            this.$refs.toast.show(res.message)
+            return
+          }
+          this.userInfo = res.data
+        })
       }
     }
   }

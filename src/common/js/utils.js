@@ -2,7 +2,7 @@ import _this from '@/main'
 import storage from 'storage-controller'
 
 const REGPASS = /^[a-zA-Z0-9]{6,18}$/
-const REGPHONE = /^1[3|4|5|7|8][0-9]{9}$/
+const REGPHONE = /^1[3|4|5|6|7|8][0-9]{9}$/
 const LOSE_EFFICACY = 10000
 const DISABLE = 110002
 const DELETE = 1 // TODO

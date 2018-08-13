@@ -21,20 +21,21 @@
       </router-link>
       <div class="item-wrapper">
         <div class="left">代理商名称</div>
-        <div class="middle">广州波士卡汽车有限公司</div>
+        <div class="middle">{{userInfo?userInfo.name:''}}</div>
       </div>
       <div class="item-wrapper">
         <div class="left">代理级别</div>
-        <div class="middle">县级A类代理</div>
+        <div class="middle">{{userInfo?userInfo.role:''}}</div>
       </div>
       <div class="item-wrapper">
         <div class="left">所在地区</div>
-        <div class="middle">广东-广州--越秀</div>
+        <div class="middle">{{userInfo?userInfo.address:''}}</div>
       </div>
       <div class="item-wrapper" @click="callPhone">
         <div class="left">AI商城数量</div>
         <div class="right project-right">
-          <div>10/200</div>
+          <div v-if="userInfo">{{userInfo.usable_account}}/{{userInfo.total_account}}</div>
+          <div v-else>0/0</div>
           <div class="arrow-right"></div>
         </div>
       </div>
@@ -72,9 +73,10 @@
   import VueCropper from 'vue-cropperjs'
   import Toast from 'components/toast/toast'
   import ConfirmMsg from 'components/confirm-msg/confirm-msg'
-  // import { UpLoad } from 'api'
-  // import { ERR_OK } from 'common/js/config'
-  console.log(ConfirmMsg)
+  import { UpLoad, Account } from 'api'
+  import { ERR_OK } from 'common/js/config'
+
+  console.log(UpLoad)
   export default {
     name: 'Account',
     components: {
@@ -85,18 +87,34 @@
     data() {
       return {
         isShow: false,
-        phoneNumber: '400-8871-855',
+        phoneNumber: '',
         visible: false,
         imageBig: '',
         cropImg: '',
         loading: false,
         status: false,
-        avatarUrl: ''
+        avatarUrl: '',
+        userInfo: null
       }
     },
+    created() {
+      this._getAccountInfo()
+    },
     methods: {
+      _getAccountInfo() {
+        Account.getAccountInfo().then(res => {
+          if (res.error !== ERR_OK) {
+            this.$refs.toast.show(res.message)
+            return
+          }
+          console.log(res)
+          this.userInfo = res.data
+          this.avatarUrl = res.data.image_url || ''
+          this.phoneNumber = res.data.platform_mobile || ''
+        })
+      },
       callPhone() {
-        const content = `数值为“已开通数/最大开通数”，若需要增加最大开通数，请联系平台客服。电话：${this.phoneNumber}`
+        const content = `数值为“${this.userInfo ? this.userInfo.usable_account : 0}/${this.userInfo ? this.userInfo.total_account : 0}”，若需要增加最大开通数，请联系平台客服。电话：${this.phoneNumber}`
         const confirmTxt = `立即拨打`
         this.$refs.confirmMsg.show({content, confirmTxt})
       },
@@ -109,6 +127,7 @@
         let $Blob = this.getBlobBydataURI(src, 'image/png')
         let formData = new FormData()
         formData.append('file', $Blob, 'file_' + Date.parse(new Date()) + '.png')
+        console.log(formData)
         // let data = {base_image: this.$refs.cropper.getCroppedCanvas().toDataURL()}
         this.loading = false // todo
         this.visible = false
