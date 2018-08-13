@@ -19,86 +19,95 @@
         </div>
       </div>
     </section>
-    <ul class="content">
-      <li class="item-wrapper" @click="toDetailPage()">
-        <div class="item one">
-          <p class="left">团队成员续费正式版本奖励</p>
-          <p class="right">+50</p>
-        </div>
-        <div class="item two">
-          <p class="left">【分销收入】</p>
-        </div>
-        <div class="item three">
-          <p class="left">2016-10-17 04:54</p>
-          <p class="right">累计 <em class="em">43,450</em></p>
-        </div>
-      </li>
-      <li class="item-wrapper">
-        <div class="item one">
-          <p class="left">团队成员续费正式版本奖励</p>
-          <p class="right">+50</p>
-        </div>
-        <div class="item two">
-          <p class="left">【分销收入】</p>
-        </div>
-        <div class="item three">
-          <p class="left">2016-10-17 04:54</p>
-          <p class="right">累计 <em class="em">43,450</em></p>
-        </div>
-      </li>
-      <li class="item-wrapper">
-        <div class="item one">
-          <p class="left">团队成员续费正式版本奖励</p>
-          <p class="right">+50</p>
-        </div>
-        <div class="item two">
-          <p class="left">【分销收入】</p>
-        </div>
-        <div class="item three">
-          <p class="left">2016-10-17 04:54</p>
-          <p class="right">累计 <em class="em">43,450</em></p>
-        </div>
-      </li>
-      <li class="item-wrapper">
-        <div class="item one">
-          <p class="left">团队成员续费正式版本奖励</p>
-          <p class="right">+50</p>
-        </div>
-        <div class="item two">
-          <p class="left">【分销收入】</p>
-        </div>
-        <div class="item three">
-          <p class="left">2016-10-17 04:54</p>
-          <p class="right">累计 <em class="em">43,450</em></p>
-        </div>
-      </li>
-      <li class="item-wrapper">
-        <div class="item one">
-          <p class="left">团队成员续费正式版本奖励</p>
-          <p class="right">+50</p>
-        </div>
-        <div class="item two">
-          <p class="left">【分销收入】</p>
-        </div>
-        <div class="item three">
-          <p class="left">2016-10-17 04:54</p>
-          <p class="right">累计 <em class="em">43,450</em></p>
-        </div>
-      </li>
-      <li class="item-wrapper">
-        <div class="item one">
-          <p class="left">团队成员续费正式版本奖励</p>
-          <p class="right">+50</p>
-        </div>
-        <div class="item two">
-          <p class="left">【分销收入】</p>
-        </div>
-        <div class="item three">
-          <p class="left">2016-10-17 04:54</p>
-          <p class="right">累计 <em class="em">43,450</em></p>
-        </div>
-      </li>
-    </ul>
+    <div class="scroll-list-wrap">
+      <scroll ref="scroll"
+              bcColor="#fff"
+              :data="dataArray"
+              :pullUpLoad="pullUpLoadObj"
+              @pullingUp="onPullingUp"
+      >
+        <ul class="content">
+          <li class="item-wrapper" @click="toDetailPage()">
+            <div class="item one">
+              <p class="left">团队成员续费正式版本奖励</p>
+              <p class="right">+50</p>
+            </div>
+            <div class="item two">
+              <p class="left">【分销收入】</p>
+            </div>
+            <div class="item three">
+              <p class="left">2016-10-17 04:54</p>
+              <p class="right">累计 <em class="em">43,450</em></p>
+            </div>
+          </li>
+          <li class="item-wrapper">
+            <div class="item one">
+              <p class="left">团队成员续费正式版本奖励</p>
+              <p class="right">+50</p>
+            </div>
+            <div class="item two">
+              <p class="left">【分销收入】</p>
+            </div>
+            <div class="item three">
+              <p class="left">2016-10-17 04:54</p>
+              <p class="right">累计 <em class="em">43,450</em></p>
+            </div>
+          </li>
+          <li class="item-wrapper">
+            <div class="item one">
+              <p class="left">团队成员续费正式版本奖励</p>
+              <p class="right">+50</p>
+            </div>
+            <div class="item two">
+              <p class="left">【分销收入】</p>
+            </div>
+            <div class="item three">
+              <p class="left">2016-10-17 04:54</p>
+              <p class="right">累计 <em class="em">43,450</em></p>
+            </div>
+          </li>
+          <li class="item-wrapper">
+            <div class="item one">
+              <p class="left">团队成员续费正式版本奖励</p>
+              <p class="right">+50</p>
+            </div>
+            <div class="item two">
+              <p class="left">【分销收入】</p>
+            </div>
+            <div class="item three">
+              <p class="left">2016-10-17 04:54</p>
+              <p class="right">累计 <em class="em">43,450</em></p>
+            </div>
+          </li>
+          <li class="item-wrapper">
+            <div class="item one">
+              <p class="left">团队成员续费正式版本奖励</p>
+              <p class="right">+50</p>
+            </div>
+            <div class="item two">
+              <p class="left">【分销收入】</p>
+            </div>
+            <div class="item three">
+              <p class="left">2016-10-17 04:54</p>
+              <p class="right">累计 <em class="em">43,450</em></p>
+            </div>
+          </li>
+          <li class="item-wrapper">
+            <div class="item one">
+              <p class="left">团队成员续费正式版本奖励</p>
+              <p class="right">+50</p>
+            </div>
+            <div class="item two">
+              <p class="left">【分销收入】</p>
+            </div>
+            <div class="item three">
+              <p class="left">2016-10-17 04:54</p>
+              <p class="right">累计 <em class="em">43,450</em></p>
+            </div>
+          </li>
+        </ul>
+      </scroll>
+    </div>
     <article class="mask-wrapper" :class="isShow?'show':''">
       <div class="content-wrapper">
         <div class="title">提示</div>
@@ -106,16 +115,32 @@
         <div class="btn-phone" @click="callMobile">好的</div>
       </div>
     </article>
+    <toast ref="toast"></toast>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+  import Scroll from 'components/scroll/scroll'
+  // import { ease } from 'common/js/ease'
+  import Toast from 'components/toast/toast'
+
   export default {
     name: 'MoneyWallet',
+    components: {
+      Toast,
+      Scroll
+    },
     data() {
       return {
-        isShow: false
+        isShow: false,
+        pullUpLoad: true,
+        pullUpLoadThreshold: 0,
+        pullUpLoadMoreTxt: '加载更多',
+        pullUpLoadNoMoreTxt: '没有更多了',
+        dataArray: []
       }
+    },
+    mounted() {
     },
     methods: {
       deposit() {
@@ -128,6 +153,36 @@
         const path = '/deposit-detail'
         const id = 100
         this.$router.push({path, query: {id}})
+      },
+      onPullingUp() {
+        // 更新数据
+        console.info('pulling up and load data')
+        setTimeout(() => {
+          this.$refs.scroll.forceUpdate()
+        }, 1500)
+      },
+      rebuildScroll() {
+        this.nextTick(() => {
+          this.$refs.scroll.destroy()
+          this.$refs.scroll.initScroll()
+        })
+      }
+    },
+    watch: {
+      pullUpLoadObj: {
+        handler() {
+          if (!this.pullUpLoad) return // 防止下拉报错
+          this.rebuildScroll()
+        },
+        deep: true
+      }
+    },
+    computed: {
+      pullUpLoadObj: function () {
+        return this.pullUpLoad ? {
+          threshold: parseInt(this.pullUpLoadThreshold),
+          txt: {more: this.pullUpLoadMoreTxt, noMore: this.pullUpLoadNoMoreTxt}
+        } : false
       }
     }
   }
@@ -174,7 +229,7 @@
         font-size: $font-size-16
         color: $color-C3A66C
         letter-spacing: 0.69px
-        text-align: center;
+        text-align: center
         line-height: 45px
 
   .ad-wrapper
@@ -237,7 +292,7 @@
         font-family: $font-family-regular
         font-size: $font-size-14
         color: $color-C3A66C
-        text-align: center;
+        text-align: center
         line-height: 30px
     .select-wrapper
       position: fixed
@@ -283,45 +338,48 @@
             height: 11px
             icon-image(icon-screen_icon-mywallet)
             margin-right: 3px
-    .content
+    .scroll-list-wrap
       position: absolute
       top: 318.5px
       left: 0
       right: 0
-      padding-left: 15.5px
-      font-family: $font-family-regular
-      background :$color-FFFFFF
-      .item-wrapper
-        height: 94px
-        border-bottom: 0.5px solid $color-E4E4E4
-        padding-right: 15px
-        .item
-          layout(row, block, nowrap)
-          justify-content: space-between
-        .one
-          font-size: $font-size-14
-          color: $color-343439
-          line-height: 1
-          padding-top: 19.5px
-          .right
-            font-family: $font-family-bold
-            font-size: $font-size-16
-            color: $color-C3A66C
-            line-height: 1
-        .two
-          font-size: $font-size-12
-          color: $color-666666
-          line-height: 1
-          padding-top: 6px
-          .left
-            text-indent: -6px
-        .three
-          padding-top: 9.5px
-          font-size: $font-size-12
-          color: $color-C1C3C3
-          line-height: 1
-          .right > .em
+      bottom: 0
+      touch-action :none
+      .content
+        padding-left: 15.5px
+        font-family: $font-family-regular
+        background: $color-FFFFFF
+        .item-wrapper
+          height: 94px
+          border-bottom: 0.5px solid $color-E4E4E4
+          padding-right: 15px
+          .item
+            layout(row, block, nowrap)
+            justify-content: space-between
+          .one
             font-size: $font-size-14
-            line-height: 12px
+            color: $color-343439
+            line-height: 1
+            padding-top: 19.5px
+            .right
+              font-family: $font-family-bold
+              font-size: $font-size-16
+              color: $color-C3A66C
+              line-height: 1
+          .two
+            font-size: $font-size-12
+            color: $color-666666
+            line-height: 1
+            padding-top: 6px
+            .left
+              text-indent: -6px
+          .three
+            padding-top: 9.5px
+            font-size: $font-size-12
+            color: $color-C1C3C3
+            line-height: 1
+            .right > .em
+              font-size: $font-size-14
+              line-height: 12px
 
 </style>
