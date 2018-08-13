@@ -11,6 +11,7 @@ const TradeView = () => import('pages/trade-view/trade-view')
 const TradeExplain = () => import('pages/explain-trabe/explain-trabe')
 const MoneyWallet = () => import('pages/money-wallet/money-wallet')
 const DepositDetail = () => import('pages/deposit-detail/deposit-detail')
+const MyTeam = () => import('pages/my-team/my-team')
 
 Vue.use(Router)
 
@@ -70,6 +71,13 @@ const route = new Router({
     {
       path: '/deposit-detail',
       component: DepositDetail,
+      meta: {
+        title: '提现详情'
+      }
+    },
+    {
+      path: '/my-team',
+      component: MyTeam,
       meta: {
         title: '提现详情'
       }
