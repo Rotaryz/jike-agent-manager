@@ -6,7 +6,8 @@
         <div class="left">更换头像</div>
         <div class="middle"></div>
         <div class="right avatar-right">
-          <div class="avatar"></div>
+          <label for="header-logo" class="avatar"><img class="avatar-img" v-if="avatarUrl" :src="avatarUrl" alt=""></label>
+          <input type="file" class="avatar-input" id="header-logo" @change="_fileChange($event)" accept="image/*">
           <div class="arrow-right"></div>
         </div>
       </div>
@@ -30,7 +31,7 @@
         <div class="left">所在地区</div>
         <div class="middle">广东-广州--越秀</div>
       </div>
-      <div class="item-wrapper" @click="showMask">
+      <div class="item-wrapper" @click="callPhone">
         <div class="left">AI商城数量</div>
         <div class="right project-right">
           <div>10/200</div>
@@ -39,31 +40,117 @@
       </div>
     </section>
     <footer class="btn-cancel">退出登录</footer>
-    <article class="mask-wrapper" :class="isShow?'show':''">
-      <div class="content-wrapper">
-        <div class="title">提示</div>
-        <div class="explain">数值为“已开通数/最大开通数”，若需要增加最大开通数，请联系平台客服。电话：400-8871-855</div>
-        <a :href="'tel:'+phoneNumber" class="btn-phone" @click="callMobile">立即拨打</a>
+    <section class="img-cut" v-show="visible">
+      <vueCropper
+        :viewMode="1"
+        class="img-big"
+        :guides="false"
+        ref="cropper"
+        :img="imageBig"
+        :rotatable="true"
+        :background="status"
+        :cropBoxResizable="status"
+        :aspectRatio="1"
+        :autoCropArea="1"
+        :dragMode="'move'"
+        :checkCrossOrigin="false"
+        :cropBoxMovable="false"
+      >
+      </vueCropper>
+      <div class="img-btn">
+        <div class="btn-item" @click="cropImage">确定</div>
+        <div class="btn-item" @click="visible = false">取消</div>
       </div>
-    </article>
+      <img class="loading" src="./loading.gif" alt="" width="30" height="30" v-show="loading">
+    </section>
+    <toast ref="toast"></toast>
+    <confirm-msg ref="confirmMsg" @confirm="confirm"></confirm-msg>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+  import VueCropper from 'vue-cropperjs'
+  import Toast from 'components/toast/toast'
+  import ConfirmMsg from 'components/confirm-msg/confirm-msg'
+  // import { UpLoad } from 'api'
+  // import { ERR_OK } from 'common/js/config'
+  console.log(ConfirmMsg)
   export default {
     name: 'Account',
+    components: {
+      Toast,
+      ConfirmMsg,
+      VueCropper
+    },
     data() {
       return {
         isShow: false,
-        phoneNumber: '400-8871-855'
+        phoneNumber: '400-8871-855',
+        visible: false,
+        imageBig: '',
+        cropImg: '',
+        loading: false,
+        status: false,
+        avatarUrl: ''
       }
     },
     methods: {
-      showMask() {
-        this.isShow = true
+      callPhone() {
+        const content = `数值为“已开通数/最大开通数”，若需要增加最大开通数，请联系平台客服。电话：${this.phoneNumber}`
+        const confirmTxt = `立即拨打`
+        this.$refs.confirmMsg.show({content, confirmTxt})
       },
-      callMobile() {
-        this.isShow = false
+      confirm() {
+        window.location.href = `tel:'${this.phoneNumber}`
+      },
+      cropImage() {
+        this.loading = true
+        let src = this.$refs.cropper.getCroppedCanvas().toDataURL()
+        let $Blob = this.getBlobBydataURI(src, 'image/png')
+        let formData = new FormData()
+        formData.append('file', $Blob, 'file_' + Date.parse(new Date()) + '.png')
+        // let data = {base_image: this.$refs.cropper.getCroppedCanvas().toDataURL()}
+        this.loading = false // todo
+        this.visible = false
+        this.avatarUrl = src
+        // UpLoad.upLoadImage(formData).then((res) => {
+        //   if (res.error === ERR_OK) {
+        //     this.mine.avatar = res.data.url
+        //     this.mine.image_id = res.data.id
+        //     this.loading = false
+        //     this.visible = false
+        //     this.$refs.toast.show('上传成功')
+        //     return false
+        //   }
+        //   this.loading = false
+        //   this.visible = false
+        //   this.$refs.toast.show(res.message)
+        // })
+      },
+      _fileChange(e) {
+        if (e.target) {
+          const file = e.target.files[0]
+          const reader = new FileReader()
+          reader.onload = async (event) => {
+            this.imageBig = event.target.result
+            this.$refs.cropper.replace(event.target.result)
+            this.visible = true
+          }
+          reader.readAsDataURL(file)
+        }
+      },
+      getBlobBydataURI(dataURI, type) {
+        let binary = atob(dataURI.split(',')[1])
+        let array = []
+        for (let i = 0; i < binary.length; i++) {
+          array.push(binary.charCodeAt(i))
+        }
+        return new Blob([new Uint8Array(array)], {type: type})
+      },
+      _infoImage(file) {
+        let param = new FormData() // 创建form对象
+        param.append('file', file, file.name)// 通过append向form对象添加数据
+        return param
       }
     }
   }
@@ -73,49 +160,35 @@
   @import "~common/stylus/variable"
   @import '~common/stylus/mixin'
 
-  .mask-wrapper
-    fill-box(fixed)
-    background: $color-mask-bg
-    z-index: -1
-    opacity: 0
-    transition: all 0.3s
-    &.show
-      z-index: 999
-      opacity: 1
-    .content-wrapper
-      width: 300px
-      margin: 174px auto
-      box-sizing: border-box
-      background: #FFFFFF
-      border-radius: 3px
-      .title
-        font-family: $font-family-medium
+  .img-cut
+    position: fixed
+    top: 0
+    left: 0
+    right: 0
+    bottom: 0
+    z-index: 999
+    background: #000
+    .img-big
+      background: #000
+      height: 100%
+    .img-btn
+      width: 100vw
+      position: absolute
+      bottom: 0
+      height: 60px
+      display: flex
+      align-items: center
+      background: $color-white
+      border-top: 0.5px solid $color-col-line
+      .btn-item
+        flex: 1
+        text-align: center
         font-size: $font-size-16
         color: $color-20202E
-        letter-spacing: 0.8px
-        text-align: center
-        line-height: 1
-        padding-top: 18px
-      .explain
-        font-family: $font-family-regular
-        font-size: $font-size-14
-        color: $color-343439
-        line-height: 1.6
-        padding 16px 22.5px 26px
-      .btn-phone
-        display: block
-        border: 0.5px solid rgba(32, 32, 46, 0.10)
-        border-radius: 3px
-        font-family: $font-family-regular
-        font-size: $font-size-16
-        color: $color-C3A66C
-        letter-spacing: 0.69px
-        text-align: center;
-        line-height: 45px
-      .phone-input
-        position: absolute
-        z-index: -1
-        opacity: 0
+        &:last-child
+          border-left: 0.5px solid $color-col-line
+    .loading
+      all-center()
 
   .arrow-right
     margin-left: 5.5px
@@ -151,14 +224,24 @@
           layout(row, block, nowrap)
           justify-content: flex-end
           margin-right: 15px
+          position: relative
           &.avatar-right, &.project-right
             layout(row, block, nowrap)
             align-items: center
           .avatar
+            display: block
             width: 48px
             height: 48px
             border-radius: 3px
-            background: red
+            overflow: hidden
+            .avatar-img
+              width: 100%
+              height: 100%
+          .avatar-input
+            position: absolute
+            z-index: -2
+            opacity: 0
+
         .middle
           font-size: $font-size-14
           color: $color-343439

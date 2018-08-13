@@ -108,14 +108,8 @@
         </ul>
       </scroll>
     </div>
-    <article class="mask-wrapper" :class="isShow?'show':''">
-      <div class="content-wrapper">
-        <div class="title">提示</div>
-        <div class="explain">资金余额为10000元，资金余额提现暂时只支持线下提现转账，如果需要提现请联系官方微信客服“赞播小妹”：jzxxxm。</div>
-        <div class="btn-phone" @click="callMobile">好的</div>
-      </div>
-    </article>
     <toast ref="toast"></toast>
+    <confirm-msg ref="confirmMsg"></confirm-msg>
   </div>
 </template>
 
@@ -123,16 +117,19 @@
   import Scroll from 'components/scroll/scroll'
   // import { ease } from 'common/js/ease'
   import Toast from 'components/toast/toast'
+  import ConfirmMsg from 'components/confirm-msg/confirm-msg'
 
   export default {
     name: 'MoneyWallet',
     components: {
       Toast,
-      Scroll
+      Scroll,
+      ConfirmMsg
     },
     data() {
       return {
-        isShow: false,
+        server: 'jzxxxm',
+        balance: 10000,
         pullUpLoad: true,
         pullUpLoadThreshold: 0,
         pullUpLoadMoreTxt: '加载更多',
@@ -144,10 +141,9 @@
     },
     methods: {
       deposit() {
-        this.isShow = true
-      },
-      callMobile() {
-        this.isShow = false
+        const content = `资金余额为${this.balance}元，资金余额提现暂时只支持线下提现转账，如果需要提现请联系官方微信客服“赞播小妹”：${this.server}。`
+        const confirmTxt = `好的`
+        this.$refs.confirmMsg.show({content, confirmTxt})
       },
       toDetailPage() {
         const path = '/deposit-detail'
@@ -191,46 +187,6 @@
 <style scoped lang="stylus" rel="stylesheet/stylus">
   @import "~common/stylus/variable"
   @import '~common/stylus/mixin'
-
-  .mask-wrapper
-    fill-box(fixed)
-    background: $color-mask-bg
-    z-index: -1
-    opacity: 0
-    transition: all 0.3s
-    &.show
-      z-index: 999
-      opacity: 1
-    .content-wrapper
-      width: 300px
-      margin: 174px auto
-      box-sizing: border-box
-      background: #FFFFFF
-      border-radius: 3px
-      .title
-        font-family: $font-family-medium
-        font-size: $font-size-16
-        color: $color-20202E
-        letter-spacing: 0.8px
-        text-align: center
-        line-height: 1
-        padding-top: 18px
-      .explain
-        font-family: $font-family-regular
-        font-size: $font-size-14
-        color: $color-343439
-        line-height: 1.6
-        padding 16px 22.5px 26px
-      .btn-phone
-        display: block
-        border: 0.5px solid rgba(32, 32, 46, 0.10)
-        border-radius: 3px
-        font-family: $font-family-regular
-        font-size: $font-size-16
-        color: $color-C3A66C
-        letter-spacing: 0.69px
-        text-align: center
-        line-height: 45px
 
   .ad-wrapper
     position: fixed
