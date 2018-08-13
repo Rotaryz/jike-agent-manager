@@ -11,9 +11,9 @@
       <div class="topMain">
         <div class="topData">
           <div class="money">
-          <p class="count">{{topData.money}}</p>
-          总交易额/元
-        </div>
+            <p class="count">{{topData.money}}</p>
+            总交易额/元
+          </div>
           <div class="buyCount">
             <p class="count">{{topData.buyCount}}</p>
             购买个数/个
@@ -24,8 +24,18 @@
           </div>
         </div>
       </div>
-
+      <div class="list">
+        <h3>AI微店购买记录</h3>
+        <div class="tab">
+          <p class="custom">日期</p>
+          <p class="money">购买个数/个</p>
+          <p class="percent">交易额/元</p>
+        </div>
+      </div>
     </section>
+    <footer class="bot-btn">
+      <a href="/manage-custom/custom-create" class="btn">新建客户</a>
+    </footer>
   </div>
 </template>
 
@@ -77,7 +87,7 @@
       justify-content: center
       align-items: center
     .icon
-      bg-image('./assets/icon-arrow_customer')
+      bg-image('./icon-arrow_customer')
       width: 16px
       height: 16px
       background-size:100% 100%
@@ -114,4 +124,26 @@
           font-size: $font-size-24
           margin-bottom: 10px
 
+  .list
+    background
+
+  .bot-btn
+    position: fixed
+    bottom: 0
+    left: 0
+    width: 100%;
+    background: $color-white
+    padding: 10px 15px
+    box-sizing: border-box
+    border-top-1px(#e3e3e3)
+    height: 65px
+  .btn
+    background: $color-C3A66C
+    font-size: $font-size-16
+    color: #FFFFFF
+    text-align: center
+    border-radius: 4px
+    height: 45px
+    line-height: 45px
+    display: block
 </style>
