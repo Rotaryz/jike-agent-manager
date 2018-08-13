@@ -23,7 +23,7 @@
       </ul>
     </section>
     <footer class="bot-btn">
-      <a href="/manage-custom/custom-create" class="btn">新建客户</a>
+      <router-link :to="/manage-custom/custom-create" class="btn">新建客户</router-link>
     </footer>
   </div>
 </template>
@@ -56,6 +56,21 @@
             count: 4,
             money: '300.00',
             percent: 60
+          }, {
+            title: '广州博士卡汽车有限公司',
+            count: 4,
+            money: '300.00',
+            percent: 60
+          }, {
+            title: '广州博士卡汽车有限公司',
+            count: 4,
+            money: '300.00',
+            percent: 60
+          }, {
+            title: '广州博士卡汽车有限公司',
+            count: 4,
+            money: '300.00',
+            percent: 60
           }
         ]
       }
@@ -81,9 +96,10 @@
 @import "~common/stylus/mixin"
 
 .manage-custom
+  padding-bottom: 65px
   .header
-    background: #F3F3F3
-    color: #848484
+    background: $color-F3F3F3
+    color: $color-848484
     font-size: $font-size-12
     height: 40px
     line-height: 40px
@@ -113,7 +129,7 @@
           text-align: left
           .title
             font-size: $font-size-14
-            color: #343439
+            color: $color-343439
             padding-right: 10px
             no-wrap()
           .count
@@ -127,7 +143,7 @@
           width: 25%
           text-align right
       .progress
-        background: #F8F8F8
+        background: $color-F8F8F8
         border-radius: 100px
         height: 2px
         margin-top: 14px
@@ -149,7 +165,7 @@
   .btn
     background: $color-C3A66C
     font-size: $font-size-16
-    color: #FFFFFF
+    color: $color-white
     text-align: center
     border-radius: 4px
     height: 45px

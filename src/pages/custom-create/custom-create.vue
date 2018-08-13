@@ -1,7 +1,23 @@
 <template>
   <div class="custom-create">
-    <p>我什么都不知道</p>
-    <router-link to="/hello-world">点击跳转</router-link>
+    <ul class="inputList">
+      <li>
+        <div class="name">*客户</div>
+        <input type="text" v-model="form.custom" placeholder="国颐堂美发有限公司">
+      </li>
+      <li>
+        <div class="name">*手机号码</div>
+        <input type="text" v-model="form.call" placeholder="15527741300">
+      </li>
+      <li>
+        <div class="name">所在地区</div>
+        <input type="text" v-model="form.area" placeholder="请选择所在的地区">
+      </li>
+      <li>
+        <div class="name">所属行业</div>
+        <input type="text" v-model="form.trade" placeholder="请选择">
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -12,7 +28,13 @@
     },
     data() {
       return {
-        value: 'suibian'
+        form: {
+          custom: null,
+          call: null,
+          area: null,
+          trade: null,
+          remark: null
+        }
       }
     },
     created() {
@@ -27,11 +49,5 @@
 </script>
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
-  .demo
-    display: flex
-    justify-content: space-around
-    align-items: center
-    height: 60px
-    border: 1px solid $color-row-line
-    font-size: 12px
+
 </style>
