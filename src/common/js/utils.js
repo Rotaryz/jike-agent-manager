@@ -3,10 +3,11 @@ import storage from 'storage-controller'
 
 const REGPASS = /^[a-zA-Z0-9]{6,18}$/
 const REGPHONE = /^1[3|4|5|6|7|8][0-9]{9}$/
-const LOSE_EFFICACY = 10000
-const DISABLE = 110002
-const DELETE = 1 // TODO
-const NET_404 = 404
+// const LOSE_EFFICACY = 10000
+// const DISABLE = 110002
+// const DELETE = 1 // TODO
+// const NET_404 = 404
+const TIME_OUT = 10000
 
 export default class utils {
   static checkIsPhoneNumber(phoneNum) {
@@ -83,22 +84,27 @@ export default class utils {
   // 错误码检查
   static _handleErrorType (code) {
     switch (code) {
-      case NET_404: {
-        _toErrorPage(`404`)
+      case TIME_OUT : {
+        storage.clear()
+        _this.$router.replace({path: '/login', query: {changeProject: true}})
         break
       }
-      case DELETE: { // todo
-        _toErrorPage(`delcard`) // 名片被删除，请联系公司管理员
-        break
-      }
-      case DISABLE: {
-        _toErrorPage(`disablecard`) // 名片被禁用，请联系公司管理员
-        break
-      }
-      case LOSE_EFFICACY: {
-        _handleLoseEfficacy()
-        break
-      }
+      // case NET_404: {
+      //   _toErrorPage(`404`)
+      //   break
+      // }
+      // case DELETE: { // todo
+      //   _toErrorPage(`delcard`) // 名片被删除，请联系公司管理员
+      //   break
+      // }
+      // case DISABLE: {
+      //   _toErrorPage(`disablecard`) // 名片被禁用，请联系公司管理员
+      //   break
+      // }
+      // case LOSE_EFFICACY: {
+      //   _handleLoseEfficacy()
+      //   break
+      // }
       default:
         break
     }
@@ -141,16 +147,16 @@ function getRandomInt (min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min)
 }
 
-function _toErrorPage (useType) {
-  const path = `/page-error`
-  _this.$router.replace({path, query: {useType}})
-}
-
-function _handleLoseEfficacy () {
-  const currentRoute = _this.$route.path
-  if (currentRoute !== '/') {
-    storage.set('beforeLoginRoute', currentRoute)
-  }
-  storage.remove('token')
-  _this.$router.replace('/oauth')
-}
+// function _toErrorPage (useType) {
+//   const path = `/page-error`
+//   _this.$router.replace({path, query: {useType}})
+// }
+//
+// function _handleLoseEfficacy () {
+//   const currentRoute = _this.$route.path
+//   if (currentRoute !== '/') {
+//     storage.set('beforeLoginRoute', currentRoute)
+//   }
+//   storage.remove('token')
+//   _this.$router.replace('/oauth')
+// }

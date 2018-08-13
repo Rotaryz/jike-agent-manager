@@ -1,7 +1,7 @@
 <template>
   <div class="money-wallet">
     <header class="header">
-      <div class="money">289.00</div>
+      <div class="money">{{balance}}</div>
       <div class="explain">可提现金额/元</div>
       <div class="btn" @click="deposit">提现</div>
     </header>
@@ -21,85 +21,85 @@
               :pullUpLoad="pullUpLoadObj"
               @pullingUp="onPullingUp"
       >
-        <ul class="content">
-          <li class="item-wrapper" @click="toDetailPage()">
+        <ul class="content" v-if="dataArray.length">
+          <li class="item-wrapper" @click="toDetailPage(item)" v-for="(item,index) in dataArray" :key="index">
             <div class="item one">
-              <p class="left">团队成员续费正式版本奖励</p>
-              <p class="right">+50</p>
+              <p class="left">{{item.title}}</p>
+              <p class="right">+{{item.total}}</p>
             </div>
             <div class="item two">
-              <p class="left">【分销收入】</p>
+              <p class="left">【{{orderType['' + item.order_type]}}】</p>
             </div>
             <div class="item three">
-              <p class="left">2016-10-17 04:54</p>
-              <p class="right">累计 <em class="em">43,450</em></p>
+              <p class="left">{{item.created_at}}</p>
+              <p class="right">累计 <em class="em">{{item.after_remaining}}</em></p>
             </div>
           </li>
-          <li class="item-wrapper">
-            <div class="item one">
-              <p class="left">团队成员续费正式版本奖励</p>
-              <p class="right">+50</p>
-            </div>
-            <div class="item two">
-              <p class="left">【分销收入】</p>
-            </div>
-            <div class="item three">
-              <p class="left">2016-10-17 04:54</p>
-              <p class="right">累计 <em class="em">43,450</em></p>
-            </div>
-          </li>
-          <li class="item-wrapper">
-            <div class="item one">
-              <p class="left">团队成员续费正式版本奖励</p>
-              <p class="right">+50</p>
-            </div>
-            <div class="item two">
-              <p class="left">【分销收入】</p>
-            </div>
-            <div class="item three">
-              <p class="left">2016-10-17 04:54</p>
-              <p class="right">累计 <em class="em">43,450</em></p>
-            </div>
-          </li>
-          <li class="item-wrapper">
-            <div class="item one">
-              <p class="left">团队成员续费正式版本奖励</p>
-              <p class="right">+50</p>
-            </div>
-            <div class="item two">
-              <p class="left">【分销收入】</p>
-            </div>
-            <div class="item three">
-              <p class="left">2016-10-17 04:54</p>
-              <p class="right">累计 <em class="em">43,450</em></p>
-            </div>
-          </li>
-          <li class="item-wrapper">
-            <div class="item one">
-              <p class="left">团队成员续费正式版本奖励</p>
-              <p class="right">+50</p>
-            </div>
-            <div class="item two">
-              <p class="left">【分销收入】</p>
-            </div>
-            <div class="item three">
-              <p class="left">2016-10-17 04:54</p>
-              <p class="right">累计 <em class="em">43,450</em></p>
-            </div>
-          </li>
-          <li class="item-wrapper">
-            <div class="item one">
-              <p class="left">团队成员续费正式版本奖励</p>
-              <p class="right">+50</p>
-            </div>
-            <div class="item two">
-              <p class="left">【分销收入】</p>
-            </div>
-            <div class="item three">
-              <p class="left">2016-10-17 04:54</p>
-              <p class="right">累计 <em class="em">43,450</em></p>
-            </div>
-          </li>
+          <!--<li class="item-wrapper">-->
+          <!--<div class="item one">-->
+          <!--<p class="left">团队成员续费正式版本奖励</p>-->
+          <!--<p class="right">+50</p>-->
+          <!--</div>-->
+          <!--<div class="item two">-->
+          <!--<p class="left">【分销收入】</p>-->
+          <!--</div>-->
+          <!--<div class="item three">-->
+          <!--<p class="left">2016-10-17 04:54</p>-->
+          <!--<p class="right">累计 <em class="em">43,450</em></p>-->
+          <!--</div>-->
+          <!--</li>-->
+          <!--<li class="item-wrapper">-->
+          <!--<div class="item one">-->
+          <!--<p class="left">团队成员续费正式版本奖励</p>-->
+          <!--<p class="right">+50</p>-->
+          <!--</div>-->
+          <!--<div class="item two">-->
+          <!--<p class="left">【分销收入】</p>-->
+          <!--</div>-->
+          <!--<div class="item three">-->
+          <!--<p class="left">2016-10-17 04:54</p>-->
+          <!--<p class="right">累计 <em class="em">43,450</em></p>-->
+          <!--</div>-->
+          <!--</li>-->
+          <!--<li class="item-wrapper">-->
+          <!--<div class="item one">-->
+          <!--<p class="left">团队成员续费正式版本奖励</p>-->
+          <!--<p class="right">+50</p>-->
+          <!--</div>-->
+          <!--<div class="item two">-->
+          <!--<p class="left">【分销收入】</p>-->
+          <!--</div>-->
+          <!--<div class="item three">-->
+          <!--<p class="left">2016-10-17 04:54</p>-->
+          <!--<p class="right">累计 <em class="em">43,450</em></p>-->
+          <!--</div>-->
+          <!--</li>-->
+          <!--<li class="item-wrapper">-->
+          <!--<div class="item one">-->
+          <!--<p class="left">团队成员续费正式版本奖励</p>-->
+          <!--<p class="right">+50</p>-->
+          <!--</div>-->
+          <!--<div class="item two">-->
+          <!--<p class="left">【分销收入】</p>-->
+          <!--</div>-->
+          <!--<div class="item three">-->
+          <!--<p class="left">2016-10-17 04:54</p>-->
+          <!--<p class="right">累计 <em class="em">43,450</em></p>-->
+          <!--</div>-->
+          <!--</li>-->
+          <!--<li class="item-wrapper">-->
+          <!--<div class="item one">-->
+          <!--<p class="left">团队成员续费正式版本奖励</p>-->
+          <!--<p class="right">+50</p>-->
+          <!--</div>-->
+          <!--<div class="item two">-->
+          <!--<p class="left">【分销收入】</p>-->
+          <!--</div>-->
+          <!--<div class="item three">-->
+          <!--<p class="left">2016-10-17 04:54</p>-->
+          <!--<p class="right">累计 <em class="em">43,450</em></p>-->
+          <!--</div>-->
+          <!--</li>-->
         </ul>
       </scroll>
     </div>
@@ -112,14 +112,16 @@
 
 <script type="text/ecmascript-6">
   import Scroll from 'components/scroll/scroll'
-  // import { ease } from 'common/js/ease'
   import Toast from 'components/toast/toast'
   import ConfirmMsg from 'components/confirm-msg/confirm-msg'
   import SelectCom from 'components/select-com/select-com'
   import WalletAd from 'components/wallet-ad/wallet-ad'
+  import { Wallet } from 'api'
+  import { ERR_OK } from 'common/js/config'
 
   const selectTab = ['全部', '提现', '加盟推荐', '分销收入', '推荐分红']
-  console.log(WalletAd)
+  // 0=全部;2=加盟推荐;3=分销收入;4=推荐分红;11提现
+
   export default {
     name: 'MoneyWallet',
     components: {
@@ -133,28 +135,53 @@
       return {
         selectTab,
         server: 'jzxxxm',
-        balance: 10000,
+        balance: '0.00',
         pullUpLoad: true,
         pullUpLoadThreshold: 0,
         pullUpLoadMoreTxt: '加载更多',
         pullUpLoadNoMoreTxt: '没有更多了',
-        dataArray: []
+        dataArray: [],
+        page: 1
       }
     },
     mounted() {
     },
+    created() {
+      this._getAgentMoney()
+      this._getPayList({type: 0, page: 1})
+    },
     methods: {
+      _getAgentMoney() {
+        Wallet.getAgentMoney().then(res => {
+          if (res.error !== ERR_OK) {
+            this.$refs.toast.show(res.message)
+            return
+          }
+          this.balance = res.data.remaining
+        })
+      },
+      _getPayList(data) {
+        // 0=全部;2=加盟推荐;3=分销收入;4=推荐分红;11提现
+        Wallet.getPayList(data).then(res => {
+          if (res.error !== ERR_OK) {
+            this.$refs.toast.show(res.message)
+            return
+          }
+          console.log(res)
+          this.dataArray = res.data
+        })
+      },
       deposit() {
-        const content = `资金余额为${this.balance}元，资金余额提现暂时只支持线下提现转账，如果需要提现请联系官方微信客服“赞播小妹”：${this.server}。`
+        const content = `可提现余额为${this.balance}元，暂时只支持线下提现转账，如果需要提现请联系官方微信客服“赞播小妹”：${this.server}。`
         const confirmTxt = `好的`
         this.$refs.confirmMsg.show({content, confirmTxt})
       },
       showSelect() {
         this.$refs.selectCom.toggle()
       },
-      toDetailPage() {
+      toDetailPage(item) {
         const path = '/deposit-detail'
-        const id = 100
+        const id = item.order_sn
         this.$router.push({path, query: {id}})
       },
       onPullingUp() {
@@ -186,6 +213,10 @@
           threshold: parseInt(this.pullUpLoadThreshold),
           txt: {more: this.pullUpLoadMoreTxt, noMore: this.pullUpLoadNoMoreTxt}
         } : false
+      },
+      // 类型1=账号销售;2=加盟推荐;3=分销收入;4=推荐分红;11提现
+      orderType() {
+        return {'1': '账号销售', '2': '加盟推荐', '3': '分销收入', '4': '推荐分红', '11': '提现'}
       }
     }
   }

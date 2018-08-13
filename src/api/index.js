@@ -3,6 +3,7 @@ import jwt from './jwt'
 import upload from './upload'
 import home from './home'
 import account from './account'
+import wallet from './wallet'
 
 // 授权模块
 export const Jwt = jwt
@@ -15,3 +16,6 @@ export const Home = home
 
 // 账号信息
 export const Account = account
+
+// 我的钱包
+export const Wallet = wallet

@@ -1,10 +1,10 @@
 <template>
   <div class="deposit-detail">
     <div class="f3"></div>
-    <section class="info-wrapper">
+    <section class="info-wrapper" v-if="orderInfo">
       <div class="item-wrapper">
         <div class="left">支出金额</div>
-        <div class="right">299.00</div>
+        <div class="right">{{orderInfo.total}}</div>
       </div>
       <div class="item-wrapper">
         <div class="left">类型</div>
@@ -12,11 +12,11 @@
       </div>
       <div class="item-wrapper">
         <div class="left">时间</div>
-        <div class="right">2018-05-04 14:24</div>
+        <div class="right">{{orderInfo.created_at}}</div>
       </div>
       <div class="item-wrapper">
         <div class="left">余额</div>
-        <div class="right">34575.00</div>
+        <div class="right">{{orderInfo.after_remaining}}</div>
       </div>
       <div class="remark">
         <div class="left">备注</div>
@@ -26,12 +26,43 @@
         </div>
       </div>
     </section>
+    <toast ref="toast"></toast>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+  import Toast from 'components/toast/toast'
+  import { Wallet } from 'api'
+  import { ERR_OK } from 'common/js/config'
+
   export default {
-    name: 'DepositDetail'
+    name: 'DepositDetail',
+    components: {
+      Toast
+    },
+    data() {
+      return {
+        orderInfo: null
+      }
+    },
+    created() {
+      console.log(this.$route.query)
+      let id = this.$route.query.id
+      id = 123456 // todo
+      this._getOrderDetail(id)
+    },
+    methods: {
+      _getOrderDetail(id) {
+        Wallet.getOrderDetail(id).then(res => {
+          if (res.error !== ERR_OK) {
+            this.$refs.toast.show(res.message)
+            return
+          }
+          console.log(res)
+          this.orderInfo = res.data
+        })
+      }
+    }
   }
 </script>
 
@@ -77,7 +108,7 @@
           flex: 1
           font-size: $font-size-14
           color: $color-343439
-          line-height :1.6
+          line-height: 1.6
           layout(column, block, nowrap)
           align-items: flex-end
           margin-right: 15px

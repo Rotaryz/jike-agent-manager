@@ -41,11 +41,12 @@
       }
     },
     watch: {
-      '$route'(to, from, next) {
+      '$route'(to, from) {
         if (to.query.changeProject) {
           this.routerArr = []
-          to.query.changeProject = false
           this.entryAnimation = 'out'
+          this.keepAlive = false
+          to.query.changeProject = false
           window.history.pushState(null, null)
           return
         }
