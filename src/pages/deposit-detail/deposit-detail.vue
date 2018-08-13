@@ -1,0 +1,84 @@
+<template>
+  <div class="deposit-detail">
+    <div class="f3"></div>
+    <section class="info-wrapper">
+      <div class="item-wrapper">
+        <div class="left">支出金额</div>
+        <div class="right">299.00</div>
+      </div>
+      <div class="item-wrapper">
+        <div class="left">类型</div>
+        <div class="right">代理商提现</div>
+      </div>
+      <div class="item-wrapper">
+        <div class="left">时间</div>
+        <div class="right">2018-05-04 14:24</div>
+      </div>
+      <div class="item-wrapper">
+        <div class="left">余额</div>
+        <div class="right">34575.00</div>
+      </div>
+      <div class="remark">
+        <div class="left">备注</div>
+        <div class="right">
+          <div class="top">管理员手动为您转账</div>
+          <div class="down">交易单据：20180516172727612869</div>
+        </div>
+      </div>
+    </section>
+  </div>
+</template>
+
+<script type="text/ecmascript-6">
+  export default {
+    name: 'DepositDetail'
+  }
+</script>
+
+<style scoped lang="stylus" rel="stylesheet/stylus">
+  @import "~common/stylus/variable"
+  @import '~common/stylus/mixin'
+
+  .deposit-detail
+    fill-box(fixed)
+    background: #fff
+    .f3
+      height: 7px
+      background: $color-F3F3F3
+    .info-wrapper
+      padding-left: 15px
+      font-family: $font-family-regular
+      .item-wrapper
+        height: 60px
+        border-bottom: 0.5px solid $color-E4E4E4
+        line-height: 60px
+        layout(row, block, nowrap)
+        .left
+          width: 83px
+          font-size: $font-size-14
+          color: $color-666666
+        .right
+          flex: 1
+          font-size: $font-size-14
+          color: $color-343439
+          layout(row, block, nowrap)
+          justify-content: flex-end
+          margin-right: 15px
+      .remark
+        border-bottom: 0.5px solid $color-E4E4E4
+        padding: 20.5px 0
+        layout(row, block, nowrap)
+        justify-content: space-between
+        .left
+          font-size: $font-size-14
+          color: $color-666666
+          padding-right: 5px
+        .right
+          flex: 1
+          font-size: $font-size-14
+          color: $color-343439
+          line-height :1.6
+          layout(column, block, nowrap)
+          align-items: flex-end
+          margin-right: 15px
+</style>

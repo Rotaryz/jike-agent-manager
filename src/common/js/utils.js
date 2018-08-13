@@ -1,12 +1,20 @@
 import _this from '@/main'
 import storage from 'storage-controller'
 
+const REGPASS = /^[a-zA-Z0-9]{6,18}$/
+const REGPHONE = /^1[3|4|5|7|8][0-9]{9}$/
 const LOSE_EFFICACY = 10000
 const DISABLE = 110002
 const DELETE = 1 // TODO
 const NET_404 = 404
 
 export default class utils {
+  static checkIsPhoneNumber(phoneNum) {
+    return REGPHONE.test(phoneNum)
+  }
+  static checkPassWord(password) {
+    return REGPASS.test(password)
+  }
   static formatDate (time) {
     let resTime = new Date(time * 1000)
     let nowDate = this.formatDateTime(resTime)
@@ -100,7 +108,6 @@ export default class utils {
   static getPlatform () {
     const navigator = window.navigator
     const u = navigator.userAgent
-    // const isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1 // android终端或者uc浏览器
     const isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/) // ios终端
     return isiOS ? 'ios' : 'android'
   }
