@@ -35,14 +35,14 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import { WEI_SHANG, ZHI_TUI } from 'common/js/constant'
+  import { PROJECT_ARR } from 'common/js/constant'
   import utils from 'common/js/utils'
   import Toast from 'components/toast/toast'
   import storage from 'storage-controller'
   import { Jwt } from 'api'
   import { ERR_OK } from 'common/js/config'
 
-  const project = [WEI_SHANG, ZHI_TUI]
+  const project = PROJECT_ARR
   export default {
     name: 'Login',
     components: {
