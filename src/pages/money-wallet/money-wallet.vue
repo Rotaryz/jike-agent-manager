@@ -106,7 +106,7 @@
     <wallet-ad></wallet-ad>
     <select-com ref="selectCom" :data="selectTab" top="318.5px"></select-com>
     <toast ref="toast"></toast>
-    <confirm-msg ref="confirmMsg"></confirm-msg>
+    <confirm-msg ref="confirmMsg" @confirm="confirm"></confirm-msg>
   </div>
 </template>
 
@@ -134,7 +134,7 @@
     data() {
       return {
         selectTab,
-        server: 'jzxxxm',
+        server: '',
         balance: '0.00',
         pullUpLoad: true,
         pullUpLoadThreshold: 0,
@@ -158,6 +158,7 @@
             return
           }
           this.balance = res.data.remaining
+          this.server = res.data.customer_ervice
         })
       },
       _getPayList(data) {
@@ -171,9 +172,12 @@
           this.dataArray = res.data
         })
       },
+      confirm() {
+        console.log(this.server)
+      },
       deposit() {
         const content = `可提现余额为${this.balance}元，暂时只支持线下提现转账，如果需要提现请联系官方微信客服“赞播小妹”：${this.server}。`
-        const confirmTxt = `好的`
+        const confirmTxt = `联系客服`
         this.$refs.confirmMsg.show({content, confirmTxt})
       },
       showSelect() {

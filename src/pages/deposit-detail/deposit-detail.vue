@@ -8,7 +8,7 @@
       </div>
       <div class="item-wrapper">
         <div class="left">类型</div>
-        <div class="right">代理商提现</div>
+        <div class="right">{{orderInfo.type}}</div>
       </div>
       <div class="item-wrapper">
         <div class="left">时间</div>
@@ -21,8 +21,8 @@
       <div class="remark">
         <div class="left">备注</div>
         <div class="right">
-          <div class="top">管理员手动为您转账</div>
-          <div class="down">交易单据：20180516172727612869</div>
+          <div class="top">{{orderInfo.note}}</div>
+          <div class="down">交易单据：{{orderInfo.withdraw_sn}}</div>
         </div>
       </div>
     </section>
