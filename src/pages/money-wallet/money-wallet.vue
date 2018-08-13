@@ -35,71 +35,6 @@
               <p class="right">累计 <em class="em">{{item.after_remaining}}</em></p>
             </div>
           </li>
-          <!--<li class="item-wrapper">-->
-          <!--<div class="item one">-->
-          <!--<p class="left">团队成员续费正式版本奖励</p>-->
-          <!--<p class="right">+50</p>-->
-          <!--</div>-->
-          <!--<div class="item two">-->
-          <!--<p class="left">【分销收入】</p>-->
-          <!--</div>-->
-          <!--<div class="item three">-->
-          <!--<p class="left">2016-10-17 04:54</p>-->
-          <!--<p class="right">累计 <em class="em">43,450</em></p>-->
-          <!--</div>-->
-          <!--</li>-->
-          <!--<li class="item-wrapper">-->
-          <!--<div class="item one">-->
-          <!--<p class="left">团队成员续费正式版本奖励</p>-->
-          <!--<p class="right">+50</p>-->
-          <!--</div>-->
-          <!--<div class="item two">-->
-          <!--<p class="left">【分销收入】</p>-->
-          <!--</div>-->
-          <!--<div class="item three">-->
-          <!--<p class="left">2016-10-17 04:54</p>-->
-          <!--<p class="right">累计 <em class="em">43,450</em></p>-->
-          <!--</div>-->
-          <!--</li>-->
-          <!--<li class="item-wrapper">-->
-          <!--<div class="item one">-->
-          <!--<p class="left">团队成员续费正式版本奖励</p>-->
-          <!--<p class="right">+50</p>-->
-          <!--</div>-->
-          <!--<div class="item two">-->
-          <!--<p class="left">【分销收入】</p>-->
-          <!--</div>-->
-          <!--<div class="item three">-->
-          <!--<p class="left">2016-10-17 04:54</p>-->
-          <!--<p class="right">累计 <em class="em">43,450</em></p>-->
-          <!--</div>-->
-          <!--</li>-->
-          <!--<li class="item-wrapper">-->
-          <!--<div class="item one">-->
-          <!--<p class="left">团队成员续费正式版本奖励</p>-->
-          <!--<p class="right">+50</p>-->
-          <!--</div>-->
-          <!--<div class="item two">-->
-          <!--<p class="left">【分销收入】</p>-->
-          <!--</div>-->
-          <!--<div class="item three">-->
-          <!--<p class="left">2016-10-17 04:54</p>-->
-          <!--<p class="right">累计 <em class="em">43,450</em></p>-->
-          <!--</div>-->
-          <!--</li>-->
-          <!--<li class="item-wrapper">-->
-          <!--<div class="item one">-->
-          <!--<p class="left">团队成员续费正式版本奖励</p>-->
-          <!--<p class="right">+50</p>-->
-          <!--</div>-->
-          <!--<div class="item two">-->
-          <!--<p class="left">【分销收入】</p>-->
-          <!--</div>-->
-          <!--<div class="item three">-->
-          <!--<p class="left">2016-10-17 04:54</p>-->
-          <!--<p class="right">累计 <em class="em">43,450</em></p>-->
-          <!--</div>-->
-          <!--</li>-->
         </ul>
       </scroll>
     </div>
@@ -118,6 +53,10 @@
   import WalletAd from 'components/wallet-ad/wallet-ad'
   import { Wallet } from 'api'
   import { ERR_OK } from 'common/js/config'
+  import VueClipboard from 'vue-clipboard2'
+  import Vue from 'vue'
+
+  Vue.use(VueClipboard)
 
   const selectTab = ['全部', '提现', '加盟推荐', '分销收入', '推荐分红']
   // 0=全部;2=加盟推荐;3=分销收入;4=推荐分红;11提现
@@ -173,7 +112,12 @@
         })
       },
       confirm() {
-        console.log(this.server)
+        this.$copyText(this.server).then(() => {
+          this.$refs.toast.show(`${this.server} 已复制至剪切板`)
+        }, err => {
+          console.warn(err)
+          this.$refs.toast.show('复制失败')
+        })
       },
       deposit() {
         const content = `可提现余额为${this.balance}元，暂时只支持线下提现转账，如果需要提现请联系官方微信客服“赞播小妹”：${this.server}。`
