@@ -15,7 +15,7 @@
   const COMPONENT_NAME = 'App'
   const DEFAULT_TITLE = '登录'
   // const DEFAULT_ROUTE = '/login'
-  // const HOME_ROUTE = '/home'
+  const HOME_ROUTE = '/home'
 
   export default {
     name: COMPONENT_NAME,
@@ -46,11 +46,9 @@
     watch: {
       '$route'(to, from) {
         document.title = to.meta.title ? to.meta.title : DEFAULT_TITLE
-        if (to.query.changeProject) {
+        if (to.path === HOME_ROUTE) {
           this.routerArr = []
           this.entryAnimation = 'out'
-          this.keepAlive = false
-          to.query.changeProject = false
           window.history.pushState(null, null)
           return
         }
