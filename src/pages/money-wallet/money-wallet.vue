@@ -1,10 +1,5 @@
 <template>
   <div class="money-wallet">
-    <div class="ad-wrapper">
-      <div class="icon"></div>
-      <div class="txt">账号销售收益不计于钱包，但会计入代理商收益记录。</div>
-      <div class="arrow-right"></div>
-    </div>
     <header class="header">
       <div class="money">289.00</div>
       <div class="explain">可提现金额/元</div>
@@ -15,7 +10,7 @@
         <div class="txt">收益明细</div>
         <div class="more">
           <div class="icon-m"></div>
-          <div class="txt-m">筛选</div>
+          <div class="txt-m" @click="showSelect">筛选</div>
         </div>
       </div>
     </section>
@@ -108,6 +103,8 @@
         </ul>
       </scroll>
     </div>
+    <wallet-ad></wallet-ad>
+    <select-com ref="selectCom" :data="selectTab" top="318.5px"></select-com>
     <toast ref="toast"></toast>
     <confirm-msg ref="confirmMsg"></confirm-msg>
   </div>
@@ -118,16 +115,23 @@
   // import { ease } from 'common/js/ease'
   import Toast from 'components/toast/toast'
   import ConfirmMsg from 'components/confirm-msg/confirm-msg'
+  import SelectCom from 'components/select-com/select-com'
+  import WalletAd from 'components/wallet-ad/wallet-ad'
 
+  const selectTab = ['全部', '提现', '加盟推荐', '分销收入', '推荐分红']
+  console.log(WalletAd)
   export default {
     name: 'MoneyWallet',
     components: {
       Toast,
       Scroll,
-      ConfirmMsg
+      ConfirmMsg,
+      SelectCom,
+      WalletAd
     },
     data() {
       return {
+        selectTab,
         server: 'jzxxxm',
         balance: 10000,
         pullUpLoad: true,
@@ -144,6 +148,9 @@
         const content = `资金余额为${this.balance}元，资金余额提现暂时只支持线下提现转账，如果需要提现请联系官方微信客服“赞播小妹”：${this.server}。`
         const confirmTxt = `好的`
         this.$refs.confirmMsg.show({content, confirmTxt})
+      },
+      showSelect() {
+        this.$refs.selectCom.toggle()
       },
       toDetailPage() {
         const path = '/deposit-detail'
@@ -187,32 +194,6 @@
 <style scoped lang="stylus" rel="stylesheet/stylus">
   @import "~common/stylus/variable"
   @import '~common/stylus/mixin'
-
-  .ad-wrapper
-    position: fixed
-    top: 0
-    left: 0
-    right: 0
-    height: 34px
-    z-index: 10
-    layout(row, block, nowrap)
-    align-items: center
-    font-family: $font-family-regular
-    font-size: 3.2vw
-    color: $color-FFFFFF
-    background: $color-C3A66C
-    .icon
-      width: 4.4vw
-      height: @width
-      margin: 0 2.4vw
-      icon-image(icon-remind_mywallet)
-    .arrow-right
-      margin-right: 4vw
-      width: 2.5vw
-      height: @width
-      icon-image(icon-arrow_home)
-    .txt
-      flex: 1
 
   .money-wallet
     fill-box()
@@ -300,7 +281,7 @@
       left: 0
       right: 0
       bottom: 0
-      touch-action :none
+      touch-action: none
       .content
         padding-left: 15.5px
         font-family: $font-family-regular
