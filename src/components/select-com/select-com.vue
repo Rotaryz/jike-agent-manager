@@ -65,12 +65,11 @@
     &:after
       content: ''
       position: absolute
-      width: 0
-      height: 0
-      top: -18px
+      width: 16px
+      height: 8px
+      top: -7.5px
       right: 15px
-      border: 10px solid transparent
-      border-bottom-color: $color-FFFFFF
+      icon-image(icon-Screening_Earnings)
     .select-container
       height: 100%
       width: 100%
