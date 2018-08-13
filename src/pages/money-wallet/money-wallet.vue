@@ -2,13 +2,13 @@
   <div class="money-wallet">
     <div class="ad-wrapper">
       <div class="icon"></div>
-      <div>账号销售收益不计于钱包，但会计入代理商收益记录。</div>
+      <div class="txt">账号销售收益不计于钱包，但会计入代理商收益记录。</div>
       <div class="arrow-right"></div>
     </div>
     <header class="header">
       <div class="money">289.00</div>
       <div class="explain">可提现金额/元</div>
-      <div class="btn">提现</div>
+      <div class="btn" @click="deposit">提现</div>
     </header>
     <section class="select-wrapper">
       <div class="title">
@@ -20,7 +20,7 @@
       </div>
     </section>
     <ul class="content">
-      <li class="item-wrapper">
+      <li class="item-wrapper" @click="toDetailPage()">
         <div class="item one">
           <p class="left">团队成员续费正式版本奖励</p>
           <p class="right">+50</p>
@@ -99,18 +99,83 @@
         </div>
       </li>
     </ul>
+    <article class="mask-wrapper" :class="isShow?'show':''">
+      <div class="content-wrapper">
+        <div class="title">提示</div>
+        <div class="explain">资金余额为10000元，资金余额提现暂时只支持线下提现转账，如果需要提现请联系官方微信客服“赞播小妹”：jzxxxm。</div>
+        <div class="btn-phone" @click="callMobile">好的</div>
+      </div>
+    </article>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
   export default {
-    name: 'MoneyWallet'
+    name: 'MoneyWallet',
+    data() {
+      return {
+        isShow: false
+      }
+    },
+    methods: {
+      deposit() {
+        this.isShow = true
+      },
+      callMobile() {
+        this.isShow = false
+      },
+      toDetailPage() {
+        const path = '/deposit-detail'
+        const id = 100
+        this.$router.push({path, query: {id}})
+      }
+    }
   }
 </script>
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
   @import "~common/stylus/variable"
   @import '~common/stylus/mixin'
+
+  .mask-wrapper
+    fill-box(fixed)
+    background: $color-mask-bg
+    z-index: -1
+    opacity: 0
+    transition: all 0.3s
+    &.show
+      z-index: 999
+      opacity: 1
+    .content-wrapper
+      width: 300px
+      margin: 174px auto
+      box-sizing: border-box
+      background: #FFFFFF
+      border-radius: 3px
+      .title
+        font-family: $font-family-medium
+        font-size: $font-size-16
+        color: $color-20202E
+        letter-spacing: 0.8px
+        text-align: center
+        line-height: 1
+        padding-top: 18px
+      .explain
+        font-family: $font-family-regular
+        font-size: $font-size-14
+        color: $color-343439
+        line-height: 1.6
+        padding 16px 22.5px 26px
+      .btn-phone
+        display: block
+        border: 0.5px solid rgba(32, 32, 46, 0.10)
+        border-radius: 3px
+        font-family: $font-family-regular
+        font-size: $font-size-16
+        color: $color-C3A66C
+        letter-spacing: 0.69px
+        text-align: center;
+        line-height: 45px
 
   .ad-wrapper
     position: fixed
@@ -119,6 +184,24 @@
     right: 0
     height: 34px
     z-index: 10
+    layout(row, block, nowrap)
+    align-items: center
+    font-family: $font-family-regular
+    font-size: 3.2vw
+    color: $color-FFFFFF
+    background: $color-C3A66C
+    .icon
+      width: 4.4vw
+      height: @width
+      margin: 0 2.4vw
+      icon-image(icon-remind_mywallet)
+    .arrow-right
+      margin-right: 4vw
+      width: 2.5vw
+      height: @width
+      icon-image(icon-arrow_home)
+    .txt
+      flex: 1
 
   .money-wallet
     fill-box()
@@ -207,6 +290,7 @@
       right: 0
       padding-left: 15.5px
       font-family: $font-family-regular
+      background :$color-FFFFFF
       .item-wrapper
         height: 94px
         border-bottom: 0.5px solid $color-E4E4E4
