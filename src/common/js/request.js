@@ -1,7 +1,10 @@
 'use strict'
 
 import axios from 'axios'
-import {baseUrl} from './config'
+import { BASE_URL } from './config'
+import storage from 'storage-controller'
+import { WEI_SHANG } from 'common/js/constant'
+import utils from 'common/js/utils'
 
 const TIME_OUT = 10000
 const COMMON_HEADER = {}
@@ -9,12 +12,17 @@ const ERR_OK = 0
 const ERR_NO = -404
 
 const http = axios.create({
-  baseURL: baseUrl.api,
+  baseURL: BASE_URL.api,
   timeout: TIME_OUT,
   headers: COMMON_HEADER
 })
 
 http.interceptors.request.use(config => {
+  const commonHeader = {
+    'Current-Application': storage.get('project', WEI_SHANG.project),
+    'Authorization': storage.get('token', '')
+  }
+  config.headers = {...commonHeader, ...config.headers}
   // 请求数据前的拦截
   return config
 }, error => {
@@ -48,6 +56,8 @@ function checkCode(res) {
   }
   // 如果网络请求成功，而提交的数据，或者是后端的一些未知错误所导致的，可以根据实际情况进行捕获异常
   if (res.data && (res.data.code !== ERR_OK)) {
+    const code = +res.data.code
+    utils._handleErrorType(code)
     throw requestException(res)
   }
   return res.data
