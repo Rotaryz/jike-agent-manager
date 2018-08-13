@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <header class="header">
+    <header class="header" v-if="isWD">
       <h3 class="company">{{userInfo?userInfo.company_name:''}}</h3>
       <h4 class="position">{{userInfo?userInfo.role_name:''}}</h4>
       <div class="money">{{userInfo?userInfo.real_income:0}}</div>
@@ -17,6 +17,23 @@
         <li class="data-item">
           <div class="top">{{userInfo?userInfo.sale_count:0}}</div>
           <div class="bottom">分销单数/单</div>
+        </li>
+      </ul>
+      <router-link to="/account" class="account">
+        <div class="icon-a"></div>
+      </router-link>
+    </header>
+    <header class="header zt" v-else>
+      <h3 class="company">{{userInfo?userInfo.company_name:''}}</h3>
+      <h4 class="position">{{userInfo?userInfo.role_name:''}}</h4>
+      <ul class="data-wrapper zt">
+        <li class="data-item">
+          <div class="top zt">{{userInfo?userInfo.real_income:0}}</div>
+          <div class="bottom">今日收入/元</div>
+        </li>
+        <li class="data-item">
+          <div class="top zt">{{userInfo?userInfo.sale_count:0}}</div>
+          <div class="bottom">今日销量/个</div>
         </li>
       </ul>
       <router-link to="/account" class="account">
@@ -53,11 +70,11 @@
             <div class="icon customer-home"></div>
             <p class="txt">客户管理</p>
           </div>
-          <div class="item">
+          <div class="item" v-if="isWD">
             <div class="icon agent-home"></div>
             <p class="txt">推荐代理商</p>
           </div>
-          <div class="item">
+          <div class="item" v-if="isWD">
             <div class="icon my-team"></div>
             <p class="txt">我的团队</p>
           </div>
@@ -67,7 +84,7 @@
             <div class="icon profit-details"></div>
             <p class="txt">收益明细</p>
           </div>
-          <router-link class="item" to="/money-wallet">
+          <router-link class="item" to="/money-wallet" v-if="isWD">
             <div class="icon my-wallet"></div>
             <p class="txt">我的钱包</p>
           </router-link>
@@ -95,7 +112,7 @@
   import storage from 'storage-controller'
   import Toast from 'components/toast/toast'
   import { ERR_OK } from 'common/js/config'
-  import { PROJECT_ARR } from 'common/js/constant'
+  import { PROJECT_ARR, WEI_SHANG } from 'common/js/constant'
 
   const tabInfo = ['管账号', '管人', '管钱']
   export default {
@@ -125,6 +142,7 @@
         const project = storage.get('project')
         const obj = PROJECT_ARR.find(val => val.project === project)
         document.title = obj.name
+        this.isWD = project === WEI_SHANG.project
         // obj && (this.selectTab = obj.application - 1)
       },
       _getHomeInfo() {
@@ -146,6 +164,7 @@
 
   .home
     background: #fff
+    min-height: 100vh
     .header
       position: relative
       background-image: linear-gradient(-180deg, #2D2C28 0%, #3D3834 100%)
@@ -188,12 +207,24 @@
         box-sizing: border-box
         layout(row, block, nowrap)
         justify-content: space-between
+        position: relative
+        &.zt
+          justify-content: space-around
+          padding: 20px
+        &.zt:after
+          content: ''
+          height: 43px
+          width: 1px
+          background: $color-676052
+          row-center()
         .data-item
           .top
             font-family: $font-family-bold
             font-size: $font-size-24
             color: $color-C3A66C
             text-align: center
+            &.zt
+              font-size: 30px
           .bottom
             font-family: $font-family-regular
             font-size: $font-size-12

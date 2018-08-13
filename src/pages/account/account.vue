@@ -43,7 +43,7 @@
         </div>
       </div>
     </section>
-    <footer class="btn-cancel">退出登录</footer>
+    <footer class="btn-cancel" @click="logout">退出登录</footer>
     <section class="img-cut" v-show="visible">
       <vueCropper
         :viewMode="1"
@@ -174,6 +174,10 @@
           array.push(binary.charCodeAt(i))
         }
         return new Blob([new Uint8Array(array)], {type: type})
+      },
+      logout() {
+        storage.clear()
+        this.$router.replace({path: '/login', query: {changeProject: true}})
       }
       // _infoImage(file) {
       //   let param = new FormData() // 创建form对象

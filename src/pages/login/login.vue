@@ -35,7 +35,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import { PROJECT_ARR } from 'common/js/constant'
+  import { PROJECT_ARR, WEI_SHANG } from 'common/js/constant'
   import utils from 'common/js/utils'
   import Toast from 'components/toast/toast'
   import storage from 'storage-controller'
@@ -58,7 +58,8 @@
         isShowSelect: false,
         phoneNumber: '',
         authCode: '',
-        allowLogin: true
+        allowLogin: true,
+        projectOption: storage.get('project', WEI_SHANG.project)
       }
     },
     beforeDestroy() {
@@ -121,11 +122,12 @@
       },
       // 切换项目
       _checkProject(index) {
-        const project = this.project[index].project
-        storage.set('project', project)
+        this.projectOption = this.project[index].project
+        storage.set('project', this.projectOption)
       },
       // 保存登录信息
       _saveAuthInfo(res) {
+        storage.set('project', this.projectOption)
         storage.set('token', res.data.access_token)
         storage.set('agentInfo', res.data.agent_info)
       }
