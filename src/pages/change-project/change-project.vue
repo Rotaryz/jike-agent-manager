@@ -1,42 +1,68 @@
 <template>
   <div class="change-project">
     <div class="f3"></div>
-    <section class="info-wrapper">
-      <article class="item-wrapper" @click="selectProject(0)">
-        <div class="left wd">WD</div>
+    <ul class="info-wrapper" v-if="projectList.length">
+      <li class="item-wrapper" @click="selectProject(index)" v-for="(item,index) in projectList" :key="index">
+        <div class="left" v-if="item.image_url">
+          <img class="logo-img" :src="item.image_url" alt="">
+        </div>
+        <div class="left wd" v-else-if="+item.application === 1">WD</div>
+        <div class="left zt" v-else-if="+item.application === 2">ZT</div>
         <div class="middle">
-          <div class="name">赞播AI微店</div>
-          <div class="explain">AI赋能微商智能获客、拓客、成交、转化。</div>
+          <div class="name">{{item.title}}</div>
+          <div class="explain">{{item.description}}</div>
         </div>
         <div class="right">
-          <div class="select" :class="selectTab===0?'active':''"></div>
+          <div class="select" :class="selectTab===index?'active':''"></div>
         </div>
-      </article>
-      <article class="item-wrapper" @click="selectProject(1)">
-        <div class="left zt">ZT</div>
-        <div class="middle">
-          <div class="name">赞播AI名片</div>
-          <div class="explain">人工智能名片，专注于提升企业销售效率。</div>
-        </div>
-        <div class="right">
-          <div class="select" :class="selectTab===1?'active':''"></div>
-        </div>
-      </article>
-    </section>
+      </li>
+    </ul>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+  import Toast from 'components/toast/toast'
+  import { Account } from 'api'
+  import { ERR_OK } from 'common/js/config'
+  import storage from 'storage-controller'
+  import { PROJECT_ARR } from 'common/js/constant'
+  // 项目(1=微商，2=智推，3=智店)
+
   export default {
     name: 'ChangeProject',
+    components: {
+      Toast
+    },
     data() {
       return {
-        selectTab: 0
+        selectTab: 0,
+        projectList: []
       }
+    },
+    created() {
+      this._getProjectList()
+      this._getProject()
     },
     methods: {
       selectProject(idx) {
         this.selectTab = idx
+        const obj = PROJECT_ARR.find(val => val.application === idx + 1)
+        storage.set('project', obj.project)
+        this.$router.replace({path: '/home', query: {changeProject: true}})
+      },
+      _getProjectList() {
+        Account.getProjectList().then(res => {
+          if (res.error !== ERR_OK) {
+            this.$refs.toast.show(res.message)
+            return
+          }
+          this.projectList = res.data
+        })
+      },
+      _getProject() {
+        const project = storage.get('project')
+        const obj = PROJECT_ARR.find(val => val.project === project)
+        obj && (this.selectTab = obj.application - 1)
       }
     }
   }
@@ -70,6 +96,9 @@
           line-height: 40px
           text-align: center
           border-radius: 3px
+          .logo-img
+            width: 100%
+            height: 100%
           &.wd
             background-image: linear-gradient(-134deg, #AE2358 0%, #C86DD7 100%)
           &.zt

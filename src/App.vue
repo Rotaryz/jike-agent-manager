@@ -41,7 +41,14 @@
       }
     },
     watch: {
-      '$route'(to, from) {
+      '$route'(to, from, next) {
+        if (to.query.changeProject) {
+          this.routerArr = []
+          to.query.changeProject = false
+          this.entryAnimation = 'out'
+          window.history.pushState(null, null)
+          return
+        }
         this.keepAlive = to.meta.keepAlive
         let path = to.path
         let flag = this.routerArr.some(val => val === path)

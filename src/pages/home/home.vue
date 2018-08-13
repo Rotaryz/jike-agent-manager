@@ -92,9 +92,10 @@
 <script type="text/ecmascript-6">
   // import { BASE_URL } from 'common/js/config'
   import { Home } from 'api'
-  // import storage from 'storage-controller'
+  import storage from 'storage-controller'
   import Toast from 'components/toast/toast'
-  import { ERR_OK } from '../../common/js/config'
+  import { ERR_OK } from 'common/js/config'
+  import { PROJECT_ARR } from 'common/js/constant'
 
   const tabInfo = ['管账号', '管人', '管钱']
   export default {
@@ -106,10 +107,12 @@
       return {
         tabInfo,
         tabIndex: 0,
-        userInfo: null
+        userInfo: null,
+        isWD: true
       }
     },
     created() {
+      this._getProject()
       this._getHomeInfo()
     },
     methods: {
@@ -117,6 +120,12 @@
         this.tabIndex = index
       },
       show() {
+      },
+      _getProject() {
+        const project = storage.get('project')
+        const obj = PROJECT_ARR.find(val => val.project === project)
+        document.title = obj.name
+        // obj && (this.selectTab = obj.application - 1)
       },
       _getHomeInfo() {
         Home.getHomeInfo().then(res => {
