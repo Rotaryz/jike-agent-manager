@@ -13,6 +13,9 @@
   import storage from 'storage-controller'
 
   const COMPONENT_NAME = 'App'
+  const DEFAULT_TITLE = '登录'
+  // const DEFAULT_ROUTE = '/login'
+  // const HOME_ROUTE = '/home'
 
   export default {
     name: COMPONENT_NAME,
@@ -31,7 +34,7 @@
     methods: {
       _checkAuthorize() {
         if (this.hasToken) {
-          // this.$router.replace({path: '/home'})
+          this.$router.replace({path: '/home'})
         }
       }
     },
@@ -42,6 +45,7 @@
     },
     watch: {
       '$route'(to, from) {
+        document.title = to.meta.title ? to.meta.title : DEFAULT_TITLE
         if (to.query.changeProject) {
           this.routerArr = []
           this.entryAnimation = 'out'
@@ -60,6 +64,7 @@
           this.routerArr.push(path)
           this.entryAnimation = 'slide'
         }
+        console.log(this.entryAnimation)
       }
     }
   }

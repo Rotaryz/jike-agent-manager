@@ -168,8 +168,9 @@
       },
       toDetailPage(item) {
         const path = '/deposit-detail'
-        const id = item.order_sn
-        this.$router.push({path, query: {id}})
+        // const id = item.order_sn
+        // this.$router.push({path, query: {id}})
+        this.$router.push(path)
       },
       onPullingUp() {
         if (!this.more) return this.$refs.scroll.forceUpdate()
@@ -303,7 +304,6 @@
       left: 0
       right: 0
       bottom: 0
-      touch-action: none
       .content
         padding-left: 15.5px
         font-family: $font-family-regular

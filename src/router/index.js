@@ -46,8 +46,7 @@ const route = new Router({
       path: '/account',
       component: Account,
       meta: {
-        title: '账号信息',
-        keepAlive: true
+        title: '账号信息'
       }
     }, {
       path: '/change-project',
@@ -133,19 +132,19 @@ const route = new Router({
   ]
 })
 
-const DEFAULT_TITLE = '登录'
-// const DEFAULT_ROUTE = '/login'
-// const HOME_ROUTE = '/home'
-
-route.beforeEach((to, from, next) => {
-  document.title = to.meta.title ? to.meta.title : DEFAULT_TITLE
-  // if (to.path === HOME_ROUTE) {
-  //   const token = storage.has('token')
-  //   if (!token) {
-  //     next({path: DEFAULT_ROUTE, replace: true})
-  //   }
-  // }
-  next()
-})
+// const DEFAULT_TITLE = '登录'
+// // const DEFAULT_ROUTE = '/login'
+// // const HOME_ROUTE = '/home'
+//
+// route.beforeEach((to, from, next) => {
+//   document.title = to.meta.title ? to.meta.title : DEFAULT_TITLE
+//   // if (to.path === HOME_ROUTE) {
+//   //   const token = storage.has('token')
+//   //   if (!token) {
+//   //     next({path: DEFAULT_ROUTE, replace: true})
+//   //   }
+//   // }
+//   next()
+// })
 
 export default route

@@ -46,7 +46,6 @@
       }
     },
     created() {
-      console.log(this.$route.query)
       let id = this.$route.query.id
       id = 123456 // todo
       this._getOrderDetail(id)
@@ -58,7 +57,6 @@
             this.$refs.toast.show(res.message)
             return
           }
-          console.log(res)
           this.orderInfo = res.data
         })
       }

@@ -56,10 +56,10 @@
       </div>
       <ul class="entry-wrapper" :style="'transform :translate3d('+ -tabIndex*100/3 +'%,0,0)'">
         <li class="entry-item one">
-          <div class="item">
+          <router-link class="item" to="/deposit-detail">
             <div class="icon open-home"></div>
             <p class="txt">开单销售</p>
-          </div>
+          </router-link>
           <div class="item">
             <div class="icon record-home"></div>
             <p class="txt">销售记录</p>
