@@ -7,6 +7,8 @@ const Login = () => import('pages/login/login')
 const Home = () => import('pages/home/home')
 const Account = () => import('pages/account/account')
 const ChangeProject = () => import('pages/change-project/change-project')
+const TradeView = () => import('pages/trade-view/trade-view')
+const TradeExplain = () => import('pages/explain-trabe/explain-trabe')
 
 Vue.use(Router)
 
@@ -39,6 +41,18 @@ const route = new Router({
       component: ChangeProject,
       meta: {
         title: '切换项目'
+      }
+    }, {
+      path: '/trade-view',
+      component: TradeView,
+      meta: {
+        title: '生意概览'
+      }
+    }, {
+      path: '/trade-explain',
+      component: TradeExplain,
+      meta: {
+        title: '数据统计说明页'
       }
     }
   ]
