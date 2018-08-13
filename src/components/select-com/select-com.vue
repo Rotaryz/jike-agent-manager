@@ -1,7 +1,7 @@
 <template>
   <div class="select-tab" :style="'top:'+ top" :class="isShow?'show':''">
     <ul class="select-container">
-      <li class="item" v-for="(item,index) in data" :key="index" @click="choose(index)">{{item}}</li>
+      <li class="item" :class="idx===index?'active':''" v-for="(item,index) in data" :key="index" @click="choose(index)">{{item}}</li>
     </ul>
   </div>
 </template>
@@ -16,6 +16,10 @@
       top: {
         type: String,
         default: `0px`
+      },
+      idx: {
+        type: Number,
+        default: 0
       }
     },
     data() {
@@ -90,4 +94,7 @@
         box-sizing: border-box
         margin-bottom: 15px
         margin-right: 12px
+        &.active
+          color: $color-FFFFFF
+          background : $color-C3A66C
 </style>

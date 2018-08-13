@@ -39,7 +39,7 @@
       </scroll>
     </div>
     <wallet-ad></wallet-ad>
-    <select-com ref="selectCom" :data="selectTab" top="318.5px"></select-com>
+    <select-com ref="selectCom" :data="selectTab" :idx="selectIdx" top="318.5px" @choose="choose"></select-com>
     <toast ref="toast"></toast>
     <confirm-msg ref="confirmMsg" @confirm="confirm"></confirm-msg>
   </div>
@@ -80,14 +80,19 @@
         pullUpLoadMoreTxt: '加载更多',
         pullUpLoadNoMoreTxt: '没有更多了',
         dataArray: [],
-        page: 1
+        page: 1,
+        more: true,
+        reqType: 0,
+        selectIdx: 0
       }
     },
     mounted() {
     },
     created() {
       this._getAgentMoney()
-      this._getPayList({type: 0, page: 1})
+      this._getPayList({type: 0, page: 1}, res => {
+        this.dataArray = res.data
+      })
     },
     methods: {
       _getAgentMoney() {
@@ -100,15 +105,15 @@
           this.server = res.data.customer_ervice
         })
       },
-      _getPayList(data) {
+      _getPayList(data, callback) {
         // 0=全部;2=加盟推荐;3=分销收入;4=推荐分红;11提现
         Wallet.getPayList(data).then(res => {
           if (res.error !== ERR_OK) {
             this.$refs.toast.show(res.message)
             return
           }
-          console.log(res)
-          this.dataArray = res.data
+          this.more = !!res.data.length
+          callback(res)
         })
       },
       confirm() {
@@ -127,17 +132,54 @@
       showSelect() {
         this.$refs.selectCom.toggle()
       },
+      choose(index) {
+        if (index === this.selectIdx) return
+        this.selectIdx = index
+        // const selectTab = ['0全部', '1提现', '2加盟推荐', '3分销收入', '4推荐分红']
+        // 0=全部;2=加盟推荐;3=分销收入;4=推荐分红;11提现
+        switch (index) {
+          case 0:
+            this.reqType = 0
+            break
+          case 1:
+            this.reqType = 11
+            break
+          case 2:
+            this.reqType = 2
+            break
+          case 3:
+            this.reqType = 3
+            break
+          case 4:
+            this.reqType = 4
+            break
+          default:
+            break
+        }
+        this.page = 1
+        this.more = true
+        this._getPayList({type: this.reqType, page: this.page}, res => {
+          this.dataArray = res.data
+          this._scrollTop()
+        })
+      },
+      _scrollTop() {
+        this.$refs.scroll && this.$refs.scroll.scrollTo(0, 0)
+      },
       toDetailPage(item) {
         const path = '/deposit-detail'
         const id = item.order_sn
         this.$router.push({path, query: {id}})
       },
       onPullingUp() {
+        if (!this.more) return this.$refs.scroll.forceUpdate()
         // 更新数据
         console.info('pulling up and load data')
-        setTimeout(() => {
-          this.$refs.scroll.forceUpdate()
-        }, 1500)
+        this.page++
+        this._getPayList({type: this.reqType, page: this.page}, res => {
+          let arr = this.dataArray.concat(res.data)
+          this.dataArray = arr
+        })
       },
       rebuildScroll() {
         this.nextTick(() => {
@@ -149,6 +191,7 @@
     watch: {
       pullUpLoadObj: {
         handler() {
+          if (!this.more) return
           if (!this.pullUpLoad) return // 防止下拉报错
           this.rebuildScroll()
         },
