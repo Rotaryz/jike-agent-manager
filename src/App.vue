@@ -62,7 +62,6 @@
           this.routerArr.push(path)
           this.entryAnimation = 'slide'
         }
-        console.log(this.entryAnimation)
       }
     }
   }
