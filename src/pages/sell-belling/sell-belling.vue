@@ -5,11 +5,11 @@
         <div class="left">
           <div class="list">
             <p class="name">*购买客户</p>
-            <input type="text" class="input" v-model="$store.state.customName" placeholder="请输入客户名称">
+            <input type="text" class="input" v-model="$store.state.customName || form.name" placeholder="请输入客户名称">
           </div>
           <div class="list">
             <p class="name">*手机号码</p>
-            <input type="text" class="input" v-model="$store.state.customCall" placeholder="用于登录商户管理后台">
+            <input type="text" class="input" v-model="$store.state.customCall || form.mobile" placeholder="用于登录商户管理后台">
           </div>
         </div>
         <div class="right">
@@ -21,38 +21,38 @@
     <div class="selec-list">
       <div class="list">
         <div class="name">所在地区</div>
-        <input class="input" type="text"  v-model="form.area" placeholder="请选择所在的地区">
+        <input class="input" type="text" readonly  v-model="form.address" placeholder="请选择所在的地区">
         <div class="icon"></div>
       </div>
       <div class="list" @click="selecTrade">
         <div class="name">所属行业</div>
-        <input class="input" type="text"  v-model="form.trade" placeholder="请选择所属的行业">
+        <input class="input" type="text" readonly  v-model="form.industry" placeholder="请选择所属的行业">
         <div class="icon"></div>
       </div>
     </div>
     <ul class="msg-list">
       <li class="list">
         <div class="name">商品名称</div>
-        <input class="input" type="text"  v-model="form.name" placeholder="赞博AI微店">
+        <input class="input" type="text"  v-model="form.title" placeholder="赞博AI微店">
       </li>
       <li class="list">
         <div class="name">剩余库存</div>
-        <input class="input" type="text"  v-model="form.stock" placeholder="赞博AI微店">
+        <input class="input" type="text" readonly  v-model="form.usable_account" placeholder="0套">
       </li>
       <li class="list">
         <div class="name">*购买数量</div>
-        <input class="input" type="text"  v-model="form.count" placeholder="请输入客户购买AI微店的数量">
+        <input class="input" type="text"  v-model="form.num" placeholder="请输入客户购买AI微店的数量">
         <div>套</div>
       </li>
       <li class="list">
         <div class="name">*销售总价</div>
-        <input class="input" type="text"  v-model="form.totalPrice" placeholder="请输入客户购买AI微店的总价">
+        <input class="input" type="text"  v-model="form.total_price" placeholder="请输入客户购买AI微店的总价">
         <div>元</div>
       </li>
     </ul>
     <div class="remark">
       <div class="name">备注</div>
-      <textarea class="textarea" type="textarea" v-model="form.remark" maxlength="200" placehoder="可在此写客户备注，不超过200字" ></textarea>
+      <textarea class="textarea" type="textarea" v-model="form.note" maxlength="200" placehoder="可在此写客户备注，不超过200字" ></textarea>
       <div class="count">{{ count }}/200</div>
     </div>
     <footer class="bot-btn">
@@ -61,7 +61,7 @@
 
     <div class="pop" v-if="popShow">
       <div class="pop-main">
-        <p class="tip">确定为客户开通{{form.count}}AI微店吗？</p>
+        <p class="tip">确定为客户开通{{form.num}}个AI微店吗？</p>
         <div class="confirm-btn">
           <span class="pop-btn" @click="cancel">取消</span>
           <span class="pop-btn right" @click="confirm">确定</span>
@@ -75,18 +75,22 @@
       v-if="tabShow"
       :tabLeftIndex="tabLeftIndex"
       :tabRightIndex="tabRightIndex"
-      :tabLeftList="tabLeftList"
-      :tabRightList="tabRightList"
+      :industryList="industryList"
       @tabLeftClick="tabLeftClick"
       @tabRightClick="tabRightClick"
       @tabCancel="tabCancel"
       @tabConfirm="tabConfirm"
     ></tab-list>
+    <toast ref="toast"></toast>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
   import TabList from 'components/tabList/tabList'
+  import { Custom } from 'api'
+  import { ERR_OK } from 'common/js/config'
+  import Toast from 'components/toast/toast'
+  import utils from 'common/js/utils'
 
   export default {
     name: 'sell-belling',
@@ -95,49 +99,84 @@
     data() {
       return {
         form: {
-          area: '广东-广州-越秀区',
-          trade: 'IT 服务 计算机软件与服务业',
-          name: '赞播AI微店',
-          stock: null,
-          count: '100个',
-          totalPrice: '200.00',
-          remark: null
+          name: '',
+          mobile: '',
+          address: '',
+          industry: '',
+          title: '',
+          num: null,
+          usable_account: '0套',
+          total_price: '',
+          note: null,
+          agent_merchant_id: ''
         },
         popShow: false, // 弹出确认窗口
         grayTip: false, // 提交成功提示
         tabShow: false, // 职业类型选择框
         tabLeftIndex: 0, // 左边tab栏列表
         tabRightIndex: 0, // 右边tab栏列表
-        tabLeftList: ['IT服务', '计算机', '计算机'],
-        tabRightList: [
-          ['互联网', '互联网', '互联网', '互联网'],
-          ['互联网和', '互联网和', '互联网和', '互联网和', '互联网和', '互联网和', '互联网和', '互联网和'],
-          ['互联网'],
-          ['互联网', '互联网']
-        ]
+        industryList: ''
       }
     },
     created() {
-      console.log(this.$store.state.customName)
+      this.form.agent_merchant_id = this.$route.query.id
+      this.getIndustry()
     },
     mounted() {
     },
     computed: {
       count() {
-        return this.form.remark ? this.form.remark.length : 0
+        return this.form.note ? this.form.note.length : 0
       }
     },
     methods: {
+      getIndustry() {
+        Custom.getIndustry()
+          .then(res => {
+            if (res.error !== ERR_OK) {
+              this.$refs.toast.show(res.message)
+              return
+            }
+            this.industryList = res.data
+          })
+      },
       submit() { // 点击提交
         this.popShow = true
       },
       confirm() { // 确认窗的确定按钮
         this.popShow = false
-        this.grayTip = true
-        setTimeout(() => {
-          this.grayTip = false
-          this.$routers.push({ path: '/sell-record' })
-        }, 1000)
+        if (!this.form.name) {
+          this.$refs.toast.show('请输入客户名称')
+          return
+        }
+        if (!this.form.mobile) {
+          this.$refs.toast.show('请输入手机号')
+          return
+        } else if (!utils.checkIsPhoneNumber(this.form.mobile)) {
+          this.$refs.toast.show('输入的手机号格式不正确')
+          return
+        }
+        if (!this.form.num) {
+          this.$refs.toast.show('请输入购买AI微店的数量')
+          return
+        }
+        if (!this.form.total_price) {
+          this.$refs.toast.show('请输入购买AI微店的总价')
+          return
+        }
+
+        Custom.openBill(this.form)
+          .then(res => {
+            if (res.error !== ERR_OK) {
+              this.$refs.toast.show(res.message)
+              return
+            }
+            this.grayTip = true
+            setTimeout(() => {
+              this.grayTip = false
+              this.$router.push({ path: '/sell-record' })
+            }, 1000)
+          })
       },
       cancel() { // 确认窗的取消按钮
         this.popShow = false
@@ -158,16 +197,19 @@
         // this.form.trade = this.tabLeftList[0] + ' ' + this.tabRightList[0][0]
       },
       tabConfirm() { // 确定选择职业类型
-        this.tabLeftIndex = 0
-        this.tabRightIndex = 0
         this.tabShow = false
-        this.form.trade = this.tabLeftList[this.tabLeftIndex] + ' ' + this.tabRightList[this.tabLeftIndex][this.tabRightIndex]
+        let tabLeftList = this.industryList[this.tabLeftIndex]
+        let tabRightList = this.industryList[this.tabLeftIndex].industry[this.tabRightIndex]
+        this.form.industry = tabLeftList.name + ' ' + tabRightList.name
+        // this.tabLeftIndex = 0
+        // this.tabRightIndex = 0
       }
     },
     watch: {
     },
     components: {
-      TabList
+      TabList,
+      Toast
     }
   }
 </script>

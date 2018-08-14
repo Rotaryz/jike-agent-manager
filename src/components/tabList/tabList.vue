@@ -5,11 +5,11 @@
       <div class="tab">
         <div class="tab-left">
           <ul>
-            <li class="list" :class="tabLeftIndex == i && 'on'" v-for="(val, i) in tabLeftList" :key="i" @click="tabLeftClick(i)">{{ val }}</li>
+            <li class="list" :class="tabLeftIndex == i && 'on'" v-for="(val, i) in industryList" :key="i" @click="tabLeftClick(i)">{{ val.name }}</li>
           </ul>
         </div>
         <div class="tab-right">
-          <li class="list" :class="tabRightIndex == i && 'on'" v-for="(val, i) in tabRightList[tabLeftIndex]" :key="i" @click="tabRightClick(i)">{{ val }}</li>
+          <li class="list" :class="tabRightIndex == i && 'on'" v-for="(val, i) in industryList[tabLeftIndex].industry" :key="i" @click="tabRightClick(i)">{{ val.name }}</li>
         </div>
       </div>
       <div class="confirm-btn">
@@ -23,10 +23,9 @@
 <script type="text/ecmascript-6">
   export default {
     props: [
-      'tabLeftIndex', // 左边tab栏列表
-      'tabRightIndex', // 右边tab栏列表
-      'tabLeftList',
-      'tabRightList'
+      'tabLeftIndex', // 左边tab栏选中
+      'tabRightIndex', // 右边tab栏选中
+      'industryList'
     ],
     data() {
       return {
