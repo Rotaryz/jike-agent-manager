@@ -24,6 +24,8 @@ const SellBelling = () => import('pages/sell-belling/sell-belling')
 const SellRecord = () => import('pages/sell-record/sell-record')
 const SellDetail = () => import('pages/sell-detail/sell-detail')
 const ChooseCustom = () => import('pages/choose-custom/choose-custom')
+const MoneyIncomeZt = () => import('pages/money-income-zt/money-income-zt')
+const MoneyIncomeWs = () => import('pages/money-income-ws/money-income-ws')
 
 Vue.use(Router)
 
@@ -183,6 +185,20 @@ const route = new Router({
       component: ChooseCustom,
       meta: {
         title: '选择客户'
+      }
+    },
+    {
+      path: '/money-income-zt',
+      component: MoneyIncomeZt,
+      meta: {
+        title: '收益明细'
+      }
+    },
+    {
+      path: '/money-income-ws',
+      component: MoneyIncomeWs,
+      meta: {
+        title: '收益明细'
       }
     }
   ]
