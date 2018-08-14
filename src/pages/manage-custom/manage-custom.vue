@@ -5,88 +5,122 @@
       <p class="money">总交易额/元</p>
       <p class="percent">开通率</p>
     </header>
-    <section class="custom-list">
-      <ul class="main">
-        <li v-for="(item,index) in msg" :key="index" class="list" @click="jump(item.title)">
-          <div class="msg">
-            <div class="cus">
-              <h4 class="title">{{ item.title }}</h4>
-              <p class="count">购买账号数 {{ item.count }}个</p>
-            </div>
-            <div class="mon">{{ item.money }}</div>
-            <div class="per">{{ item.percent }}%</div>
-          </div>
-          <div class="progress">
-            <div class="gress" :style="{ width:`${item.percent}%`}"></div>
-          </div>
-        </li>
-      </ul>
-    </section>
-    <footer class="bot-btn">
-      <router-link to="/custom-create" class="btn">新建客户</router-link>
-    </footer>
+    <div class="custom-scroll">
+      <scroll ref="scroll"
+              :probeType="probeType"
+              :bcColor="bcColor"
+              :data="dataArray"
+              :showNoMore="false"
+              :listenScroll="listenScroll"
+              :pullUpLoad="pullUpLoadObj"
+              @pullingUp="onPullingUp">
+        <section class="custom-list">
+          <ul class="main">
+            <li v-for="(item,index) in msg" :key="index" class="list" @click="jump(item.id)">
+              <div class="msg">
+                <div class="cus">
+                  <h4 class="title">{{ item.name }}</h4>
+                  <p class="count">购买账号数 {{ item.total_account }}个</p>
+                </div>
+                <div class="mon">{{ item.total_paid }}</div>
+                <div class="per">{{ item.take_rate }}</div>
+              </div>
+              <div class="progress">
+                <div class="gress" :style="{ width:item.take_rate }"></div>
+              </div>
+            </li>
+          </ul>
+        </section>
+      </scroll>
+    </div>
+    <!--<footer class="bot-btn">-->
+      <!--<router-link to="/custom-create" class="btn">新建客户</router-link>-->
+    <!--</footer>-->
+    <toast ref="toast"></toast>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+  import Scroll from 'components/scroll/scroll'
+  import { Custom } from 'api'
+  import { ERR_OK } from 'common/js/config'
+  import Toast from 'components/toast/toast'
+
   export default {
     name: 'Demo',
     props: {
     },
     data() {
       return {
+        listenScroll: true,
+        probeType: 3,
+        bcColor: '#fff',
+        dataArray: [],
+        pullUpLoad: true,
+        pullUpLoadThreshold: 0,
+        pullUpLoadMoreTxt: '加载更多',
+        pullUpLoadNoMoreTxt: '没有更多了',
+        page: 1,
         msg: [
           {
-            title: '广州博士卡汽车有限公司',
-            count: 4,
-            money: '300.00',
-            percent: 70
-          }, {
-            title: '广州博士卡汽车有限公司',
-            count: 4,
-            money: '300.00',
-            percent: 20
-          }, {
-            title: '广州博士卡汽车有限公司',
-            count: 4,
-            money: '300.00',
-            percent: 90
-          }, {
-            title: '广州博士卡汽车有限公司',
-            count: 4,
-            money: '300.00',
-            percent: 60
-          }, {
-            title: '广州博士卡汽车有限公司',
-            count: 4,
-            money: '300.00',
-            percent: 60
-          }, {
-            title: '广州博士卡汽车有限公司',
-            count: 4,
-            money: '300.00',
-            percent: 60
-          }, {
-            title: '广州博士卡汽车有限公司',
-            count: 4,
-            money: '300.00',
-            percent: 60
+            id: 1,
+            name: '赞播集团',
+            total_account: 100,
+            total_paid: '20000.00',
+            take_rate: '30%'
           }
         ]
       }
     },
     created() {
+      this.getCustomList()
     },
     mounted() {
     },
     computed: {
+      pullUpLoadObj: function () {
+        return this.pullUpLoad ? {
+          threshold: parseInt(this.pullUpLoadThreshold),
+          txt: {more: this.pullUpLoadMoreTxt, noMore: this.pullUpLoadNoMoreTxt}
+        } : false
+      }
     },
     methods: {
-      jump(name) {
-        this.$router.push({path: '/custom-detail', query: {name}})
+      jump(id) {
+        this.$router.push({path: '/custom-detail', query: {id}})
+      },
+      onPullingUp() {
+        this.$refs.scroll.forceUpdate()
+      },
+      rebuildScroll() {
+        this.nextTick(() => {
+          this.$refs.scroll.destroy()
+          this.$refs.scroll.initScroll()
+        })
+      },
+      getCustomList() { // 获取客户列表
+        Custom.getCustomList(this.page, 10)
+          .then(res => {
+            if (res.error !== ERR_OK) {
+              this.$refs.toast.show(res.message)
+              return
+            }
+            this.msg = res.data
+          })
       }
     },
     watch: {
+      pullUpLoadObj: {
+        handler() {
+          if (!this.pullUpLoad) return // 防止下拉报错
+          this.rebuildScroll()
+        },
+        deep: true
+      }
+    },
+    components: {
+      Scroll,
+      Toast
     }
   }
 </script>
@@ -96,7 +130,6 @@
 @import "~common/stylus/mixin"
 
 .manage-custom
-  padding-bottom: 68px
   .header
     background: $color-F3F3F3
     color: $color-848484
@@ -114,7 +147,13 @@
     .percent
       width: 25%
       text-align right
-
+  .custom-scroll
+    position: absolute
+    left: 0
+    right: 0
+    top: 40px
+    bottom: 0
+    overflow: hidden
   .custom-list
     padding: 0 15px
     background: $color-white
