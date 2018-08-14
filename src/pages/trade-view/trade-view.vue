@@ -58,7 +58,7 @@
       <!--我的收入占比-->
       <div class="pie-box pie-box-change" >
         <div id="myPie"></div>
-        <div class="my-pie-moeny">累计收入：￥{{pieMoney || 0}}</div>
+        <div class="my-pie-moeny">累计收入：¥{{pieMoney || 0}}</div>
       </div>
       <div class="echarts-title-box">
         <div class="echarts-title">
