@@ -39,11 +39,12 @@
         <div class="text">生意数据概览</div>
       </div>
       <div class="income-data">
-        <div class="data-item" v-for="(item, index) in incomeList" @click="selectIncome(index)" :class="incomeIndex * 1 ===index ? 'data-item-active' : ''">{{item}}
+        <div class="data-item" v-for="(item, index) in incomeList" @click="selectIncome(index)"
+             :class="incomeIndex * 1 ===index ? 'data-item-active' : ''">{{item}}
         </div>
       </div>
       <!--我的收入-->
-      <div class="pie-box line-box" >
+      <div class="pie-box line-box">
         <div id="myLine"></div>
         <div class="title-box">
           <div class="sub-title">我的收入</div>
@@ -56,7 +57,7 @@
         </div>
       </div>
       <!--我的收入占比-->
-      <div class="pie-box pie-box-change" >
+      <div class="pie-box pie-box-change">
         <div id="myPie"></div>
         <div class="my-pie-moeny">累计收入：¥{{pieMoney || 0}}</div>
       </div>
@@ -67,7 +68,7 @@
         </div>
       </div>
       <!--核心数据指标-->
-      <div class="pie-box line-box" >
+      <div class="pie-box line-box">
         <div id="myDataBar"></div>
         <div class="pie-list">
           <div class="list">
@@ -107,7 +108,7 @@
         </div>
       </div>
       <div class="income-data">
-        <div class="data-item" v-for="(item, index) in teamIncomeList"  @click="selectTeamIncome(index)"
+        <div class="data-item" v-for="(item, index) in teamIncomeList" @click="selectTeamIncome(index)"
              :class="teamIncomeIndex * 1 ===index ? 'data-item-active' : ''">{{item}}
         </div>
       </div>
@@ -120,9 +121,10 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import { ERR_OK } from 'common/js/config'
-  import { Trade } from 'api'
+  import {ERR_OK} from 'common/js/config'
+  import {Trade} from 'api'
   import Toast from 'components/toast/toast'
+
   export default {
     name: 'trade-view',
     data() {
@@ -151,14 +153,15 @@
       }
     },
     created() {
-      this.getData()
       this.getMyIncomeData(1)
+      this.getData()
       this.getMyIncomePidData()
       this.getMyBarData()
       this.getNewMemberData(1)
       this.getTeamIncomeData(1)
     },
-    mounted() {},
+    mounted() {
+    },
     methods: {
       getData() {
         Trade.getTodayData().then(res => {

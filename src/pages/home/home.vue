@@ -98,8 +98,8 @@
         <router-link class="more" :to="isWD?'/trade-view':'/ai-trade'">更多</router-link>
       </div>
       <article class="charts-container">
-        <div class="pie-box line-box">
-          <div id="myLine"></div>
+        <div class="pie-box line-box" >
+          <div id="myHomeLine"></div>
           <div class="title-box">
             <div class="sub-title">我的收入</div>
           </div>
@@ -157,7 +157,7 @@
         })
       },
       drawLine() {
-        let myChart = this.$echarts.init(document.getElementById('myLine'))
+        let myChart = this.$echarts.init(document.getElementById('myHomeLine'))
         // 我的收入
         myChart.setOption({
           xAxis: {
@@ -462,7 +462,6 @@
           padding-bottom: 11px
         .c-wrapper
           height: 217.5px
-
   .pie-box
     position: relative
     background: linear-gradient(rgba(255, 255, 255, .1) 0%, #fff 100%)
@@ -473,7 +472,7 @@
       height: 285px
       margin: 0 auto
       padding: 20px
-    #myLine
+    #myHomeLine
       width: 100%
       height: 300px
       margin: 0 auto
