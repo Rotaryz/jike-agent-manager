@@ -12,9 +12,9 @@
         <div class="team-top">
           <div class="team-title">
             <div class="text">我的团队</div>
-            <div class="title-img">
+            <router-link class="title-img" to="/explain-team">
               <img src="./icon-help_myteam@2x.png" alt="">
-            </div>
+            </router-link>
           </div>
           <div class="team-ab">
             <div class="team-box-samll">
@@ -38,13 +38,17 @@
           <div class="scale-two">分销单数/个</div>
           <div class="scale-thr">分销收入/元</div>
         </div>
-        <ul class="team-list">
+        <ul class="team-list" v-if="dataArray.length !== 0">
           <li class="item" v-for="item in dataArray" v-bind:key="item.id">
             <div class="item-one">{{item.name}}</div>
             <div class="item-two">{{item.commission_num}}</div>
             <div class="item-thr">{{item.commission_income}}</div>
           </li>
         </ul>
+        <div class="null-box"  v-if="dataArray.length === 0">
+          <img src="./pic-nodata@2x.png" class="null-box-img">
+          <div class="null-box-text">暂还没有数据</div>
+        </div>
       </scroll>
     </div>
   </div>
@@ -69,7 +73,9 @@
         pullUpLoadMoreTxt: '加载更多',
         pullUpLoadNoMoreTxt: '没有更多了',
         order: '',
-        money: ''
+        money: '',
+        page: 1,
+        noMore: false
       }
     },
     created() {
@@ -276,6 +282,17 @@
         font-size: $font-size-14
         color: $color-AA905D
         font-family: $font-family-regular
+  .null-box
+    padding-top: 50px
+    .null-box-img
+      width: 150px
+      display: block
+      margin: 0 auto
+    .null-box-text
+      text-align: center
+      font-size: $font-size-14
+      color: #a6a6a6
+      font-family: $font-family-regular
   .z
     width: 100%
 

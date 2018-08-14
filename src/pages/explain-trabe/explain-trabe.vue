@@ -18,7 +18,7 @@
       <div class="big-title title-mt">1. 我的收入</div>
       <div class="big-small text-mt">A. 总收入=账号销售收入+加盟推荐奖励+推荐团队分红+团队分销收入。</div>
       <div class="big-small text-mt-small">B. 账号销售收入：代理商在开单销售页录入客户购买账号的收入（客户购买金额）。</div>
-      <div class="big-small text-mt-small"><span>C. 团队分销收入：自己分销团队成员分销收入，相关介绍请查看</span><span class="jump-color">我的团队业务规则</span>。</div>
+      <div class="big-small text-mt-small"><span>C. 团队分销收入：自己分销团队成员分销收入，相关介绍请查看</span><span class="jump-color"><router-link class="jump-color" to="/explain-team">我的团队业务规则</router-link></span>。</div>
       <div class="big-small text-mt-small">D. 加盟推荐奖励：代理商推荐其他代理商加盟成功后, 平台给予推荐代理商的一次性奖励，根据代理商的等级不同，奖励金分为5000元/个，18000元/个，30000元/个3个等级。</div>
       <div class="big-small text-mt-small">E. 推荐团队分红：代理商推荐其他代理商加盟成功后, 除了加盟推荐奖励外，还享有被推荐代理商团队业绩的3%分红的长期奖励。</div>
       <div class="big-title title-mt-two">2. 收入占比</div>
@@ -26,7 +26,7 @@
       <div class="big-title title-mt-two">3. 核心数据指标</div>
       <div class="big-small text-mt">每日销售账号个数、推荐代理商个数、团队分销单数。这三个指标直接影响代理商收入中的4种类型收入。</div>
       <div class="big-title title-mt-two">4. 新增团队成员</div>
-      <div class="big-small text-mt"><span>新增团队成员会影响团队分销单数，所以对于代理商也较为重要，我们提供了近30天的数据统计。新增团队成员的说明请查看</span><span class="jump-color">我的团队业务说明</span>。</div>
+      <div class="big-small text-mt"><span>新增团队成员会影响团队分销单数，所以对于代理商也较为重要，我们提供了近30天的数据统计。新增团队成员的说明请查看</span><span class="jump-color"><router-link class="jump-color" to="/explain-team">我的团队业务说明</router-link></span>。</div>
       <div class="big-title title-mt-two">5. 环比</div>
       <div class="big-small text-mt">环比增长率=（本期数-上期数）/上期数*100%。</div>
     </div>

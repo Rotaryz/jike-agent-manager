@@ -7,9 +7,9 @@
         {{tradeData.real_income || 0}}
       </div>
       <div class="top-text">今日实际收入</div>
-      <div class="que-img">
+      <router-link class="que-img" to="/explain-trade">
         <img src="./icon-help_myteam@2x.png">
-      </div>
+      </router-link>
       <div class="trade-ab">
         <div class="order-box">
           <div class="item">
@@ -635,8 +635,8 @@
     .que-img
       top: 25.5px
       right: 20px
-      width: 15.5px
-      height: 15.5px
+      width: 18px
+      height: 18px
       position: absolute
       img
         width: 100%

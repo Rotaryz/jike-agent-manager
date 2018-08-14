@@ -1,9 +1,9 @@
 <template>
   <div class="ai-box">
     <div class="ai-top">
-      <div class="que-img">
+      <router-link class="que-img" to="/ai-explain">
         <img src="./icon-help_myteam@2x.png">
-      </div>
+      </router-link>
       <div class="name">{{tradeData.company_name}}</div>
       <div class="po-name-box">
         <div class="po-name" v-if="tradeData.role_name">{{tradeData.role_name}}</div>
@@ -279,8 +279,8 @@
     .que-img
       top: 25.5px
       right: 20px
-      width: 15.5px
-      height: 15.5px
+      width: 18px
+      height: 18px
       position: absolute
       img
         width: 100%

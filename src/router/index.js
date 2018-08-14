@@ -7,7 +7,7 @@ const Home = () => import('pages/home/home')
 const Account = () => import('pages/account/account')
 const ChangeProject = () => import('pages/change-project/change-project')
 const TradeView = () => import('pages/trade-view/trade-view')
-const TradeExplain = () => import('pages/explain-trabe/explain-trabe')
+const ExplainTrade = () => import('pages/explain-trabe/explain-trabe')
 const ManageCustom = () => import('pages/manage-custom/manage-custom')
 const CustomDetail = () => import('pages/custom-detail/custom-detail')
 const CustomCreate = () => import('pages/custom-create/custom-create')
@@ -67,8 +67,8 @@ const route = new Router({
         title: '生意概览'
       }
     }, {
-      path: '/trade-explain',
-      component: TradeExplain,
+      path: '/explain-trade',
+      component: ExplainTrade,
       meta: {
         title: '数据统计说明页'
       }
