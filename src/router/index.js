@@ -72,7 +72,6 @@ const route = new Router({
       meta: {
         title: '数据统计说明页'
       }
-    }, {
     },
     {
       path: '/manage-custom',
