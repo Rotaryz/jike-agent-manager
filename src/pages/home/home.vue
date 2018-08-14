@@ -99,16 +99,10 @@
       </div>
       <article class="charts-container">
         <div class="c-title">我的收入</div>
-        <div class="c-wrapper" @click="test"></div>
+        <div class="c-wrapper"></div>
       </article>
     </section>
     <toast ref="toast"></toast>
-    <awesome-picker
-      ref="picker"
-      :data="cityData"
-      @cancel="handlePickerCancel"
-      @confirm="handlePickerConfirm">
-    </awesome-picker>
   </div>
 </template>
 
@@ -141,27 +135,14 @@
       this._getHomeInfo()
     },
     methods: {
-      test() {
-        console.log(2222)
-        this.$refs.picker.show()
-      },
-      handlePickerCancel(e) {
-        console.log(e)
-      },
-      handlePickerConfirm(e) {
-        console.log(e)
-      },
       changeTab(index) {
         this.tabIndex = index
-      },
-      show() {
       },
       _getProject() {
         const project = storage.get('project')
         const obj = PROJECT_ARR.find(val => val.project === project)
         document.title = obj.name
         this.isWD = project === WEI_SHANG.project
-        // obj && (this.selectTab = obj.application - 1)
       },
       _getHomeInfo() {
         Home.getHomeInfo().then(res => {

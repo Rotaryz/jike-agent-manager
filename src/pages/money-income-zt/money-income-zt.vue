@@ -25,6 +25,7 @@
               :data="dataArray"
               :pullUpLoad="pullUpLoadObj"
               @pullingUp="onPullingUp"
+              v-if="false"
       >
         <ul class="content" v-if="dataArray.length">
           <li class="item-wrapper" v-for="(item,index) in dataArray" :key="index">
@@ -42,6 +43,7 @@
           </li>
         </ul>
       </scroll>
+      <empty-data v-else></empty-data>
     </div>
     <toast ref="toast"></toast>
   </div>
@@ -52,12 +54,14 @@
   import Toast from 'components/toast/toast'
   import { Income } from 'api'
   import { ERR_OK } from 'common/js/config'
+  import EmptyData from 'components/empty-data/empty-data'
 
   export default {
     name: 'MoneyWallet',
     components: {
       Toast,
-      Scroll
+      Scroll,
+      EmptyData
     },
     data() {
       return {
@@ -211,13 +215,11 @@
       height: 7px
       background: $color-F3F3F3
     .scroll-list-wrap
-      fill-box()
       position: absolute
       top: 212.5px
       left: 0
       right: 0
       bottom: 0
-      background rebeccapurple
       .content
         padding-left: 15.5px
         font-family: $font-family-regular
