@@ -3,20 +3,9 @@
     <header class="header">
       <div class="money">{{grandTotal}}</div>
       <div class="explain">累计收入/元</div>
-      <!--<ul class="data-wrapper">-->
-        <!--<li class="data-item">-->
-          <!--<div class="top">340</div>-->
-          <!--<div class="bottom">本日收入/元</div>-->
-        <!--</li>-->
-        <!--<li class="data-item">-->
-          <!--<div class="top">340</div>-->
-          <!--<div class="bottom">本周收入/元</div>-->
-        <!--</li>-->
-        <!--<li class="data-item">-->
-          <!--<div class="top">340</div>-->
-          <!--<div class="bottom">本月收入/元</div>-->
-        <!--</li>-->
-      <!--</ul>-->
+      <div class="pie-box pie-box-change echarts-pos" >
+        <div id="myPie"></div>
+      </div>
     </header>
     <div class="f3"></div>
     <section class="select-wrapper">
@@ -34,8 +23,9 @@
               :data="dataArray"
               :pullUpLoad="pullUpLoadObj"
               @pullingUp="onPullingUp"
+              v-if="dataArray.length"
       >
-        <ul class="content" v-if="dataArray.length">
+        <ul class="content">
           <li class="item-wrapper" v-for="(item,index) in dataArray" :key="index">
             <div class="item one">
               <p class="left">{{item.title}}</p>
@@ -51,6 +41,7 @@
           </li>
         </ul>
       </scroll>
+      <empty-data v-else></empty-data>
     </div>
     <select-com ref="selectCom" :data="selectTab" :idx="selectIdx" top="365px" @choose="choose"></select-com>
     <toast ref="toast"></toast>
@@ -63,6 +54,7 @@
   import SelectCom from 'components/select-com/select-com'
   import { Income } from 'api'
   import { ERR_OK } from 'common/js/config'
+  import EmptyData from 'components/empty-data/empty-data'
 
   const selectTab = ['全部', '账号销售', '加盟推荐', '分销收入', '推荐分红', '提现']
 
@@ -71,7 +63,8 @@
     components: {
       Toast,
       Scroll,
-      SelectCom
+      SelectCom,
+      EmptyData
     },
     data() {
       return {
@@ -104,6 +97,34 @@
             return
           }
           this.grandTotal = res.data.grand_total
+          this.drawPie(res)
+        })
+      },
+      drawPie(res) {
+        let myChart = this.$echarts.init(document.getElementById('myPie'))
+        // 我的收入占比
+        myChart.setOption({
+          tooltip: {
+            trigger: 'item',
+            formatter: '{d}%'
+          },
+          color: ['#8B572A', '#C3A66C', '#716558', '#4A4A4A'],
+          series: [
+            {
+              name: '',
+              type: 'pie',
+              radius: '45%',
+              center: ['50%', '40%'],
+              data: res.data.rate,
+              itemStyle: {
+                emphasis: {
+                  shadowBlur: 10,
+                  shadowOffsetX: 0,
+                  shadowColor: 'rgba(0, 0, 0, 0.5)'
+                }
+              }
+            }
+          ]
         })
       },
       _getIncomeList(data, callback) {
@@ -202,14 +223,15 @@
 <style scoped lang="stylus" rel="stylesheet/stylus">
   @import "~common/stylus/variable"
   @import '~common/stylus/mixin'
-
+  *
+    box-sizing: border-box
+    -moz-box-sizing: border-box
+    -webkit-box-sizing: border-box
   .money-wallet
     fill-box()
     background: $color-FFFFFF
     .header
       height: 310.5px
-      layout()
-      align-items: center
       .money
         color: $color-C3A66C
         font-family: $font-family-dinbold
@@ -348,5 +370,133 @@
             .right > .em
               font-size: $font-size-14
               line-height: 12px
+  .pie-box
+    position: relative
+    height: 305px
+    border-bottom: 10px solid #eee
+    box-sizing: border-box
+    -moz-box-sizing: border-box
+    -webkit-box-sizing: border-box
+    #myPie
+      width: 100%
+      height: 285px
+      margin: 0 auto
+      padding: 20px
+    #myLine
+      width: 100%
+      height: 300px
+      margin: 0 auto
+      padding: 0px 0px 0
+      top: -5px
+    #myAddLine
+      width: 100%
+      height: 300px
+      margin: 20px auto
+      padding: 35px 0px 0
+    #myBar
+      width: 100%
+      height: 300px
+      margin: 20px auto
+      padding: 35px 20px 0
+    #myDataBar
+      width: 100%
+      height: 280px
+      margin: 0px auto
+      top: -25px
+      padding: 0 10px 0
+    #myMember
+      width: 100%
+      height: 305px
+      margin: 0px auto
+      padding: 0 10px 0
+    #myMemberMoney
+      width: 100%
+      height: 305px
+      margin: 0px auto
+      padding: 0 10px 0
+    #mySuccess
+      width: 100%
+      height: 300px
+      margin: 20px auto
+      padding: 35px 20px 0
+    .title-box
+      position: absolute
+      width: 100%
+      text-align: center
+      top: 15px
+      left: 0
+      .sub-title
+        margin-top: 5px
+        font-size: $font-size-12
+        color: $color-343439
+        font-family: $font-family-regular
+    .bottom-des
+      position: absolute
+      bottom: 10px
+      layout(row)
+      width: 100%
+      .tab
+        layout(row)
+        justify-content: center
+        align-items: center
+        width: 25%
+        .icon
+          background: #F9B43C
+          width: 6px
+          height: 6px
+          border-radius: 50%
+          margin-right: 3px
+        .two
+          background: #F9543C
+        .thr
+          background: #8E3C68
+        .four
+          background: #23799D
+        .text
+          font-size: $font-size-12
+          font-family: $font-family-regular
+          color: $color-text
+    .pie-list
+      layout(row)
+      position: absolute
+      width: 100%
+      bottom: 15px
+      left: 0
+      .list
+        flex: 1
+        layout(row)
+        align-items: center
+        justify-content: center
+        font-size: $font-size-12
+        font-family: $font-family-medium
+        color: $color-343439
+        .icon
+          background: #343439
+          width: 7px
+          height: 7px
+          margin-right: 4px
+        .two
+          background: #C3A66C
+        .thr
+          background: #8B572A
+        .four
+          background: #F9B43C
+        .text
+          line-height: 1
+          font-size: $font-size-small
+          color: #202020
+          font-family: $font-family-regular
 
+    .my-pie-moeny
+      font-size: $font-size-14
+      color: $color-C3A66C
+      font-family: $font-family-medium
+      position: absolute
+      width: 100%
+      bottom: 10px
+      left: 0
+      text-align: center
+
+  .pie-box-change
+    height: 250px
 </style>

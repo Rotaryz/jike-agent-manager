@@ -1,7 +1,8 @@
 const state = {
   argument: {},
   customName: '',
-  customCall: ''
+  customCall: '',
+  homeTab: 0
 }
 
 export default state

@@ -26,6 +26,7 @@
         </div>
       </div>
     </section>
+    <empty-data v-else></empty-data>
     <toast ref="toast"></toast>
   </div>
 </template>
@@ -34,11 +35,13 @@
   import Toast from 'components/toast/toast'
   import { Wallet } from 'api'
   import { ERR_OK } from 'common/js/config'
+  import EmptyData from 'components/empty-data/empty-data'
 
   export default {
     name: 'DepositDetail',
     components: {
-      Toast
+      Toast,
+      EmptyData
     },
     data() {
       return {
@@ -47,7 +50,6 @@
     },
     created() {
       let id = this.$route.query.id
-      id = 123456 // todo
       this._getOrderDetail(id)
     },
     methods: {

@@ -20,8 +20,9 @@
               :data="dataArray"
               :pullUpLoad="pullUpLoadObj"
               @pullingUp="onPullingUp"
+              v-if="dataArray.length"
       >
-        <ul class="content" v-if="dataArray.length">
+        <ul class="content">
           <li class="item-wrapper" @click="toDetailPage(item)" v-for="(item,index) in dataArray" :key="index">
             <div class="item one">
               <p class="left">{{item.title}}</p>
@@ -37,6 +38,7 @@
           </li>
         </ul>
       </scroll>
+      <empty-data v-else></empty-data>
     </div>
     <wallet-ad></wallet-ad>
     <select-com ref="selectCom" :data="selectTab" :idx="selectIdx" top="318.5px" @choose="choose"></select-com>
@@ -55,6 +57,7 @@
   import { ERR_OK } from 'common/js/config'
   import VueClipboard from 'vue-clipboard2'
   import Vue from 'vue'
+  import EmptyData from 'components/empty-data/empty-data'
 
   Vue.use(VueClipboard)
 
@@ -68,7 +71,8 @@
       Scroll,
       ConfirmMsg,
       SelectCom,
-      WalletAd
+      WalletAd,
+      EmptyData
     },
     data() {
       return {
