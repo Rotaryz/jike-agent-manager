@@ -6,7 +6,7 @@ export default {
    * @returns {*}
    */
   getCustomList(limit, page) {
-    let url = '/api/agent/agent-merchant-report'
+    let url = '/api/agent/agent-merchant'
     return request.get(url, {limit, page})
   },
   /**

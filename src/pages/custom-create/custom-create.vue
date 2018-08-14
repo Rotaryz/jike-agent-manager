@@ -11,7 +11,7 @@
       </li>
       <li class="list">
         <div class="name">所在地区</div>
-        <input class="input" type="text" readonly v-model="form.address" placeholder="请选择所在的地区">
+        <input class="input" type="text" readonly v-model="form.address" @click="selcetAddress" placeholder="请选择所在的地区">
         <div class="icon"></div>
       </li>
       <li class="list" @click="selecTrade">
@@ -36,6 +36,12 @@
       @tabCancel="tabCancel"
       @tabConfirm="tabConfirm"
     ></tab-list>
+    <awesome-picker
+      ref="picker"
+      :data="cityData"
+      @cancel="handlePickerCancel"
+      @confirm="handlePickerConfirm">
+    </awesome-picker>
     <toast ref="toast"></toast>
   </div>
 </template>
@@ -45,6 +51,7 @@
   import { Custom } from 'api'
   import { ERR_OK } from 'common/js/config'
   import Toast from 'components/toast/toast'
+  import {cityData} from 'common/js/utils'
 
   export default {
     name: 'custom-create',
@@ -65,7 +72,8 @@
         tabShow: false, // 职业类型选择框
         tabLeftIndex: 0, // 左边tab栏列表
         tabRightIndex: 0, // 右边tab栏列表
-        industryList: []
+        industryList: [],
+        cityData
       }
     },
     created() {
@@ -98,7 +106,6 @@
         this.tabLeftIndex = 0
         this.tabRightIndex = 0
         this.tabShow = false
-        this.form.trade = this.tabLeftList[0] + ' ' + this.tabRightList[0][0]
       },
       tabConfirm() { // 确定选择职业类型
         this.tabShow = false
@@ -131,8 +138,8 @@
             this.industryList = res.data
           })
       },
-      customMsg(data) { // 客户资料
-        Custom.createCustom(data)
+      customMsg() { // 客户资料
+        Custom.createCustom(this.form)
           .then(res => {
             if (res.error !== ERR_OK) {
               this.$refs.toast.show(res.message)
@@ -140,6 +147,22 @@
             }
             this.form = res.data
           })
+      },
+      handlePickerCancel(e) {
+      },
+      handlePickerConfirm(e) {
+        console.log(e)
+        let arr = []
+        e.map(item => {
+          if (item.value) {
+            return arr.push(item.value)
+          }
+        })
+        let str = arr.join('-')
+        this.form.address = str
+      },
+      selcetAddress() {
+        this.$refs.picker.show()
       }
     },
     watch: {

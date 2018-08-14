@@ -6,15 +6,14 @@
     </header>
     <div class="msg-list-scroll">
       <scroll ref="scroll"
-              :probeType="probeType"
-              :bcColor="bcColor"
+              bcColor="#fff"
               :data="dataArray"
-              :listenScroll="listenScroll"
               :pullUpLoad="pullUpLoadObj"
-              @pullingUp="onPullingUp">
+              @pullingUp="onPullingUp"
+      >
         <section class="msg-list">
           <ul class="main">
-            <li v-for="(item,index) in msg" :key="index" class="list" @click="jump(item.id)">
+            <li v-for="(item,index) in dataArray" :key="index" class="list" @click="jump(item.id)">
               <div class="name">{{ item.name }}</div>
               <div class="money">{{ item.total_price }}</div>
             </li>
@@ -38,19 +37,19 @@
     },
     data() {
       return {
-        listenScroll: true,
-        probeType: 3,
-        bcColor: '#fff',
         dataArray: [],
         pullUpLoad: true,
         pullUpLoadThreshold: 0,
         pullUpLoadMoreTxt: '加载更多',
         pullUpLoadNoMoreTxt: '没有更多了',
-        msg: []
+        page: 1,
+        more: true
       }
     },
     created() {
-      this.getRecordList()
+      this.getRecordList(res => {
+        this.dataArray = res.data
+      })
     },
     mounted() {
     },
@@ -63,27 +62,35 @@
       }
     },
     methods: {
-      onPullingUp() {
-        this.$refs.scroll.forceUpdate()
-      },
-      rebuildScroll() {
-        this.nextTick(() => {
-          this.$refs.scroll.destroy()
-          this.$refs.scroll.initScroll()
-        })
-      },
       jump(id) {
         this.$router.push({path: '/sell-detail', query: {id}})
       },
-      getRecordList() { // 获取销售记录列表
+      getRecordList(callback) { // 获取销售记录列表
         Custom.getRecordList(10, this.$route.query.id)
           .then(res => {
             if (res.error !== ERR_OK) {
               this.$refs.toast.show(res.message)
               return
             }
-            this.msg = res.data
+            this.more = !!res.data.length
+            callback(res)
           })
+      },
+      onPullingUp() {
+        if (!this.more) return this.$refs.scroll.forceUpdate()
+        // 更新数据
+        console.info('pulling up and load data')
+        this.page++
+        this.getRecordList(res => {
+          let arr = this.dataArray.concat(res.data)
+          this.dataArray = arr
+        })
+      },
+      rebuildScroll() {
+        this.nextTick(() => {
+          this.$refs.scroll.destroy()
+          this.$refs.scroll.initScroll()
+        })
       }
     },
     watch: {

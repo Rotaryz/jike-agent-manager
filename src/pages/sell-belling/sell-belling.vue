@@ -21,7 +21,7 @@
     <div class="selec-list">
       <div class="list">
         <div class="name">所在地区</div>
-        <input class="input" type="text" readonly  v-model="form.address" placeholder="请选择所在的地区">
+        <input class="input" type="text" readonly  v-model="form.address" @click="selcetAddress" placeholder="请选择所在的地区">
         <div class="icon"></div>
       </div>
       <div class="list" @click="selecTrade">
@@ -81,6 +81,12 @@
       @tabCancel="tabCancel"
       @tabConfirm="tabConfirm"
     ></tab-list>
+    <awesome-picker
+      ref="picker"
+      :data="cityData"
+      @cancel="handlePickerCancel"
+      @confirm="handlePickerConfirm">
+    </awesome-picker>
     <toast ref="toast"></toast>
   </div>
 </template>
@@ -90,7 +96,7 @@
   import { Custom } from 'api'
   import { ERR_OK } from 'common/js/config'
   import Toast from 'components/toast/toast'
-  import utils from 'common/js/utils'
+  import utils, { cityData } from 'common/js/utils'
 
   export default {
     name: 'sell-belling',
@@ -105,7 +111,7 @@
           industry: '',
           title: '',
           num: null,
-          usable_account: '0套',
+          usable_account: '0',
           total_price: '',
           note: null,
           agent_merchant_id: ''
@@ -115,11 +121,13 @@
         tabShow: false, // 职业类型选择框
         tabLeftIndex: 0, // 左边tab栏列表
         tabRightIndex: 0, // 右边tab栏列表
-        industryList: ''
+        industryList: '',
+        cityData
       }
     },
     created() {
       this.form.agent_merchant_id = this.$route.query.id
+      this.form.usable_account = `${this.$route.query.num}套`
       this.getIndustry()
     },
     mounted() {
@@ -204,6 +212,22 @@
         this.form.industry = tabLeftList.name + ' ' + tabRightList.name
         // this.tabLeftIndex = 0
         // this.tabRightIndex = 0
+      },
+      handlePickerCancel(e) {
+      },
+      handlePickerConfirm(e) {
+        console.log(e)
+        let arr = []
+        e.map(item => {
+          if (item.value) {
+            return arr.push(item.value)
+          }
+        })
+        let str = arr.join('-')
+        this.form.address = str
+      },
+      selcetAddress() {
+        this.$refs.picker.show()
       }
     },
     watch: {

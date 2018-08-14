@@ -5,8 +5,8 @@ const mutations = {
     state.argument = argument
   },
   [TYPES.SELEC_CUSTOM](state, custom) {
-    state.customName = custom.title
-    state.customCall = custom.call
+    state.customName = custom.name
+    state.customCall = custom.mobile
   },
   [TYPES.HOME_TAB](state, idx) {
     state.homeTab = idx

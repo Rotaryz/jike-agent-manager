@@ -33,25 +33,24 @@
         </div>
       </div>
     </section>
-    <div class="list-scroll">
-      <scroll ref="scroll"
-              :probeType="probeType"
-              :bcColor="bcColor"
-              :data="dataArray"
-              :listenScroll="listenScroll"
-              :pullUpLoad="pullUpLoadObj"
-              @pullingUp="onPullingUp">
-        <ul>
+    <!--<div class="list-scroll">-->
+      <!--<scroll ref="scroll"-->
+              <!--bcColor="#fff"-->
+              <!--:data="dataArray"-->
+              <!--:pullUpLoad="pullUpLoadObj"-->
+              <!--@pullingUp="onPullingUp"-->
+      <!--&gt;-->
+        <ul class="abso-list">
           <li v-for="(item,index) in msg.agent_sale_records" :key="item.id" class="list">
             <div class="date">{{ item.created_at }}</div>
             <div class="count">{{ item.num }}</div>
             <div class="money">{{ item.total_price }}</div>
           </li>
         </ul>
-      </scroll>
-    </div>
+      <!--</scroll>-->
+    <!--</div>-->
     <footer class="bot-btn">
-      <a :href="`tel:${ msg.mobile }`" class="btn">联系客户</a>
+      <a :href="`tel:${ dataArray.mobile }`" class="btn">联系客户</a>
     </footer>
     <toast ref="toast"></toast>
   </div>
@@ -69,28 +68,29 @@
     },
     data() {
       return {
-        bcColor: '#fff',
-        probeType: 3,
-        listenScroll: true,
+        dataArray: [],
         pullUpLoad: true,
         pullUpLoadThreshold: 0,
         pullUpLoadMoreTxt: '加载更多',
         pullUpLoadNoMoreTxt: '没有更多了',
-        dataArray: [],
+        page: 1,
+        more: true,
         company: '国颐堂美发有限公司',
-        msg: '',
         id: null,
-        agentId: ''
+        agentId: '',
+        msg: ''
       }
     },
     created() {
       this.id = this.$route.query.id
-      this.getCustomMsg(this.id)
+      this.getCustomMsg(res => {
+        this.dataArray = res.data.agent_sale_records
+      })
     },
     mounted() {
     },
     computed: {
-      pullUpLoadObj: function() {
+      pullUpLoadObj: function () {
         return this.pullUpLoad ? {
           threshold: parseInt(this.pullUpLoadThreshold),
           txt: {more: this.pullUpLoadMoreTxt, noMore: this.pullUpLoadNoMoreTxt}
@@ -98,27 +98,36 @@
       }
     },
     methods: {
-      onPullingUp() {
-        this.$refs.scroll.forceUpdate()
-      },
-      rebuildScroll() {
-        this.nextTick(() => {
-          this.$refs.scroll.destroy()
-          this.$refs.scroll.initScroll()
-        })
-      },
       jump(agentId) {
         this.$router.push({path: '/custom-create', query: { id: this.id, agentId }})
       },
-      getCustomMsg(id) { // 获取客户信息
-        Custom.getCustomMsg(id)
+      getCustomMsg(callback) { // 获取客户信息
+        Custom.getCustomMsg(this.id)
           .then(res => {
             if (res.error !== ERR_OK) {
               this.$refs.toast.show(res.message)
               return
             }
             this.msg = res.data
+            this.more = !!res.data.agent_sale_records.length
+            callback(res)
           })
+      },
+      onPullingUp() {
+        if (!this.more) return this.$refs.scroll.forceUpdate()
+        // 更新数据
+        console.info('pulling up and load data')
+        this.page++
+        this.getCustomMsg(res => {
+          let arr = this.dataArray.concat(res.data.agent_sale_records)
+          this.dataArray = arr
+        })
+      },
+      rebuildScroll() {
+        this.nextTick(() => {
+          this.$refs.scroll.destroy()
+          this.$refs.scroll.initScroll()
+        })
       }
     },
     watch: {
@@ -239,12 +248,20 @@
           color: $color-343439
         .count
           color: $color-AA905
-    .list-scroll
-      position: absolute
-      top: 291px
-      left: 0
-      right: 0
-      bottom: 65px
+    /*.list-scroll*/
+      /*position: absolute*/
+      /*top: 291px*/
+      /*left: 0*/
+      /*right: 0*/
+      /*bottom: 65px*/
+      .abso-list
+        position: absolute
+        top: 291px
+        left: 0
+        right: 0
+        bottom: 65px
+        background: $color-white
+        overflow: scroll
       .list
         background: $color-white
         height: 60px

@@ -7,26 +7,24 @@
     </header>
     <div class="custom-scroll">
       <scroll ref="scroll"
-              :probeType="probeType"
-              :bcColor="bcColor"
+              bcColor="#fff"
               :data="dataArray"
-              :showNoMore="false"
-              :listenScroll="listenScroll"
               :pullUpLoad="pullUpLoadObj"
-              @pullingUp="onPullingUp">
+              @pullingUp="onPullingUp"
+      >
         <section class="custom-list">
           <ul class="main">
-            <li v-for="(item,index) in msg" :key="index" class="list" @click="jump(item.id)">
+            <li v-for="(item,index) in dataArray" :key="index" class="list" @click="jump(item.id)">
               <div class="msg">
                 <div class="cus">
                   <h4 class="title">{{ item.name }}</h4>
-                  <p class="count">购买账号数 {{ item.total_account }}个</p>
+                  <p class="count">购买账号数 {{ item.total_account || 0 }}个</p>
                 </div>
                 <div class="mon">{{ item.total_paid }}</div>
-                <div class="per">{{ item.take_rate }}</div>
+                <div class="per">{{ item.take_rate || '0%' }}</div>
               </div>
               <div class="progress">
-                <div class="gress" :style="{ width:item.take_rate }"></div>
+                <div class="gress" :style="{ width:item.take_rate || '0%' }"></div>
               </div>
             </li>
           </ul>
@@ -52,28 +50,19 @@
     },
     data() {
       return {
-        listenScroll: true,
-        probeType: 3,
-        bcColor: '#fff',
         dataArray: [],
         pullUpLoad: true,
         pullUpLoadThreshold: 0,
         pullUpLoadMoreTxt: '加载更多',
         pullUpLoadNoMoreTxt: '没有更多了',
         page: 1,
-        msg: [
-          {
-            id: 1,
-            name: '赞播集团',
-            total_account: 100,
-            total_paid: '20000.00',
-            take_rate: '30%'
-          }
-        ]
+        more: true
       }
     },
     created() {
-      this.getCustomList()
+      this.getCustomList(10, 1, res => {
+        this.dataArray = res.data
+      })
     },
     mounted() {
     },
@@ -89,24 +78,32 @@
       jump(id) {
         this.$router.push({path: '/custom-detail', query: {id}})
       },
+      getCustomList(limit, page, callback) { // 获取客户列表
+        Custom.getCustomList(limit, page)
+          .then(res => {
+            if (res.error !== ERR_OK) {
+              this.$refs.toast.show(res.message)
+              return
+            }
+            this.more = !!res.data.length
+            callback(res)
+          })
+      },
       onPullingUp() {
-        this.$refs.scroll.forceUpdate()
+        if (!this.more) return this.$refs.scroll.forceUpdate()
+        // 更新数据
+        console.info('pulling up and load data')
+        this.page++
+        this.getCustomList(10, this.page, res => {
+          let arr = this.dataArray.concat(res.data)
+          this.dataArray = arr
+        })
       },
       rebuildScroll() {
         this.nextTick(() => {
           this.$refs.scroll.destroy()
           this.$refs.scroll.initScroll()
         })
-      },
-      getCustomList() { // 获取客户列表
-        Custom.getCustomList(10, this.page)
-          .then(res => {
-            if (res.error !== ERR_OK) {
-              this.$refs.toast.show(res.message)
-              return
-            }
-            this.msg = res.data
-          })
       }
     },
     watch: {
@@ -130,6 +127,7 @@
 @import "~common/stylus/mixin"
 
 .manage-custom
+  min-height :100vh
   .header
     background: $color-F3F3F3
     color: $color-848484
