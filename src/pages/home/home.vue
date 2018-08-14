@@ -113,13 +113,12 @@
 </template>
 
 <script type="text/ecmascript-6">
-  // import { BASE_URL } from 'common/js/config'
   import { Home } from 'api'
   import storage from 'storage-controller'
   import Toast from 'components/toast/toast'
   import { ERR_OK } from 'common/js/config'
   import { PROJECT_ARR, WEI_SHANG } from 'common/js/constant'
-  import {cityData} from 'common/js/utils'
+  import { cityData } from 'common/js/utils'
 
   const tabInfo = ['管账号', '管人', '管钱']
 
@@ -374,6 +373,16 @@
           background-size: 9.4px 9.4px
           background-position: right 1.6px
           background-repeat: no-repeat
+          position: relative
+          &:after
+            content: ''
+            position: absolute
+            width: 100px
+            height: 40px
+            left: -20px
+            top: -20px
+            right: -20px
+            border-bottom: -20px
       .charts-container
         .c-title
           font-family: $font-family-regular

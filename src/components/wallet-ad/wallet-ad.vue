@@ -1,9 +1,9 @@
 <template>
-  <div class="ad-wrapper">
+  <router-link class="ad-wrapper" to="/money-income-ws">
     <div class="icon"></div>
     <div class="txt">账号销售收益不计于钱包，但会计入代理商收益记录。</div>
     <div class="arrow-right"></div>
-  </div>
+  </router-link>
 </template>
 
 <script type="text/ecmascript-6">
