@@ -27,7 +27,7 @@
               @pullingUp="onPullingUp"
               v-if="dataArray.length"
       >
-        <ul class="content" >
+        <ul class="content">
           <li class="item-wrapper" v-for="(item,index) in dataArray" :key="index">
             <div class="item one">
               <p class="left">{{item.title}}</p>
@@ -43,7 +43,7 @@
           </li>
         </ul>
       </scroll>
-      <empty-data v-else></empty-data>
+      <empty-data v-else-if="showEmpty"></empty-data>
     </div>
     <toast ref="toast"></toast>
   </div>
@@ -72,7 +72,8 @@
         dataArray: [],
         page: 1,
         more: true,
-        incomeInfo: null
+        incomeInfo: null,
+        showEmpty: false
       }
     },
     mounted() {
@@ -80,18 +81,20 @@
     created() {
       this._getIncomeList({type: 0, page: 1}, res => {
         this.dataArray = res.data
-        console.log(res.data)
+        this._checkEmpty()
       })
       this._getGrandTotal()
     },
     methods: {
+      _checkEmpty() {
+        this.showEmpty = !this.dataArray.length
+      },
       _getGrandTotal() {
         Income.getGrandTotal().then(res => {
           if (res.error !== ERR_OK) {
             this.$refs.toast.show(res.message)
             return
           }
-          console.log(res)
           this.incomeInfo = res.data
         })
       },

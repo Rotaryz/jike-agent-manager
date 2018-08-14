@@ -41,7 +41,7 @@
           </li>
         </ul>
       </scroll>
-      <empty-data v-else></empty-data>
+      <empty-data v-else-if="showEmpty"></empty-data>
     </div>
     <select-com ref="selectCom" :data="selectTab" :idx="selectIdx" top="365px" @choose="choose"></select-com>
     <toast ref="toast"></toast>
@@ -78,7 +78,8 @@
         page: 1,
         more: true,
         reqType: 0,
-        selectIdx: 0
+        selectIdx: 0,
+        showEmpty: false
       }
     },
     mounted() {
@@ -87,6 +88,7 @@
       this._getRateTotal()
       this._getIncomeList({type: 0, page: 1}, res => {
         this.dataArray = res.data
+        this._checkEmpty()
       })
     },
     methods: {
@@ -99,6 +101,9 @@
           this.grandTotal = res.data.grand_total
           this.drawPie(res)
         })
+      },
+      _checkEmpty() {
+        this.showEmpty = !this.dataArray.length
       },
       drawPie(res) {
         let myChart = this.$echarts.init(document.getElementById('myPie'))
@@ -172,6 +177,7 @@
         this.more = true
         this._getIncomeList({type: this.reqType, page: this.page}, res => {
           this.dataArray = res.data
+          this._checkEmpty()
           this._scrollTop()
         })
       },

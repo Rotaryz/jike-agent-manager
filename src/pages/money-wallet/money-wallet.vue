@@ -87,7 +87,8 @@
         page: 1,
         more: true,
         reqType: 0,
-        selectIdx: 0
+        selectIdx: 0,
+        showEmpty: false
       }
     },
     mounted() {
@@ -96,9 +97,13 @@
       this._getAgentMoney()
       this._getPayList({type: 0, page: 1}, res => {
         this.dataArray = res.data
+        this._checkEmpty()
       })
     },
     methods: {
+      _checkEmpty() {
+        this.showEmpty = !this.dataArray.length
+      },
       _getAgentMoney() {
         Wallet.getAgentMoney().then(res => {
           if (res.error !== ERR_OK) {
@@ -164,6 +169,7 @@
         this.more = true
         this._getPayList({type: this.reqType, page: this.page}, res => {
           this.dataArray = res.data
+          this._checkEmpty()
           this._scrollTop()
         })
       },

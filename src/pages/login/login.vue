@@ -41,6 +41,7 @@
   import storage from 'storage-controller'
   import { Jwt } from 'api'
   import { ERR_OK } from 'common/js/config'
+  import { mapActions } from 'vuex'
 
   const project = PROJECT_ARR
   export default {
@@ -66,10 +67,12 @@
       this.timer && clearInterval(this.timer)
     },
     methods: {
+      ...mapActions(['updateHomeTab']),
       login() {
         if (!this.allowLogin) return
         this.allowLogin = false
         if (!this._check()) return
+        this.updateHomeTab(0)
         Jwt.login(this.phoneNumber, this.authCode).then(res => {
           this.allowLogin = true
           if (res.error !== ERR_OK) {
