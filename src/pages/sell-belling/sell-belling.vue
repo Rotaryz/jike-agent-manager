@@ -33,20 +33,20 @@
     <ul class="msg-list">
       <li class="list">
         <div class="name">商品名称</div>
-        <input class="input" type="text"  v-model="form.title" placeholder="赞博AI微店">
+        <input class="input" type="text"  v-model="form.title" placeholder="请输入商品名称">
       </li>
       <li class="list">
         <div class="name">剩余库存</div>
-        <input class="input" type="text" readonly  v-model="form.usable_account" placeholder="0套">
+        <input class="input" type="text" readonly  v-model="form.usable_account" placeholder="剩余库存">
       </li>
       <li class="list">
         <div class="name">*购买数量</div>
-        <input class="input" type="text"  v-model="form.num" placeholder="请输入客户购买AI微店的数量">
+        <input class="input" type="text"  v-model="form.num" placeholder="请输入购买数量">
         <div>套</div>
       </li>
       <li class="list">
         <div class="name">*销售总价</div>
-        <input class="input" type="text"  v-model="form.total_price" placeholder="请输入客户购买AI微店的总价">
+        <input class="input" type="text"  v-model="form.total_price" placeholder="请输入销售总价">
         <div>元</div>
       </li>
     </ul>
@@ -127,7 +127,7 @@
     },
     created() {
       this.form.agent_merchant_id = this.$route.query.id
-      this.form.usable_account = `${this.$route.query.num}套`
+      this.form.usable_account = this.$route.query.num ? `${this.$route.query.num}套` : ''
       this.getIndustry()
     },
     mounted() {
