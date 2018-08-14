@@ -1,17 +1,20 @@
 <template>
   <div class="ai-box">
     <div class="ai-top">
-      <div class="name">广州波士卡汽车有限公司</div>
+      <router-link class="que-img" to="/ai-explain">
+        <img src="./icon-help_myteam@2x.png">
+      </router-link>
+      <div class="name">{{tradeData.company_name}}</div>
       <div class="po-name-box">
-        <div class="po-name">县级A类代理</div>
+        <div class="po-name" v-if="tradeData.role_name">{{tradeData.role_name}}</div>
       </div>
       <div class="data-box">
         <div class="data-box-item">
-          <div class="number">12289</div>
+          <div class="number">{{tradeData.real_income || 0}}</div>
           <div class="text">今日收入/元</div>
         </div>
         <div class="data-box-item">
-          <div class="number">289</div>
+          <div class="number">{{tradeData.account_sale || 0}}</div>
           <div class="text">今日销量/个</div>
         </div>
       </div>
@@ -24,7 +27,7 @@
     </div>
     <div class="data-title">我的收入</div>
     <div class="income-data">
-      <div class="data-item" v-for="(item, index) in incomeList"
+      <div class="data-item" v-for="(item, index) in incomeList" @click="selectIncome(index)"
            :class="incomeIndex * 1 ===index ? 'data-item-active' : ''">{{item}}
       </div>
     </div>
@@ -36,8 +39,8 @@
     </div>
     <div class="data-title">我的账号销量</div>
     <div class="income-data">
-      <div class="data-item" v-for="(item, index) in incomeList"
-           :class="incomeIndex * 1 ===index ? 'data-item-active' : ''">{{item}}
+      <div class="data-item" v-for="(item, index) in accountList" @click="selectAccount(index)"
+           :class="accountIndex * 1 ===index ? 'data-item-active' : ''">{{item}}
       </div>
     </div>
     <div class="pie-box line-box" >
@@ -45,16 +48,36 @@
       <div class="title-box">
       </div>
     </div>
+    <toast ref="toast"></toast>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+  import { ERR_OK } from 'common/js/config'
+  import { Trade } from 'api'
+  import Toast from 'components/toast/toast'
   export default {
     name: 'ai-trade',
     data() {
       return {
-        incomeList: ['近3天', '近7天', '近15天']
+        incomeList: ['近3天', '近7天', '近15天'],
+        incomeIndex: 0,
+        accountList: ['近3天', '近7天', '近15天'],
+        accountIndex: 0,
+        tradeData: {
+          company_name: '',
+          role_name: '',
+          real_income: '',
+          account_sale: ''
+        },
+        incomeData: {},
+        accountData: {}
       }
+    },
+    created() {
+      this.getData()
+      this.getMyIncomeData(1)
+      this.getAccountSaleData(1)
     },
     mounted() {
       setTimeout(() => {
@@ -63,6 +86,44 @@
       }, 1000)
     },
     methods: {
+      getData() {
+        Trade.getTodayData().then(res => {
+          if (res.error === ERR_OK) {
+            console.log(res)
+            this.tradeData = res.data
+          } else {
+            this.$refs.toast.show(res.message)
+          }
+        })
+      },
+      selectIncome(index) {
+        this.incomeIndex = index
+        this.getMyIncomeData(index + 1)
+      },
+      selectAccount(index) {
+        this.accountIndex = index
+        this.getAccountSaleData(index + 1)
+      },
+      getMyIncomeData(time) {
+        Trade.getMyIncome({time_type: time}).then(res => {
+          if (res.error === ERR_OK) {
+            this.incomeData = res.data
+            this.drawLine()
+          } else {
+            this.$refs.toast.show(res.message)
+          }
+        })
+      },
+      getAccountSaleData(time) {
+        Trade.getAccountSale({time_type: time}).then(res => {
+          if (res.error === ERR_OK) {
+            this.accountData = res.data
+            this.drawTwoLine()
+          } else {
+            this.$refs.toast.show(res.message)
+          }
+        })
+      },
       drawLine() {
         let myChart = this.$echarts.init(document.getElementById('myLine'))
         // 我的收入
@@ -70,7 +131,7 @@
           xAxis: {
             type: 'category',
             boundaryGap: false,
-            data: ['08.11', '08.12', '08.13', '08.14', '08.15', '08.16', '08.17', '08.18', '08.19', '08.20', '08.21', '08.22', '08.23', '08.24', '08.25'],
+            data: this.incomeData.x,
             splitLine: {
               show: true,
               lineStyle: {
@@ -88,7 +149,7 @@
           },
           tooltip: {
             trigger: 'axis',
-            formatter: '活跃度：{c}',
+            formatter: '收入：{c}',
             axisPointer: {
               type: 'none'
             }
@@ -112,7 +173,7 @@
             }
           },
           series: [{
-            data: ['10', '22', '30', '10', '22', '30', '10', '22', '30', '10', '22', '30', '10', '22', '30'],
+            data: this.incomeData.y,
             type: 'line',
             showSymbol: false,
             itemStyle: {
@@ -135,7 +196,7 @@
           xAxis: {
             type: 'category',
             boundaryGap: false,
-            data: ['08.11', '08.12', '08.13', '08.14', '08.15', '08.16', '08.17', '08.18', '08.19', '08.20', '08.21', '08.22', '08.23', '08.24', '08.25'],
+            data: this.accountData.x,
             splitLine: {
               show: true,
               lineStyle: {
@@ -177,7 +238,7 @@
             }
           },
           series: [{
-            data: ['10', '22', '30', '10', '22', '30', '10', '22', '30', '10', '22', '30', '10', '22', '30'],
+            data: this.accountData.y,
             type: 'line',
             showSymbol: false,
             itemStyle: {
@@ -193,6 +254,9 @@
           }]
         })
       }
+    },
+    components: {
+      Toast
     }
   }
 </script>
@@ -212,6 +276,16 @@
     height: 160px
     background-image: linear-gradient(-180deg, #2D2C28 0%, #3D3834 100%)
     padding-top: 27px
+    .que-img
+      top: 25.5px
+      right: 20px
+      width: 18px
+      height: 18px
+      position: absolute
+      img
+        width: 100%
+        height: 100%
+        display: block
     .name
       color: #a3a2a0
       font-size: $font-size-14

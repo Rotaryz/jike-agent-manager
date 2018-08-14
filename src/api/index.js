@@ -6,6 +6,8 @@ import account from './account'
 import wallet from './wallet'
 import income from './income'
 import custom from './custom'
+import trade from './trade'
+import agent from './agent'
 
 // 授权模块
 export const Jwt = jwt
@@ -27,3 +29,9 @@ export const Income = income
 
 // 客户管理
 export const Custom = custom
+
+// 生意概览
+export const Trade = trade
+
+// 代理商
+export const Agent = agent
