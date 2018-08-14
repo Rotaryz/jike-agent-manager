@@ -6,27 +6,30 @@
     </header>
     <div class="custom-list-scroll">
       <scroll ref="scroll"
-              :probeType="probeType"
-              :bcColor="bcColor"
+              bcColor="#fff"
               :data="dataArray"
-              :listenScroll="listenScroll"
               :pullUpLoad="pullUpLoadObj"
-              @pullingUp="onPullingUp">
+              @pullingUp="onPullingUp"
+      >
         <section class="custom-list">
           <ul class="main">
-            <li v-for="(item,index) in msg" :key="index" class="list" @click="selecCustom(msg[index])">
-              <div class="name">{{ item.title }}</div>
-              <div class="call">{{ item.call }}</div>
+            <li v-for="(item,index) in dataArray" :key="index" class="list" @click="selecCustom(dataArray[index],item.id)">
+              <div class="name">{{ item.name }}</div>
+              <div class="call">{{ item.mobile }}</div>
             </li>
           </ul>
         </section>
       </scroll>
     </div>
+    <toast ref="toast"></toast>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
   import Scroll from 'components/scroll/scroll'
+  import { Custom } from 'api'
+  import { ERR_OK } from 'common/js/config'
+  import Toast from 'components/toast/toast'
 
   export default {
     name: 'choose-custom',
@@ -34,63 +37,19 @@
     },
     data() {
       return {
-        listenScroll: true,
-        probeType: 3,
-        bcColor: '#fff',
         dataArray: [],
         pullUpLoad: true,
         pullUpLoadThreshold: 0,
         pullUpLoadMoreTxt: '加载更多',
         pullUpLoadNoMoreTxt: '没有更多了',
-        msg: [
-          {
-            title: '国颐堂美发有限公司',
-            call: '16620141178'
-          },
-          {
-            title: '国颐堂美发有限公司',
-            call: '16620141178'
-          },
-          {
-            title: '国颐堂美发有限公司',
-            call: '16620141178'
-          },
-          {
-            title: '国颐堂美发有限公司',
-            call: '16620141178'
-          },
-          {
-            title: '国颐堂美发有限公司',
-            call: '16620141178'
-          },
-          {
-            title: '国颐堂美发有限公司',
-            call: '16620141178'
-          },
-          {
-            title: '国颐堂美发有限公司',
-            call: '16620141178'
-          },
-          {
-            title: '国颐堂美发有限公司',
-            call: '16620141178'
-          },
-          {
-            title: '国颐堂美发有限公司',
-            call: '16620141178'
-          },
-          {
-            title: '国颐堂美发有限公司',
-            call: '16620141178'
-          },
-          {
-            title: '国颐堂美发有限公司',
-            call: '16620141178'
-          }
-        ]
+        page: 1,
+        more: true
       }
     },
     created() {
+      this.getRecordList(res => {
+        this.dataArray = res.data
+      })
     },
     mounted() {
     },
@@ -103,18 +62,43 @@
       }
     },
     methods: {
+      selecCustom(obj, id) {
+        this.$store.commit('SELEC_CUSTOM', obj)
+        Custom.getCustomMsg(id)
+          .then(res => {
+            if (res.error !== ERR_OK) {
+              this.$refs.toast.show(res.message)
+            } else {
+              this.$router.push({ path: '/sell-belling', query: {num: res.data.usable_account} })
+            }
+          })
+      },
+      getRecordList(callback) { // 获取客户列表
+        Custom.getCustomList(10, this.page)
+          .then(res => {
+            if (res.error !== ERR_OK) {
+              this.$refs.toast.show(res.message)
+              return
+            }
+            this.more = !!res.data.length
+            callback(res)
+          })
+      },
       onPullingUp() {
-        this.$refs.scroll.forceUpdate()
+        if (!this.more) return this.$refs.scroll.forceUpdate()
+        // 更新数据
+        console.info('pulling up and load data')
+        this.page++
+        this.getRecordList(res => {
+          let arr = this.dataArray.concat(res.data)
+          this.dataArray = arr
+        })
       },
       rebuildScroll() {
         this.nextTick(() => {
           this.$refs.scroll.destroy()
           this.$refs.scroll.initScroll()
         })
-      },
-      selecCustom(obj) {
-        this.$store.commit('SELEC_CUSTOM', obj)
-        this.$router.push({ path: '/sell-belling' })
       }
     },
     watch: {
@@ -127,7 +111,8 @@
       }
     },
     components: {
-      Scroll
+      Scroll,
+      Toast
     }
   }
 </script>
