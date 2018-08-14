@@ -172,9 +172,10 @@
               return
             }
             this.grayTip = true
+            let id = this.$route.query.id
             setTimeout(() => {
               this.grayTip = false
-              this.$router.push({ path: '/sell-record' })
+              this.$router.push({path: '/sell-record', query: { id }})
             }, 1000)
           })
       },

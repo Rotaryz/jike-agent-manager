@@ -45,8 +45,16 @@ export default {
    * 销售记录列表
    * @returns {*}
    */
-  getRecordList() {
+  getRecordList(limit, id) {
     let url = '/api/agent/agent-sale-record'
+    return request.get(url, {limit, agent_merchant_id: id})
+  },
+  /**
+   * 销售记录详情
+   * @returns {*}
+   */
+  getRecordDetail(id) {
+    let url = `/api/agent/agent-sale-record/${id}`
     return request.get(url)
   }
 

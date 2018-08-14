@@ -14,9 +14,9 @@
               @pullingUp="onPullingUp">
         <section class="msg-list">
           <ul class="main">
-            <li v-for="(item,index) in msg" :key="index" class="list" @click="jump(item.title)">
-              <div class="name">{{ item.title }}</div>
-              <div class="money">{{ item.money }}</div>
+            <li v-for="(item,index) in msg" :key="index" class="list" @click="jump(item.id)">
+              <div class="name">{{ item.name }}</div>
+              <div class="money">{{ item.total_price }}</div>
             </li>
           </ul>
         </section>
@@ -46,55 +46,11 @@
         pullUpLoadThreshold: 0,
         pullUpLoadMoreTxt: '加载更多',
         pullUpLoadNoMoreTxt: '没有更多了',
-        msg: [
-          {
-            title: '国颐堂美发有限公司',
-            money: '9,988'
-          },
-          {
-            title: '国颐堂美发有限公司',
-            money: '9,988'
-          },
-          {
-            title: '国颐堂美发有限公司',
-            money: '9,988'
-          },
-          {
-            title: '国颐堂美发有限公司',
-            money: '9,988'
-          },
-          {
-            title: '国颐堂美发有限公司',
-            money: '9,988'
-          },
-          {
-            title: '国颐堂美发有限公司',
-            money: '9,988'
-          },
-          {
-            title: '国颐堂美发有限公司',
-            money: '9,988'
-          },
-          {
-            title: '国颐堂美发有限公司',
-            money: '9,988'
-          },
-          {
-            title: '国颐堂美发有限公司',
-            money: '9,988'
-          },
-          {
-            title: '国颐堂美发有限公司',
-            money: '9,988'
-          },
-          {
-            title: '国颐堂美发有限公司',
-            money: '9,988'
-          }
-        ]
+        msg: []
       }
     },
     created() {
+      this.getRecordList()
     },
     mounted() {
     },
@@ -116,11 +72,11 @@
           this.$refs.scroll.initScroll()
         })
       },
-      jump(name) {
-        this.$router.push({path: '/sell-detail', query: {name}})
+      jump(id) {
+        this.$router.push({path: '/sell-detail', query: {id}})
       },
       getRecordList() { // 获取销售记录列表
-        Custom.getRecordList(this.page, 10)
+        Custom.getRecordList(10, this.$route.query.id)
           .then(res => {
             if (res.error !== ERR_OK) {
               this.$refs.toast.show(res.message)

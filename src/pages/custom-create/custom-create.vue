@@ -7,7 +7,7 @@
       </li>
       <li class="list">
         <div class="name">手机号码</div>
-        <input class="input" type="text" v-model="form.call" :readonly="hasId" placeholder="15527741300">
+        <input class="input" type="text" v-model="mobile" readonly placeholder="15527741300">
       </li>
       <li class="list">
         <div class="name">所在地区</div>
@@ -30,8 +30,7 @@
       v-if="tabShow"
       :tabLeftIndex="tabLeftIndex"
       :tabRightIndex="tabRightIndex"
-      :tabLeftList="tabLeftList"
-      :tabRightList="tabRightList"
+      :industryList="industryList"
       @tabLeftClick="tabLeftClick"
       @tabRightClick="tabRightClick"
       @tabCancel="tabCancel"
@@ -55,36 +54,34 @@
       return {
         form: {
           name: '国颐堂美发有限公司',
-          call: '15527741300',
           address: null,
           industry: null,
           note: null,
           agent_merchant_id: ''
         },
-        hasId: false,
+        mobile: '15527741300',
+        data: {},
+        id: '',
         tabShow: false, // 职业类型选择框
         tabLeftIndex: 0, // 左边tab栏列表
         tabRightIndex: 0, // 右边tab栏列表
-        tabLeftList: ['IT服务', '计算机', '计算机'],
-        tabRightList: [
-          ['互联网', '互联网', '互联网', '互联网'],
-          ['互联网和', '互联网和', '互联网和'],
-          ['互联网'],
-          ['互联网', '互联网']
-        ]
-
+        industryList: []
       }
     },
     created() {
-      this.agent_merchant_id = this.$route.query.id
-
-      this.customMsg(this.form)
+      this.form.agent_merchant_id = this.$route.query.agentId
+      this.id = this.$route.query.id
+      this.getIndustry()
+      this.getCustomMsg()
     },
     mounted() {
     },
+    beforeEach(to, from, next) {
+      console.log('sss')
+    },
     computed: {
       count() {
-        return this.form.remark ? this.form.remark.length : 0
+        return this.form.note ? this.form.note.length : 0
       }
     },
     methods: {
@@ -105,7 +102,34 @@
       },
       tabConfirm() { // 确定选择职业类型
         this.tabShow = false
-        this.form.trade = this.tabLeftList[this.tabLeftIndex] + ' ' + this.tabRightList[this.tabLeftIndex][this.tabRightIndex]
+        let tabLeftList = this.industryList[this.tabLeftIndex]
+        let tabRightList = this.industryList[this.tabLeftIndex].industry[this.tabRightIndex]
+        this.form.industry = tabLeftList.name + ' ' + tabRightList.name
+        // this.tabLeftIndex = 0
+        // this.tabRightIndex = 0
+      },
+      getCustomMsg() { // 获取客户信息
+        Custom.getCustomMsg(this.id)
+          .then(res => {
+            if (res.error !== ERR_OK) {
+              this.$refs.toast.show(res.message)
+              return
+            }
+            this.form.name = res.data.name
+            this.form.address = res.data.address
+            this.form.industry = res.data.industry
+            this.form.note = res.data.note
+          })
+      },
+      getIndustry() {
+        Custom.getIndustry()
+          .then(res => {
+            if (res.error !== ERR_OK) {
+              this.$refs.toast.show(res.message)
+              return
+            }
+            this.industryList = res.data
+          })
       },
       customMsg(data) { // 客户资料
         Custom.createCustom(data)
@@ -114,7 +138,7 @@
               this.$refs.toast.show(res.message)
               return
             }
-            this.msg = res.data
+            this.form = res.data
           })
       }
     },

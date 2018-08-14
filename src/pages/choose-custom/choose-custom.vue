@@ -22,11 +22,15 @@
         </section>
       </scroll>
     </div>
+    <toast ref="toast"></toast>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
   import Scroll from 'components/scroll/scroll'
+  import { Custom } from 'api'
+  import { ERR_OK } from 'common/js/config'
+  import Toast from 'components/toast/toast'
 
   export default {
     name: 'choose-custom',
@@ -115,6 +119,16 @@
       selecCustom(obj) {
         this.$store.commit('SELEC_CUSTOM', obj)
         this.$router.push({ path: '/sell-belling' })
+      },
+      getRecordList() { // 获取客户列表
+        Custom.getRecordList(10, this.$route.query.id)
+          .then(res => {
+            if (res.error !== ERR_OK) {
+              this.$refs.toast.show(res.message)
+              return
+            }
+            this.msg = res.data
+          })
       }
     },
     watch: {
@@ -127,7 +141,8 @@
       }
     },
     components: {
-      Scroll
+      Scroll,
+      Toast
     }
   }
 </script>

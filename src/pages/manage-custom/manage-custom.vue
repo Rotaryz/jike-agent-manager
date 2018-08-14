@@ -99,7 +99,7 @@
         })
       },
       getCustomList() { // 获取客户列表
-        Custom.getCustomList(this.page, 10)
+        Custom.getCustomList(10, this.page)
           .then(res => {
             if (res.error !== ERR_OK) {
               this.$refs.toast.show(res.message)

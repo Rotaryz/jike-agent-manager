@@ -79,12 +79,12 @@
         dataArray: [],
         company: '国颐堂美发有限公司',
         msg: '',
-        id: null
+        id: null,
+        agentId: ''
       }
     },
     created() {
       this.id = this.$route.query.id
-      console.log(this.id)
       this.getCustomMsg(this.id)
     },
     mounted() {
@@ -107,8 +107,8 @@
           this.$refs.scroll.initScroll()
         })
       },
-      jump(id) {
-        this.$router.push({path: '/custom-create', query: { id }})
+      jump(agentId) {
+        this.$router.push({path: '/custom-create', query: { id: this.id, agentId }})
       },
       getCustomMsg(id) { // 获取客户信息
         Custom.getCustomMsg(id)
