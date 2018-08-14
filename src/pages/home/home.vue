@@ -98,7 +98,7 @@
         <router-link class="more" :to="isWD?'/trade-view':'/ai-trade'">更多</router-link>
       </div>
       <article class="charts-container">
-        <div class="pie-box line-box" >
+        <div class="pie-box line-box">
           <div id="myHomeLine"></div>
           <div class="title-box">
             <div class="sub-title">我的收入</div>
@@ -422,6 +422,7 @@
         justify-content: space-between
         padding: 20.5px 0 15px
         font-family: $font-family-regular
+        overflow: hidden
         .txt
           font-size: $font-size-16
           color: $color-343439
@@ -462,11 +463,11 @@
           padding-bottom: 11px
         .c-wrapper
           height: 217.5px
+
   .pie-box
     position: relative
     background: linear-gradient(rgba(255, 255, 255, .1) 0%, #fff 100%)
     height: 305px
-    border-bottom: 10px solid #eee
     #myPie
       width: 100%
       height: 285px

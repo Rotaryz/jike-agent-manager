@@ -34,7 +34,7 @@
     methods: {
       _checkAuthorize() {
         if (this.hasToken) {
-          // this.$router.replace({path: '/home'})
+          this.$router.replace({path: '/home'})
         }
       }
     },

@@ -22,7 +22,7 @@ export default {
    * @returns {*}
    */
   getRateTotal() {
-    let url = '/api/report/income-total-rate'
+    let url = '/api/report/earning-rate'
     return request.get(url)
   }
 }

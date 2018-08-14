@@ -178,9 +178,8 @@
       },
       toDetailPage(item) {
         const path = '/deposit-detail'
-        // const id = item.order_sn
-        // this.$router.push({path, query: {id}})
-        this.$router.push(path)
+        const id = item.order_sn
+        this.$router.push({path, query: {id}})
       },
       onPullingUp() {
         if (!this.more) return this.$refs.scroll.forceUpdate()

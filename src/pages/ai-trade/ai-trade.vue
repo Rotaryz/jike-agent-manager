@@ -32,7 +32,7 @@
       </div>
     </div>
     <!--我的收入-->
-    <div class="pie-box line-box" >
+    <div class="pie-box line-box">
       <div id="myLine"></div>
       <div class="title-box">
       </div>
@@ -43,7 +43,7 @@
            :class="accountIndex * 1 ===index ? 'data-item-active' : ''">{{item}}
       </div>
     </div>
-    <div class="pie-box line-box" >
+    <div class="pie-box line-box">
       <div id="myTwoLine"></div>
       <div class="title-box">
       </div>
@@ -56,6 +56,7 @@
   import { ERR_OK } from 'common/js/config'
   import { Trade } from 'api'
   import Toast from 'components/toast/toast'
+
   export default {
     name: 'ai-trade',
     data() {
@@ -268,8 +269,10 @@
     box-sizing: border-box
     -moz-box-sizing: border-box
     -webkit-box-sizing: border-box
+
   .ai-box
     background: $color-FFFFFF
+
   .ai-top
     width: 100%
     position: relative
@@ -301,7 +304,7 @@
       border: 1px solid #676052
       display: inline-block
       text-align: center
-      padding:3px 10px 4px
+      padding: 3px 10px 4px
       border-radius: 50px
     .data-box
       layout(row)
@@ -309,7 +312,7 @@
       margin-top: 20px
       .data-box-item
         width: 50%
-        border-right:0.5px solid  $color-676052
+        border-right: 0.5px solid  $color-676052
         &:last-chid
           border-right: 0
         .number
@@ -323,8 +326,10 @@
           font-size: $font-size-12
           font-family: $font-family-regular
           margin-top: 5px
+
   .echarts-title-box
     padding-top: 20px
+
   .echarts-title
     layout(row)
     align-items: center
@@ -342,6 +347,8 @@
   .income-data
     layout(row)
     justify-content: center
+    position: relative
+    z-index: 90
     .data-item
       width: 50px
       margin: 0 10px
@@ -495,6 +502,7 @@
     font-family: $font-family-regular
     color: $color-343439
     text-align: center
+
   .z
     width: 100%
 
