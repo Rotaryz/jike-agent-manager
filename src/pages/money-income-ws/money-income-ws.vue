@@ -1,7 +1,7 @@
 <template>
   <div class="money-wallet">
     <header class="header">
-      <div class="money">341289</div>
+      <div class="money">{{grandTotal}}</div>
       <div class="explain">累计收入/元</div>
       <!--<ul class="data-wrapper">-->
         <!--<li class="data-item">-->
@@ -36,7 +36,7 @@
               @pullingUp="onPullingUp"
       >
         <ul class="content" v-if="dataArray.length">
-          <li class="item-wrapper" @click="toDetailPage(item)" v-for="(item,index) in dataArray" :key="index">
+          <li class="item-wrapper" v-for="(item,index) in dataArray" :key="index">
             <div class="item one">
               <p class="left">{{item.title}}</p>
               <p class="right">+{{item.total}}</p>
@@ -76,8 +76,7 @@
     data() {
       return {
         selectTab,
-        server: '',
-        balance: '0.00',
+        grandTotal: '0.00',
         pullUpLoad: true,
         pullUpLoadThreshold: 0,
         pullUpLoadMoreTxt: '加载更多',
@@ -92,22 +91,21 @@
     mounted() {
     },
     created() {
-      // this._getAgentMoney()
+      this._getRateTotal()
       this._getIncomeList({type: 0, page: 1}, res => {
         this.dataArray = res.data
       })
     },
     methods: {
-      // _getAgentMoney() {
-      //   Wallet.getAgentMoney().then(res => {
-      //     if (res.error !== ERR_OK) {
-      //       this.$refs.toast.show(res.message)
-      //       return
-      //     }
-      //     this.balance = res.data.remaining
-      //     this.server = res.data.customer_ervice
-      //   })
-      // },
+      _getRateTotal() {
+        Income.getRateTotal().then(res => {
+          if (res.error !== ERR_OK) {
+            this.$refs.toast.show(res.message)
+            return
+          }
+          this.grandTotal = res.data.grand_total
+        })
+      },
       _getIncomeList(data, callback) {
         // 0=全部;1=账号销售;2=加盟推荐;3=分销收入;4=推荐分红;11提现
         Income.getIncomeList(data).then(res => {

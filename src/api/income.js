@@ -16,5 +16,13 @@ export default {
   getGrandTotal() {
     let url = '/api/report/my-grand-total'
     return request.get(url)
+  },
+  /**
+   * 累计收入占比[微商]
+   * @returns {*}
+   */
+  getRateTotal() {
+    let url = '/api/report/income-total-rate'
+    return request.get(url)
   }
 }

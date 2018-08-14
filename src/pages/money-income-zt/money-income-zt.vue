@@ -1,19 +1,19 @@
 <template>
   <div class="money-wallet">
     <header class="header">
-      <div class="money">341289</div>
+      <div class="money">{{incomeInfo?incomeInfo.all_income:0}}</div>
       <div class="explain">累计收入/元</div>
       <ul class="data-wrapper">
         <li class="data-item">
-          <div class="top">340</div>
+          <div class="top">{{incomeInfo?incomeInfo.yesterday_income:0}}</div>
           <div class="bottom">本日收入/元</div>
         </li>
         <li class="data-item">
-          <div class="top">340</div>
+          <div class="top">{{incomeInfo?incomeInfo.week_income:0}}</div>
           <div class="bottom">本周收入/元</div>
         </li>
         <li class="data-item">
-          <div class="top">340</div>
+          <div class="top">{{incomeInfo?incomeInfo.month_income:0}}</div>
           <div class="bottom">本月收入/元</div>
         </li>
       </ul>
@@ -27,7 +27,7 @@
               @pullingUp="onPullingUp"
       >
         <ul class="content" v-if="dataArray.length">
-          <li class="item-wrapper" @click="toDetailPage(item)" v-for="(item,index) in dataArray" :key="index">
+          <li class="item-wrapper" v-for="(item,index) in dataArray" :key="index">
             <div class="item one">
               <p class="left">{{item.title}}</p>
               <p class="right">+{{item.total}}</p>
@@ -67,7 +67,8 @@
         pullUpLoadNoMoreTxt: '没有更多了',
         dataArray: [],
         page: 1,
-        more: true
+        more: true,
+        incomeInfo: null
       }
     },
     mounted() {
@@ -87,10 +88,10 @@
             return
           }
           console.log(res)
+          this.incomeInfo = res.data
         })
       },
       _getIncomeList(data, callback) {
-        // 0=全部;2=加盟推荐;3=分销收入;4=推荐分红;11提现
         Income.getIncomeList(data).then(res => {
           if (res.error !== ERR_OK) {
             this.$refs.toast.show(res.message)
