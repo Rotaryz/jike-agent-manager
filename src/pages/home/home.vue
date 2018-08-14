@@ -95,11 +95,15 @@
     <section class="charts">
       <div class="title">
         <div class="txt">生意概览</div>
-        <router-link class="more" to="/ai-trade">更多</router-link>
+        <router-link class="more" :to="isWD?'/trade-view':'/ai-trade'">更多</router-link>
       </div>
       <article class="charts-container">
-        <div class="c-title">我的收入</div>
-        <div class="c-wrapper"></div>
+        <div class="pie-box line-box" >
+          <div id="myLine"></div>
+          <div class="title-box">
+            <div class="sub-title">我的收入</div>
+          </div>
+        </div>
       </article>
     </section>
     <toast ref="toast"></toast>
@@ -107,7 +111,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import { Home } from 'api'
+  import { Home, Trade } from 'api'
   import storage from 'storage-controller'
   import Toast from 'components/toast/toast'
   import { ERR_OK } from 'common/js/config'
@@ -133,8 +137,84 @@
     created() {
       this._getProject()
       this._getHomeInfo()
+      this.getMyIncomeData(1)
     },
     methods: {
+      getMyIncomeData(time) {
+        Trade.getMyIncome({time_type: time}).then(res => {
+          if (res.error === ERR_OK) {
+            this.incomeData = res.data
+            this.drawLine()
+          } else {
+            this.$refs.toast.show(res.message)
+          }
+        })
+      },
+      drawLine() {
+        let myChart = this.$echarts.init(document.getElementById('myLine'))
+        // 我的收入
+        myChart.setOption({
+          xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: this.incomeData.x,
+            splitLine: {
+              show: true,
+              lineStyle: {
+                color: '#E6E6E6'
+              }
+            },
+            axisLabel: {
+              color: '#343439'
+            },
+            axisLine: {
+              lineStyle: {
+                color: '#c4c4c4'
+              }
+            }
+          },
+          tooltip: {
+            trigger: 'axis',
+            formatter: '收入：{c}',
+            axisPointer: {
+              type: 'none'
+            }
+          },
+          yAxis: {
+            minInterval: 1,
+            type: 'value',
+            splitLine: {
+              show: true,
+              lineStyle: {
+                color: '#E6E6E6'
+              }
+            },
+            axisLabel: {
+              color: '#343439'
+            },
+            axisLine: {
+              lineStyle: {
+                color: '#c4c4c4'
+              }
+            }
+          },
+          series: [{
+            data: this.incomeData.y,
+            type: 'line',
+            showSymbol: false,
+            itemStyle: {
+              normal: {
+                color: '#C5A970',
+                borderWidth: 2,
+                lineStyle: {
+                  color: '#C5A970',
+                  width: 3
+                }
+              }
+            }
+          }]
+        })
+      },
       changeTab(index) {
         this.tabIndex = index
       },
@@ -373,4 +453,129 @@
           padding-bottom: 11px
         .c-wrapper
           height: 217.5px
+  .pie-box
+    position: relative
+    background: linear-gradient(rgba(255, 255, 255, .1) 0%, #fff 100%)
+    height: 305px
+    border-bottom: 10px solid #eee
+    #myPie
+      width: 100%
+      height: 285px
+      margin: 0 auto
+      padding: 20px
+    #myLine
+      width: 100%
+      height: 300px
+      margin: 0 auto
+      padding: 0px 0px 0
+      top: -5px
+    #myAddLine
+      width: 100%
+      height: 300px
+      margin: 20px auto
+      padding: 35px 0px 0
+    #myBar
+      width: 100%
+      height: 300px
+      margin: 20px auto
+      padding: 35px 20px 0
+    #myDataBar
+      width: 100%
+      height: 280px
+      margin: 0px auto
+      top: -25px
+      padding: 0 10px 0
+    #myMember
+      width: 100%
+      height: 305px
+      margin: 0px auto
+      padding: 0 10px 0
+    #myMemberMoney
+      width: 100%
+      height: 305px
+      margin: 0px auto
+      padding: 0 10px 0
+    #mySuccess
+      width: 100%
+      height: 300px
+      margin: 20px auto
+      padding: 35px 20px 0
+    .title-box
+      position: absolute
+      width: 100%
+      text-align: center
+      top: 15px
+      left: 0
+      .sub-title
+        margin-top: 5px
+        font-size: $font-size-12
+        color: $color-343439
+        font-family: $font-family-regular
+    .bottom-des
+      position: absolute
+      bottom: 10px
+      layout(row)
+      width: 100%
+      .tab
+        layout(row)
+        justify-content: center
+        align-items: center
+        width: 25%
+        .icon
+          background: #F9B43C
+          width: 6px
+          height: 6px
+          border-radius: 50%
+          margin-right: 3px
+        .two
+          background: #F9543C
+        .thr
+          background: #8E3C68
+        .four
+          background: #23799D
+        .text
+          font-size: $font-size-12
+          font-family: $font-family-regular
+          color: $color-text
+    .pie-list
+      layout(row)
+      position: absolute
+      width: 100%
+      bottom: 15px
+      left: 0
+      .list
+        flex: 1
+        layout(row)
+        align-items: center
+        justify-content: center
+        font-size: $font-size-12
+        font-family: $font-family-medium
+        color: $color-343439
+        .icon
+          background: #343439
+          width: 7px
+          height: 7px
+          margin-right: 4px
+        .two
+          background: #C3A66C
+        .thr
+          background: #8B572A
+        .four
+          background: #F9B43C
+        .text
+          line-height: 1
+          font-size: $font-size-small
+          color: #202020
+          font-family: $font-family-regular
+
+    .my-pie-moeny
+      font-size: $font-size-14
+      color: $color-C3A66C
+      font-family: $font-family-medium
+      position: absolute
+      width: 100%
+      bottom: 10px
+      left: 0
+      text-align: center
+
 </style>
