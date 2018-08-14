@@ -26,6 +26,7 @@
   import { ERR_OK } from 'common/js/config'
   import storage from 'storage-controller'
   import { PROJECT_ARR } from 'common/js/constant'
+  import { mapActions } from 'vuex'
   // 项目(1=微商，2=智推，3=智店)
 
   export default {
@@ -44,6 +45,7 @@
       this._getProject()
     },
     methods: {
+      ...mapActions(['updateHomeTab']),
       selectProject(idx) {
         this.selectTab = idx
         const obj = PROJECT_ARR.find(val => val.application === idx + 1)
@@ -60,6 +62,7 @@
         })
       },
       _getProject() {
+        this.updateHomeTab(0)
         const project = storage.get('project')
         const obj = PROJECT_ARR.find(val => val.project === project)
         obj && (this.selectTab = obj.application - 1)

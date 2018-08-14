@@ -98,7 +98,7 @@
         <router-link class="more" :to="isWD?'/trade-view':'/ai-trade'">更多</router-link>
       </div>
       <article class="charts-container">
-        <div class="pie-box line-box" >
+        <div class="pie-box line-box">
           <div id="myLine"></div>
           <div class="title-box">
             <div class="sub-title">我的收入</div>
@@ -117,6 +117,7 @@
   import { ERR_OK } from 'common/js/config'
   import { PROJECT_ARR, WEI_SHANG } from 'common/js/constant'
   import { cityData } from 'common/js/utils'
+  import { mapGetters, mapActions } from 'vuex'
 
   const tabInfo = ['管账号', '管人', '管钱']
 
@@ -135,11 +136,16 @@
       }
     },
     created() {
+      this.tabIndex = this.homeTabIdx
       this._getProject()
       this._getHomeInfo()
       this.getMyIncomeData(1)
     },
+    beforeDestroy() {
+      this.updateHomeTab(this.tabIndex)
+    },
     methods: {
+      ...mapActions(['updateHomeTab']),
       getMyIncomeData(time) {
         Trade.getMyIncome({time_type: time}).then(res => {
           if (res.error === ERR_OK) {
@@ -233,6 +239,9 @@
           this.userInfo = res.data
         })
       }
+    },
+    computed: {
+      ...mapGetters(['homeTabIdx'])
     }
   }
 </script>
@@ -453,6 +462,7 @@
           padding-bottom: 11px
         .c-wrapper
           height: 217.5px
+
   .pie-box
     position: relative
     background: linear-gradient(rgba(255, 255, 255, .1) 0%, #fff 100%)

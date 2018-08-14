@@ -80,6 +80,7 @@
   import { ERR_OK } from 'common/js/config'
   import storage from 'storage-controller'
   import { PROJECT_ARR } from 'common/js/constant'
+  import { mapActions } from 'vuex'
 
   export default {
     name: 'Account',
@@ -107,6 +108,7 @@
       this._getProject()
     },
     methods: {
+      ...mapActions(['updateHomeTab']),
       _getProject() {
         const project = storage.get('project')
         const obj = PROJECT_ARR.find(val => val.project === project)
@@ -176,6 +178,7 @@
         return new Blob([new Uint8Array(array)], {type: type})
       },
       logout() {
+        this.updateHomeTab(0)
         storage.clear()
         this.$router.replace({path: '/login', query: {changeProject: true}})
       }
