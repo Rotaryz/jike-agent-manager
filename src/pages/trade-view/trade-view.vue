@@ -4,7 +4,7 @@
     <div class="trade-top">
       <div class="top-title">本日数据统计</div>
       <div class="top-number">
-        288.00
+        {{tradeData.real_income || 0}}
       </div>
       <div class="top-text">今日实际收入</div>
       <div class="que-img">
@@ -13,22 +13,22 @@
       <div class="trade-ab">
         <div class="order-box">
           <div class="item">
-            <div class="number">34</div>
+            <div class="number">{{tradeData.account_sale || 0}}</div>
             <div class="text">账号销量</div>
             <div class="line"></div>
-            <div class="color-text">环比50%</div>
+            <div class="color-text">环比{{tradeData.account_sale_percent || '0%'}}</div>
           </div>
           <div class="item">
-            <div class="number">34</div>
-            <div class="text">账号销量</div>
+            <div class="number">{{tradeData.invite_join || 0}}</div>
+            <div class="text">推荐加盟</div>
             <div class="line"></div>
-            <div class="color-text">环比50%</div>
+            <div class="color-text">环比{{tradeData.invite_join_percent || '0%'}}</div>
           </div>
           <div class="item">
-            <div class="number">34</div>
-            <div class="text">账号销量</div>
+            <div class="number">{{tradeData.sale_count || 0}}</div>
+            <div class="text">分销单数</div>
             <div class="line"></div>
-            <div class="color-text">环比50%</div>
+            <div class="color-text">环比{{tradeData.invite_join_percent || '0%'}}</div>
           </div>
         </div>
       </div>
@@ -39,8 +39,7 @@
         <div class="text">生意数据概览</div>
       </div>
       <div class="income-data">
-        <div class="data-item" v-for="(item, index) in incomeList"
-             :class="incomeIndex * 1 ===index ? 'data-item-active' : ''">{{item}}
+        <div class="data-item" v-for="(item, index) in incomeList" @click="selectIncome(index)" :class="incomeIndex * 1 ===index ? 'data-item-active' : ''">{{item}}
         </div>
       </div>
       <!--我的收入-->
@@ -59,7 +58,7 @@
       <!--我的收入占比-->
       <div class="pie-box pie-box-change" >
         <div id="myPie"></div>
-        <div class="my-pie-moeny">累计收入：￥6,000.00</div>
+        <div class="my-pie-moeny">累计收入：￥{{pieMoney || 0}}</div>
       </div>
       <div class="echarts-title-box">
         <div class="echarts-title">
@@ -93,8 +92,8 @@
         </div>
       </div>
       <div class="income-data">
-        <div class="data-item" v-for="(item, index) in incomeList"
-             :class="incomeIndex * 1 ===index ? 'data-item-active' : ''">{{item}}
+        <div class="data-item" v-for="(item, index) in newAddList" @click="selectNewAdd(index)"
+             :class="newAddIndex * 1 ===index ? 'data-item-active' : ''">{{item}}
         </div>
       </div>
       <div class="pie-box line-box">
@@ -108,36 +107,131 @@
         </div>
       </div>
       <div class="income-data">
-        <div class="data-item" v-for="(item, index) in incomeList"
-             :class="incomeIndex * 1 ===index ? 'data-item-active' : ''">{{item}}
+        <div class="data-item" v-for="(item, index) in teamIncomeList"  @click="selectTeamIncome(index)"
+             :class="teamIncomeIndex * 1 ===index ? 'data-item-active' : ''">{{item}}
         </div>
       </div>
       <div class="pie-box line-box">
         <div id="myMemberMoney"></div>
       </div>
     </div>
+    <toast ref="toast"></toast>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+  import { ERR_OK } from 'common/js/config'
+  import { Trade } from 'api'
+  import Toast from 'components/toast/toast'
   export default {
     name: 'trade-view',
     data() {
       return {
         incomeList: ['近3天', '近7天', '近15天'],
-        incomeIndex: 0
+        incomeIndex: 0,
+        newAddList: ['近3天', '近7天', '近15天'],
+        newAddIndex: 0,
+        teamIncomeList: ['近3天', '近7天', '近15天'],
+        teamIncomeIndex: 0,
+        tradeData: {
+          real_income: '',
+          account_sale: '',
+          account_sale_percent: '',
+          invite_join: '',
+          invite_join_percent: '',
+          sale_count: '',
+          sale_count_percent: ''
+        },
+        incomeData: {},
+        incomePie: [],
+        pieMoney: '',
+        incomeBar: {},
+        newMemberData: {},
+        TeamIncomeData: {}
       }
     },
-    mounted() {
-      setTimeout(() => {
-        this.drawLine()
-        this.drawPie()
-        this.drawDataBar()
-        this.drawMember()
-        this.drawMemberMoney()
-      }, 1000)
+    created() {
+      this.getData()
+      this.getMyIncomeData(1)
+      this.getMyIncomePidData()
+      this.getMyBarData()
+      this.getNewMemberData(1)
+      this.getTeamIncomeData(1)
     },
+    mounted() {},
     methods: {
+      getData() {
+        Trade.getTodayData().then(res => {
+          if (res.error === ERR_OK) {
+            this.tradeData = res.data
+          } else {
+            this.$refs.toast.show(res.message)
+          }
+        })
+      },
+      getMyIncomeData(time) {
+        Trade.getMyIncome({time_type: time}).then(res => {
+          if (res.error === ERR_OK) {
+            this.incomeData = res.data
+            this.drawLine()
+          } else {
+            this.$refs.toast.show(res.message)
+          }
+        })
+      },
+      getNewMemberData(time) {
+        Trade.getNewMember({time_type: time}).then(res => {
+          if (res.error === ERR_OK) {
+            this.newMemberData = res.data
+            this.drawMember()
+          } else {
+            this.$refs.toast.show(res.message)
+          }
+        })
+      },
+      getTeamIncomeData(time) {
+        Trade.getTeamIncome({time_type: time}).then(res => {
+          if (res.error === ERR_OK) {
+            this.TeamIncomeData = res.data
+            this.drawMemberMoney()
+          } else {
+            this.$refs.toast.show(res.message)
+          }
+        })
+      },
+      getMyIncomePidData() {
+        Trade.getMyIncomePid().then(res => {
+          if (res.error === ERR_OK) {
+            this.incomePie = res.data.rate
+            this.pieMoney = res.data.grand_total
+            this.drawPie()
+          } else {
+            this.$refs.toast.show(res.message)
+          }
+        })
+      },
+      getMyBarData() {
+        Trade.getMyBar().then(res => {
+          if (res.error === ERR_OK) {
+            this.incomeBar = res.data
+            this.drawDataBar()
+          } else {
+            this.$refs.toast.show(res.message)
+          }
+        })
+      },
+      selectIncome(index) {
+        this.incomeIndex = index
+        this.getMyIncomeData(index + 1)
+      },
+      selectNewAdd(index) {
+        this.newAddIndex = index
+        this.getNewMemberData(index + 1)
+      },
+      selectTeamIncome(index) {
+        this.teamIncomeIndex = index
+        this.getTeamIncomeData(index + 1)
+      },
       drawLine() {
         let myChart = this.$echarts.init(document.getElementById('myLine'))
         // 我的收入
@@ -145,7 +239,7 @@
           xAxis: {
             type: 'category',
             boundaryGap: false,
-            data: ['08.11', '08.12', '08.13', '08.14', '08.15', '08.16', '08.17', '08.18', '08.19', '08.20', '08.21', '08.22', '08.23', '08.24', '08.25'],
+            data: this.incomeData.x,
             splitLine: {
               show: true,
               lineStyle: {
@@ -163,7 +257,7 @@
           },
           tooltip: {
             trigger: 'axis',
-            formatter: '活跃度：{c}',
+            formatter: '收入：{c}',
             axisPointer: {
               type: 'none'
             }
@@ -187,7 +281,7 @@
             }
           },
           series: [{
-            data: ['10', '22', '30', '10', '22', '30', '10', '22', '30', '10', '22', '30', '10', '22', '30'],
+            data: this.incomeData.y,
             type: 'line',
             showSymbol: false,
             itemStyle: {
@@ -214,16 +308,11 @@
           color: ['#8B572A', '#C3A66C', '#716558', '#4A4A4A'],
           series: [
             {
-              name: '访问222来源',
+              name: '',
               type: 'pie',
               radius: '45%',
               center: ['50%', '40%'],
-              data: [
-                {value: 1, name: '账号销售收入'},
-                {value: 1, name: '团队分销收入'},
-                {value: 1, name: '加盟推荐奖励'},
-                {value: 1, name: '推荐团队分红'}
-              ],
+              data: this.incomePie,
               itemStyle: {
                 emphasis: {
                   shadowBlur: 10,
@@ -256,7 +345,7 @@
             axisLabel: {
               color: '#343439'
             },
-            data: ['08.08', '08.08', '08.08', '08.08'],
+            data: this.incomeBar.x,
             axisLine: {
               lineStyle: {
                 color: '#c4c4c4'
@@ -294,7 +383,7 @@
                   color: '#fff'
                 }
               },
-              data: [320, 302, 301, 334],
+              data: this.incomeBar.y1,
               itemStyle: {
                 normal: {
                   color: '#343439',
@@ -318,7 +407,7 @@
                   color: '#fff'
                 }
               },
-              data: [120, 132, 101, 134],
+              data: this.incomeBar.y2,
               itemStyle: {
                 normal: {
                   color: '#C3A66C',
@@ -342,7 +431,7 @@
                   color: '#fff'
                 }
               },
-              data: [220, 182, 191, 234],
+              data: this.incomeBar.y3,
               itemStyle: {
                 normal: {
                   color: '#8B572A',
@@ -362,7 +451,7 @@
           xAxis: {
             type: 'category',
             boundaryGap: false,
-            data: ['08.11', '08.12', '08.13', '08.14', '08.15', '08.16', '08.17', '08.18', '08.19', '08.20', '08.21', '08.22', '08.23', '08.24', '08.25'],
+            data: this.newMemberData.x,
             splitLine: {
               show: false,
               lineStyle: {
@@ -380,7 +469,7 @@
           },
           tooltip: {
             trigger: 'axis',
-            formatter: '活跃度：{c}',
+            formatter: '新增团队：{c}',
             axisPointer: {
               type: 'none'
             }
@@ -404,7 +493,7 @@
             }
           },
           series: [{
-            data: ['10', '22', '30', '10', '22', '30', '10', '22', '30', '10', '22', '30', '10', '22', '30'],
+            data: this.newMemberData.y,
             type: 'line',
             smooth: true,
             showSymbol: false,
@@ -427,7 +516,7 @@
           xAxis: {
             type: 'category',
             boundaryGap: false,
-            data: ['08.11', '08.12', '08.13', '08.14', '08.15', '08.16', '08.17', '08.18', '08.19', '08.20', '08.21', '08.22', '08.23', '08.24', '08.25'],
+            data: this.TeamIncomeData.x,
             splitLine: {
               show: false,
               lineStyle: {
@@ -445,7 +534,7 @@
           },
           tooltip: {
             trigger: 'axis',
-            formatter: '活跃度：{c}',
+            formatter: '团队分销收入：{c}',
             axisPointer: {
               type: 'none'
             }
@@ -474,7 +563,7 @@
             }
           },
           series: [{
-            data: ['10', '22', '30', '10', '22', '30', '10', '22', '30', '10', '22', '30', '10', '22', '30'],
+            data: this.TeamIncomeData.y,
             type: 'line',
             smooth: true,
             showSymbol: false,
@@ -491,6 +580,9 @@
           }]
         })
       }
+    },
+    components: {
+      Toast
     }
   }
 </script>

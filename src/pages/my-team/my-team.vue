@@ -5,6 +5,7 @@
               :probeType="probeType"
               :bcColor="bcColor"
               :data="dataArray"
+              :showNoMore="false"
               :listenScroll="listenScroll"
               :pullUpLoad="pullUpLoadObj"
               @pullingUp="onPullingUp">
@@ -18,11 +19,11 @@
           <div class="team-ab">
             <div class="team-box-samll">
               <div class="item">
-                <div class="number">300</div>
+                <div class="number">{{order}}</div>
                 <div class="number-order">分销单数/单</div>
               </div>
               <div class="item">
-                <div class="number">1,800</div>
+                <div class="number">{{money}}</div>
                 <div class="number-order">分销收入/元</div>
               </div>
             </div>
@@ -38,60 +39,10 @@
           <div class="scale-thr">分销收入/元</div>
         </div>
         <ul class="team-list">
-          <li class="item">
-            <div class="item-one">蓝月亮有限公司</div>
-            <div class="item-two">100</div>
-            <div class="item-thr">600</div>
-          </li>
-          <li class="item">
-            <div class="item-one">蓝月亮有限公司</div>
-            <div class="item-two">100</div>
-            <div class="item-thr">600</div>
-          </li>
-          <li class="item">
-            <div class="item-one">蓝月亮有限公司</div>
-            <div class="item-two">100</div>
-            <div class="item-thr">600</div>
-          </li>
-          <li class="item">
-            <div class="item-one">蓝月亮有限公司</div>
-            <div class="item-two">100</div>
-            <div class="item-thr">600</div>
-          </li>
-          <li class="item">
-            <div class="item-one">蓝月亮有限公司</div>
-            <div class="item-two">100</div>
-            <div class="item-thr">600</div>
-          </li>
-          <li class="item">
-            <div class="item-one">蓝月亮有限公司</div>
-            <div class="item-two">100</div>
-            <div class="item-thr">600</div>
-          </li>
-          <li class="item">
-            <div class="item-one">蓝月亮有限公司</div>
-            <div class="item-two">100</div>
-            <div class="item-thr">600</div>
-          </li>
-          <li class="item">
-            <div class="item-one">蓝月亮有限公司</div>
-            <div class="item-two">100</div>
-            <div class="item-thr">600</div>
-          </li>
-          <li class="item">
-            <div class="item-one">蓝月亮有限公司</div>
-            <div class="item-two">100</div>
-            <div class="item-thr">600</div>
-          </li>
-          <li class="item">
-            <div class="item-one">蓝月亮有限公司</div>
-            <div class="item-two">100</div>
-            <div class="item-thr">600</div>
-          </li>
-          <li class="item">
-            <div class="item-one">蓝月亮有限公司</div>
-            <div class="item-two">100</div>
-            <div class="item-thr">600</div>
+          <li class="item" v-for="item in dataArray" v-bind:key="item.id">
+            <div class="item-one">{{item.name}}</div>
+            <div class="item-two">{{item.commission_num}}</div>
+            <div class="item-thr">{{item.commission_income}}</div>
           </li>
         </ul>
       </scroll>
@@ -102,6 +53,8 @@
 <script type="text/ecmascript-6">
   import Scroll from 'components/scroll/scroll'
   import Toast from 'components/toast/toast'
+  import { ERR_OK } from 'common/js/config'
+  import { Agent } from 'api'
 
   export default {
     name: 'my-team',
@@ -114,18 +67,62 @@
         pullUpLoad: true,
         pullUpLoadThreshold: 0,
         pullUpLoadMoreTxt: '加载更多',
-        pullUpLoadNoMoreTxt: '没有更多了'
+        pullUpLoadNoMoreTxt: '没有更多了',
+        order: '',
+        money: ''
       }
+    },
+    created() {
+      this.getMyTeamData()
     },
     methods: {
       onPullingUp() {
-        this.$refs.scroll.forceUpdate()
+        this.getMoreMyTeamData()
+        if (this.noMore) {
+          this.$refs.scroll.forceUpdate()
+        }
       },
       rebuildScroll() {
         this.nextTick(() => {
           this.$refs.scroll.destroy()
           this.$refs.scroll.initScroll()
         })
+      },
+      getMyTeamData() {
+        this.page = 1
+        this.noMore = false
+        Agent.getMyTeam(this.page).then(res => {
+          if (res.error === ERR_OK) {
+            console.log(res)
+            this.dataArray = res.data
+            this.order = res.total_commission_num
+            this.money = res.total_commission_income
+            this._isMore(res)
+          } else {
+            this.$refs.toast.show(res.message)
+          }
+        })
+      },
+      getMoreMyTeamData() {
+        if (this.noMore) return
+        Agent.getMyTeam(this.page).then(res => {
+          if (res.error === ERR_OK) {
+            console.log(res)
+            this.dataArray.push(...res.data)
+            this._isMore(res)
+          } else {
+            this.$refs.toast.show(res.message)
+          }
+          setTimeout(() => {
+            this.$refs.scroll.forceUpdate()
+          }, 20)
+        })
+      },
+      _isMore(res) {
+        this.page++
+        if (this.dataArray.length >= res.meta.total * 1) {
+          this.noMore = true
+        }
       }
     },
     computed: {
