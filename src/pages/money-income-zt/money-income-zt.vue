@@ -25,9 +25,9 @@
               :data="dataArray"
               :pullUpLoad="pullUpLoadObj"
               @pullingUp="onPullingUp"
-              v-if="false"
+              v-if="dataArray.length"
       >
-        <ul class="content" v-if="dataArray.length">
+        <ul class="content" >
           <li class="item-wrapper" v-for="(item,index) in dataArray" :key="index">
             <div class="item one">
               <p class="left">{{item.title}}</p>

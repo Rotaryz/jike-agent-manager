@@ -23,8 +23,9 @@
               :data="dataArray"
               :pullUpLoad="pullUpLoadObj"
               @pullingUp="onPullingUp"
+              v-if="dataArray.length"
       >
-        <ul class="content" v-if="dataArray.length">
+        <ul class="content">
           <li class="item-wrapper" v-for="(item,index) in dataArray" :key="index">
             <div class="item one">
               <p class="left">{{item.title}}</p>
@@ -39,8 +40,8 @@
             </div>
           </li>
         </ul>
-
       </scroll>
+      <empty-data v-else></empty-data>
     </div>
     <select-com ref="selectCom" :data="selectTab" :idx="selectIdx" top="365px" @choose="choose"></select-com>
     <toast ref="toast"></toast>
@@ -53,6 +54,7 @@
   import SelectCom from 'components/select-com/select-com'
   import { Income } from 'api'
   import { ERR_OK } from 'common/js/config'
+  import EmptyData from 'components/empty-data/empty-data'
 
   const selectTab = ['全部', '账号销售', '加盟推荐', '分销收入', '推荐分红', '提现']
 
@@ -61,7 +63,8 @@
     components: {
       Toast,
       Scroll,
-      SelectCom
+      SelectCom,
+      EmptyData
     },
     data() {
       return {
