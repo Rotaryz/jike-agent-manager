@@ -14,7 +14,7 @@
         <input class="input" type="text" readonly v-model="form.area" placeholder="请选择所在的地区">
         <div class="icon"></div>
       </li>
-      <li class="list">
+      <li class="list" @click="selecTrade">
         <div class="name">所属行业</div>
         <input class="input" type="text" readonly v-model="form.trade" placeholder="请选择所属的行业">
         <div class="icon"></div>
@@ -25,10 +25,24 @@
       <textarea class="textarea" type="textarea" v-model="form.remark" maxlength="200" placehoder="可在此写客户备注，不超过200字" ></textarea>
       <div class="count">{{ count }}/200</div>
     </div>
+
+    <tab-list
+      v-if="tabShow"
+      :tabLeftIndex="tabLeftIndex"
+      :tabRightIndex="tabRightIndex"
+      :tabLeftList="tabLeftList"
+      :tabRightList="tabRightList"
+      @tabLeftClick="tabLeftClick"
+      @tabRightClick="tabRightClick"
+      @tabCancel="tabCancel"
+      @tabConfirm="tabConfirm"
+    ></tab-list>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+  import TabList from 'components/tabList/tabList'
+
   export default {
     name: 'custom-create',
     props: {
@@ -41,7 +55,17 @@
           area: null,
           trade: null,
           remark: null
-        }
+        },
+        tabShow: false, // 职业类型选择框
+        tabLeftIndex: 0, // 左边tab栏列表
+        tabRightIndex: 0, // 右边tab栏列表
+        tabLeftList: ['IT服务', '计算机', '计算机'],
+        tabRightList: [
+          ['互联网', '互联网', '互联网', '互联网'],
+          ['互联网和', '互联网和', '互联网和'],
+          ['互联网'],
+          ['互联网', '互联网']
+        ]
       }
     },
     created() {
@@ -54,8 +78,30 @@
       }
     },
     methods: {
+      selecTrade() {
+        this.tabShow = true
+      },
+      tabLeftClick(num) { // 左tab栏点击
+        this.tabLeftIndex = num
+      },
+      tabRightClick(num) { // 右tab栏点击
+        this.tabRightIndex = num
+      },
+      tabCancel() { // 取消选择职业类型
+        this.tabLeftIndex = 0
+        this.tabRightIndex = 0
+        this.tabShow = false
+        this.form.trade = this.tabLeftList[0] + ' ' + this.tabRightList[0][0]
+      },
+      tabConfirm() { // 确定选择职业类型
+        this.tabShow = false
+        this.form.trade = this.tabLeftList[this.tabLeftIndex] + ' ' + this.tabRightList[this.tabLeftIndex][this.tabRightIndex]
+      }
     },
     watch: {
+    },
+    components: {
+      TabList
     }
   }
 </script>

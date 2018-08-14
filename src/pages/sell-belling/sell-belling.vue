@@ -71,29 +71,23 @@
 
     <div class="gray-tip" v-if="grayTip">恭喜您，已成功开单了~</div>
 
-    <div class="tab-bg" v-if="tabShow">
-      <div class="tab-list">
-        <h3 class="title">行业类型</h3>
-        <div class="tab">
-          <div class="tab-left">
-            <ul>
-              <li class="list" :class="tabLeftIndex == i && 'on'" v-for="(val, i) in tabLeftList" :key="i" @click="tabLeftClick(i)">{{ val }}</li>
-            </ul>
-          </div>
-          <div class="tab-right">
-            <li class="list" :class="tabRightIndex == i && 'on'" v-for="(val, i) in tabRightList[tabLeftIndex]" :key="i" @click="tabRightClick(i)">{{ val }}</li>
-          </div>
-        </div>
-        <div class="confirm-btn">
-          <span class="pop-btn" @click="tabCancel">取消</span>
-          <span class="pop-btn right" @click="tabConfirm">确定</span>
-        </div>
-      </div>
-    </div>
+    <tab-list
+      v-if="tabShow"
+      :tabLeftIndex="tabLeftIndex"
+      :tabRightIndex="tabRightIndex"
+      :tabLeftList="tabLeftList"
+      :tabRightList="tabRightList"
+      @tabLeftClick="tabLeftClick"
+      @tabRightClick="tabRightClick"
+      @tabCancel="tabCancel"
+      @tabConfirm="tabConfirm"
+    ></tab-list>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+  import TabList from 'components/tabList/tabList'
+
   export default {
     name: 'sell-belling',
     props: {
@@ -117,7 +111,7 @@
         tabLeftList: ['IT服务', '计算机', '计算机'],
         tabRightList: [
           ['互联网', '互联网', '互联网', '互联网'],
-          ['互联网和', '互联网和', '互联网和'],
+          ['互联网和', '互联网和', '互联网和', '互联网和', '互联网和', '互联网和', '互联网和', '互联网和'],
           ['互联网'],
           ['互联网', '互联网']
         ]
@@ -161,14 +155,19 @@
         this.tabLeftIndex = 0
         this.tabRightIndex = 0
         this.tabShow = false
-        this.form.trade = this.tabLeftList[0] + ' ' + this.tabRightList[0][0]
+        // this.form.trade = this.tabLeftList[0] + ' ' + this.tabRightList[0][0]
       },
       tabConfirm() { // 确定选择职业类型
+        this.tabLeftIndex = 0
+        this.tabRightIndex = 0
         this.tabShow = false
         this.form.trade = this.tabLeftList[this.tabLeftIndex] + ' ' + this.tabRightList[this.tabLeftIndex][this.tabRightIndex]
       }
     },
     watch: {
+    },
+    components: {
+      TabList
     }
   }
 </script>
