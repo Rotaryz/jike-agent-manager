@@ -1,5 +1,6 @@
 import _this from '@/main'
 import storage from 'storage-controller'
+import CITY_JSON from 'common/js/city'
 
 const REGPASS = /^[a-zA-Z0-9]{6,18}$/
 const REGPHONE = /^1[3|4|5|6|7|8][0-9]{9}$/
@@ -160,3 +161,27 @@ function getRandomInt (min, max) {
 //   storage.remove('token')
 //   _this.$router.replace('/oauth')
 // }
+
+function doCity(city) {
+  let arr = []
+  for (let [, value] of Object.entries(city)) {
+    let obj1 = {}
+    obj1.value = value.name
+    obj1.children = []
+    const two = value.child
+    for (let [, val] of Object.entries(two)) {
+      let obj2 = {}
+      obj2.value = val.name
+      obj2.children = []
+      const three = val.child
+      for (let [, cc] of Object.entries(three)) {
+        obj2.children.push({value: cc})
+      }
+      obj1.children.push({value: obj2.value, children: obj2.children})
+    }
+    arr.push(obj1)
+  }
+  return arr
+}
+
+export const cityData = doCity(CITY_JSON)

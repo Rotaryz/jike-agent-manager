@@ -56,28 +56,28 @@
       </div>
       <ul class="entry-wrapper" :style="'transform :translate3d('+ -tabIndex*100/3 +'%,0,0)'">
         <li class="entry-item one">
-          <router-link class="item" to="/deposit-detail">
+          <router-link class="item" to="/sell-belling">
             <div class="icon open-home"></div>
             <p class="txt">开单销售</p>
           </router-link>
-          <div class="item">
+          <router-link class="item" to="/sell-record">
             <div class="icon record-home"></div>
             <p class="txt">销售记录</p>
-          </div>
+          </router-link>
         </li>
         <li class="entry-item two">
-          <div class="item">
+          <router-link class="item" to="/manage-custom">
             <div class="icon customer-home"></div>
             <p class="txt">客户管理</p>
-          </div>
-          <div class="item" v-if="isWD">
+          </router-link>
+          <router-link class="item" v-if="isWD" to="/manage-agent">
             <div class="icon agent-home"></div>
             <p class="txt">推荐代理商</p>
-          </div>
-          <div class="item" v-if="isWD">
+          </router-link>
+          <router-link class="item" v-if="isWD" to="/my-team">
             <div class="icon my-team"></div>
             <p class="txt">我的团队</p>
-          </div>
+          </router-link>
         </li>
         <li class="entry-item three">
           <div class="item">
@@ -95,14 +95,20 @@
     <section class="charts">
       <div class="title">
         <div class="txt">生意概览</div>
-        <div class="more">更多</div>
+        <router-link class="more" to="/ai-trade">更多</router-link>
       </div>
       <article class="charts-container">
         <div class="c-title">我的收入</div>
-        <div class="c-wrapper"></div>
+        <div class="c-wrapper" @click="test"></div>
       </article>
     </section>
     <toast ref="toast"></toast>
+    <awesome-picker
+      ref="picker"
+      :data="cityData"
+      @cancel="handlePickerCancel"
+      @confirm="handlePickerConfirm">
+    </awesome-picker>
   </div>
 </template>
 
@@ -113,8 +119,10 @@
   import Toast from 'components/toast/toast'
   import { ERR_OK } from 'common/js/config'
   import { PROJECT_ARR, WEI_SHANG } from 'common/js/constant'
+  import {cityData} from 'common/js/utils'
 
   const tabInfo = ['管账号', '管人', '管钱']
+
   export default {
     name: 'Home',
     components: {
@@ -123,6 +131,7 @@
     data() {
       return {
         tabInfo,
+        cityData,
         tabIndex: 0,
         userInfo: null,
         isWD: true
@@ -133,6 +142,16 @@
       this._getHomeInfo()
     },
     methods: {
+      test() {
+        console.log(2222)
+        this.$refs.picker.show()
+      },
+      handlePickerCancel(e) {
+        console.log(e)
+      },
+      handlePickerConfirm(e) {
+        console.log(e)
+      },
       changeTab(index) {
         this.tabIndex = index
       },
