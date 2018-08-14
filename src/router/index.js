@@ -1,14 +1,16 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+// import storage from 'storage-controller'
 
-// const HelloWorld = () => import('pages/hello-world/hello-world')
-// const WeChart = () => import('pages/vue-echarts/vue-echarts')
 const Login = () => import('pages/login/login')
 const Home = () => import('pages/home/home')
 const Account = () => import('pages/account/account')
 const ChangeProject = () => import('pages/change-project/change-project')
 const TradeView = () => import('pages/trade-view/trade-view')
 const TradeExplain = () => import('pages/explain-trabe/explain-trabe')
+const ManageCustom = () => import('pages/manage-custom/manage-custom')
+const CustomDetail = () => import('pages/custom-detail/custom-detail')
+const CustomCreate = () => import('pages/custom-create/custom-create')
 const MoneyWallet = () => import('pages/money-wallet/money-wallet')
 const DepositDetail = () => import('pages/deposit-detail/deposit-detail')
 const MyTeam = () => import('pages/my-team/my-team')
@@ -18,6 +20,10 @@ const AgentAward = () => import('pages/agent-award/agent-award')
 const AgentEntering = () => import('pages/agent-entering/agent-entering')
 const AiTrade = () => import('pages/ai-trade/ai-trade')
 const AiExplain = () => import('pages/ai-explain/ai-explain')
+const SellBelling = () => import('pages/sell-belling/sell-belling')
+const SellRecord = () => import('pages/sell-record/sell-record')
+const SellDetail = () => import('pages/sell-detail/sell-detail')
+const ChooseCustom = () => import('pages/choose-custom/choose-custom')
 
 Vue.use(Router)
 
@@ -67,6 +73,29 @@ const route = new Router({
         title: '数据统计说明页'
       }
     }, {
+    },
+    {
+      path: '/manage-custom',
+      component: ManageCustom,
+      meta: {
+        title: '客户列表'
+      }
+    },
+    {
+      path: '/custom-detail',
+      component: CustomDetail,
+      meta: {
+        title: '客户详情'
+      }
+    },
+    {
+      path: '/custom-create',
+      component: CustomCreate,
+      meta: {
+        title: '客户资料'
+      }
+    },
+    {
       path: '/money-wallet',
       component: MoneyWallet,
       meta: {
@@ -127,6 +156,34 @@ const route = new Router({
       component: AiExplain,
       meta: {
         title: '数据统计说明页'
+      }
+    },
+    {
+      path: '/sell-belling',
+      component: SellBelling,
+      meta: {
+        title: '开单销售'
+      }
+    },
+    {
+      path: '/sell-record',
+      component: SellRecord,
+      meta: {
+        title: '销售记录'
+      }
+    },
+    {
+      path: '/sell-detail',
+      component: SellDetail,
+      meta: {
+        title: '销售详情'
+      }
+    },
+    {
+      path: '/choose-custom',
+      component: ChooseCustom,
+      meta: {
+        title: '选择客户'
       }
     }
   ]
