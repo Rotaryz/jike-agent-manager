@@ -23,7 +23,7 @@
       </ul>
     </section>
     <footer class="bot-btn">
-      <router-link :to="/manage-custom/custom-create" class="btn">新建客户</router-link>
+      <router-link to="/custom-create" class="btn">新建客户</router-link>
     </footer>
   </div>
 </template>
@@ -96,7 +96,7 @@
 @import "~common/stylus/mixin"
 
 .manage-custom
-  padding-bottom: 65px
+  padding-bottom: 68px
   .header
     background: $color-F3F3F3
     color: $color-848484

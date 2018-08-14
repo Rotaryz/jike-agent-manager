@@ -1,5 +1,7 @@
 const state = {
-  argument: {}
+  argument: {},
+  customName: '',
+  customCall: ''
 }
 
 export default state

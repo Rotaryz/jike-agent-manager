@@ -11,6 +11,10 @@ const CustomDetail = () => import('pages/custom-detail/custom-detail')
 const CustomCreate = () => import('pages/custom-create/custom-create')
 const MoneyWallet = () => import('pages/money-wallet/money-wallet')
 const DepositDetail = () => import('pages/deposit-detail/deposit-detail')
+const SellBelling = () => import('pages/sell-belling/sell-belling')
+const SellRecord = () => import('pages/sell-record/sell-record')
+const SellDetail = () => import('pages/sell-detail/sell-detail')
+const ChooseCustom = () => import('pages/choose-custom/choose-custom')
 
 Vue.use(Router)
 
@@ -48,25 +52,29 @@ const route = new Router({
       meta: {
         title: '切换项目'
       }
-    }, {
+    },
+    {
       path: '/manage-custom',
       component: ManageCustom,
       meta: {
         title: '客户列表'
       }
-    }, {
+    },
+    {
       path: '/custom-detail',
       component: CustomDetail,
       meta: {
         title: '客户详情'
       }
-    }, {
+    },
+    {
       path: '/custom-create',
       component: CustomCreate,
       meta: {
         title: '客户资料'
       }
-    }, {
+    },
+    {
       path: '/money-wallet',
       component: MoneyWallet,
       meta: {
@@ -78,6 +86,34 @@ const route = new Router({
       component: DepositDetail,
       meta: {
         title: '提现详情'
+      }
+    },
+    {
+      path: '/sell-belling',
+      component: SellBelling,
+      meta: {
+        title: '开单销售'
+      }
+    },
+    {
+      path: '/sell-record',
+      component: SellRecord,
+      meta: {
+        title: '销售记录'
+      }
+    },
+    {
+      path: '/sell-detail',
+      component: SellDetail,
+      meta: {
+        title: '销售详情'
+      }
+    },
+    {
+      path: '/choose-custom',
+      component: ChooseCustom,
+      meta: {
+        title: '选择客户'
       }
     }
   ]
