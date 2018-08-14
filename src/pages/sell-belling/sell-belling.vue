@@ -24,7 +24,7 @@
         <input class="input" type="text"  v-model="form.area" placeholder="请选择所在的地区">
         <div class="icon"></div>
       </div>
-      <div class="list">
+      <div class="list" @click="selecTrade">
         <div class="name">所属行业</div>
         <input class="input" type="text"  v-model="form.trade" placeholder="请选择所属的行业">
         <div class="icon"></div>
@@ -71,7 +71,25 @@
 
     <div class="gray-tip" v-if="grayTip">恭喜您，已成功开单了~</div>
 
-
+    <div class="tab-bg" v-if="tabShow">
+      <div class="tab-list">
+        <h3 class="title">行业类型</h3>
+        <div class="tab">
+          <div class="tab-left">
+            <ul>
+              <li class="list" :class="tabLeftIndex == i && 'on'" v-for="(val, i) in tabLeftList" :key="i" @click="tabLeftClick(i)">{{ val }}</li>
+            </ul>
+          </div>
+          <div class="tab-right">
+            <li class="list" :class="tabRightIndex == i && 'on'" v-for="(val, i) in tabRightList[tabLeftIndex]" :key="i" @click="tabRightClick(i)">{{ val }}</li>
+          </div>
+        </div>
+        <div class="confirm-btn">
+          <span class="pop-btn" @click="tabCancel">取消</span>
+          <span class="pop-btn right" @click="tabConfirm">确定</span>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -91,8 +109,18 @@
           totalPrice: '200.00',
           remark: null
         },
-        popShow: false,
-        grayTip: false
+        popShow: false, // 弹出确认窗口
+        grayTip: false, // 提交成功提示
+        tabShow: false, // 职业类型选择框
+        tabLeftIndex: 0, // 左边tab栏列表
+        tabRightIndex: 0, // 右边tab栏列表
+        tabLeftList: ['IT服务', '计算机', '计算机'],
+        tabRightList: [
+          ['互联网', '互联网', '互联网', '互联网'],
+          ['互联网和', '互联网和', '互联网和'],
+          ['互联网'],
+          ['互联网', '互联网']
+        ]
       }
     },
     created() {
@@ -106,10 +134,10 @@
       }
     },
     methods: {
-      submit() {
+      submit() { // 点击提交
         this.popShow = true
       },
-      confirm() {
+      confirm() { // 确认窗的确定按钮
         this.popShow = false
         this.grayTip = true
         setTimeout(() => {
@@ -117,8 +145,27 @@
           this.$routers.push({ path: '/sell-record' })
         }, 1000)
       },
-      cancel() {
+      cancel() { // 确认窗的取消按钮
         this.popShow = false
+      },
+      selecTrade() {
+        this.tabShow = true
+      },
+      tabLeftClick(num) { // 左tab栏点击
+        this.tabLeftIndex = num
+      },
+      tabRightClick(num) { // 右tab栏点击
+        this.tabRightIndex = num
+      },
+      tabCancel() { // 取消选择职业类型
+        this.tabLeftIndex = 0
+        this.tabRightIndex = 0
+        this.tabShow = false
+        this.form.trade = this.tabLeftList[0] + ' ' + this.tabRightList[0][0]
+      },
+      tabConfirm() { // 确定选择职业类型
+        this.tabShow = false
+        this.form.trade = this.tabLeftList[this.tabLeftIndex] + ' ' + this.tabRightList[this.tabLeftIndex][this.tabRightIndex]
       }
     },
     watch: {
@@ -338,4 +385,72 @@
     right: 0
     margin: 0 auto
     z-index: 100
+
+  .tab-bg
+    position: fixed
+    left: 0
+    right: 0
+    top: 0
+    bottom: 0
+    background: rgba(0,0,0,0.7)
+    .tab-list
+      position: absolute
+      left: 0
+      right: 0
+      top: 20%
+      margin: 0 auto
+      width: 70%
+      height: 300px
+      background: $color-white
+      text-align: center
+    .title
+      height: 40px
+      line-height: 40px
+      font-size: 16px
+      color: $color-white
+      background-image: linear-gradient(-180deg, #2D2C28 0%, #3D3834 100%)
+
+    .tab
+      height: 220px
+      overflow:hidden
+      display: flex
+      font-size: $font-size-14
+      .tab-left
+        width: 80px
+        height: 220px
+        overflow-y: scroll
+        background: $color-E4E4E4
+        .list
+          padding: 8px 0
+          overflow: hidden
+          &.on
+           background: $color-white
+           color: $color-C3A66C
+      .tab-right
+        flex: 1
+        height: 220px
+        overflow-y: scroll
+        .list
+          padding: 8px 0
+          border-bottom: 1px solid $color-E3E6E9
+          text-align: left
+          margin-left: 10px
+          overflow: hidden
+          &.on
+            color: $color-C3A66C
+    .confirm-btn
+      box-sizing: border-box
+      height: 40px
+      display: flex
+      line-height: 40px
+      border-top: 1px solid $color-E3E6E9
+      .pop-btn
+        width: 50%
+        box-sizing: border-box
+        border-right: 1px solid $color-E3E6E9
+        color: $color-C1C3C3
+        &.right
+          border-right: 0
+          color: $color-C3A66C
+
 </style>
