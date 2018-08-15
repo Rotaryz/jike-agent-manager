@@ -31,6 +31,8 @@
   import { ERR_OK } from 'common/js/config'
   import Toast from 'components/toast/toast'
 
+  const LIMIT = 10
+
   export default {
     name: 'sell-record',
     props: {
@@ -47,7 +49,7 @@
       }
     },
     created() {
-      this.getRecordList(res => {
+      this.getRecordList(10, 1, res => {
         this.dataArray = res.data
       })
     },
@@ -65,14 +67,14 @@
       jump(id) {
         this.$router.push({path: '/sell-detail', query: {id}})
       },
-      getRecordList(callback) { // 获取销售记录列表
-        Custom.getRecordList(10, this.page, this.$route.query.id)
+      getRecordList(limit, page, callback) { // 获取销售记录列表
+        Custom.getRecordList(limit, page, this.$route.query.id)
           .then(res => {
             if (res.error !== ERR_OK) {
               this.$refs.toast.show(res.message)
               return
             }
-            this.more = !!res.data.length
+            this.more = res.data.length === LIMIT
             callback(res)
           })
       },
@@ -81,7 +83,8 @@
         // 更新数据
         console.info('pulling up and load data')
         this.page++
-        this.getRecordList(res => {
+        this.getRecordList(10, this.page, res => {
+          // this.more = res.data.length === LIMIT
           let arr = this.dataArray.concat(res.data)
           this.dataArray = arr
         })
@@ -100,6 +103,9 @@
           this.rebuildScroll()
         },
         deep: true
+      },
+      dataArray(current, prev) {
+        this.pullUpLoad = current.length >= 10
       }
     },
     components: {
@@ -113,6 +119,9 @@
   @import "~common/stylus/variable"
   @import "~common/stylus/mixin"
 
+  .sell-record
+  .choose-custom
+    min-height :100vh
   .header
     background: $color-F3F3F3
     color: $color-848484

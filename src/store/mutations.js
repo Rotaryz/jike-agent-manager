@@ -6,7 +6,7 @@ const mutations = {
   },
   [TYPES.SELEC_CUSTOM](state, custom) {
     state.customName = custom.name
-    state.customCall = custom.mobile
+    state.customMobile = custom.mobile
   },
   [TYPES.HOME_TAB](state, idx) {
     state.homeTab = idx

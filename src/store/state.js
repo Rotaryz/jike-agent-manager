@@ -1,7 +1,7 @@
 const state = {
   argument: {},
   customName: '',
-  customCall: '',
+  customMobile: '',
   homeTab: 0
 }
 

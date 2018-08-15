@@ -44,6 +44,8 @@
   import { ERR_OK } from 'common/js/config'
   import Toast from 'components/toast/toast'
 
+  const  LIMIT = 10
+
   export default {
     name: 'Demo',
     props: {
@@ -85,7 +87,7 @@
               this.$refs.toast.show(res.message)
               return
             }
-            this.more = !!res.data.length
+            this.more = res.data.length === LIMIT
             callback(res)
           })
       },
@@ -95,6 +97,7 @@
         console.info('pulling up and load data')
         this.page++
         this.getCustomList(10, this.page, res => {
+          this.more = res.data.length === LIMIT
           let arr = this.dataArray.concat(res.data)
           this.dataArray = arr
         })
@@ -113,6 +116,9 @@
           this.rebuildScroll()
         },
         deep: true
+      },
+      dataArray(current, prev) {
+        this.pullUpLoad = current.length >= 10
       }
     },
     components: {
