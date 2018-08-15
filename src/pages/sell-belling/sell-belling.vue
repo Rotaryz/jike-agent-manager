@@ -277,7 +277,7 @@
       },
       mobile(cur, prev) {
         let num = cur
-        num = num.match(/\d(\d{0,10})/) ? num.match(/\d(\d{0,10})/)[0] : ''
+        num = num.match(/\d{0,11}/) ? num.match(/\d{0,11}/)[0] : ''
         this.mobile = num
         this.form.mobile = num
       }
