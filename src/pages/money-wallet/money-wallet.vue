@@ -115,6 +115,7 @@
         })
       },
       _getPayList(data, callback) {
+        if (!this.more) return
         // 0=全部;2=加盟推荐;3=分销收入;4=推荐分红;11提现
         Wallet.getPayList(data).then(res => {
           if (res.error !== ERR_OK) {
