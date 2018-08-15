@@ -99,7 +99,6 @@
         this.noMore = false
         Agent.getMyTeam(this.page).then(res => {
           if (res.error === ERR_OK) {
-            console.log(res)
             this.dataArray = res.data
             this.order = res.total_commission_num
             this.money = res.total_commission_income
@@ -113,7 +112,6 @@
         if (this.noMore) return
         Agent.getMyTeam(this.page).then(res => {
           if (res.error === ERR_OK) {
-            console.log(res)
             this.dataArray.push(...res.data)
             this._isMore(res)
           } else {
@@ -176,6 +174,7 @@
     margin-bottom: 80px
     position: relative
     z-index: 2
+    icon-image-jpg(pic-banner_myteam)
     .team-title
       layout(row)
       justify-content: center
