@@ -26,7 +26,7 @@
           <li class="item-wrapper" @click="toDetailPage(item)" v-for="(item,index) in dataArray" :key="index">
             <div class="item one">
               <p class="left">{{item.title}}</p>
-              <p class="right">+{{item.total}}</p>
+              <p class="right">{{item.total}}</p>
             </div>
             <div class="item two">
               <p class="left">【{{orderType['' + item.order_type]}}】</p>
