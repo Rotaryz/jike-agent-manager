@@ -21,13 +21,11 @@
     <div class="selec-list">
       <div class="list" @click="selcetAddress">
         <div class="name">所在地区</div>
-        <!--<input class="input" type="text" readonly  v-model="form.address" @click="selcetAddress" placeholder="请选择所在的地区">-->
         <p class="area-selec" :class="selecArea && 'black'" >{{ form.address }}</p>
         <div class="icon"></div>
       </div>
       <div class="list" @click="selecTrade">
         <div class="name">所属行业</div>
-        <!--<input class="input" type="text" readonly  v-model="form.industry" placeholder="请选择所属的行业">-->
         <p class="industry-selec" :class="selecIndustry && 'black'">{{ form.industry }}</p>
         <div class="icon"></div>
       </div>
@@ -35,11 +33,11 @@
     <ul class="msg-list">
       <li class="list">
         <div class="name">商品名称</div>
-        <input class="input readonly" type="text" readonly v-model="form.title" placeholder="请输入商品名称">
+        <p class="readonly">{{form.title}}</p>
       </li>
       <li class="list">
         <div class="name">剩余库存</div>
-        <input class="input readonly" type="text" readonly v-model="form.usable_account" placeholder="0">
+        <p class="readonly">{{form.usable_account}}套</p>
       </li>
       <li class="list">
         <div class="name">*购买数量</div>
@@ -415,6 +413,8 @@
         align-items: center
         &:last-child
           border-bottom: 0
+        .readonly
+          color: $color-BEB5A3
       .input
         color: $color-111313
         outline: none
