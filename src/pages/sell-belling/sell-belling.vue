@@ -33,7 +33,7 @@
     <ul class="msg-list">
       <li class="list">
         <div class="name">商品名称</div>
-        <input class="input" type="text"  v-model="form.title" placeholder="请输入商品名称">
+        <input class="input" type="text" readonly v-model="form.title" placeholder="请输入商品名称">
       </li>
       <li class="list">
         <div class="name">剩余库存</div>
@@ -93,12 +93,12 @@
 
 <script type="text/ecmascript-6">
   import TabList from 'components/tabList/tabList'
-  import { Custom } from 'api'
+  import { Custom, Account } from 'api'
   import { ERR_OK } from 'common/js/config'
   import Toast from 'components/toast/toast'
   import utils, { cityData } from 'common/js/utils'
   import storage from 'storage-controller'
-  import { WEI_SHANG } from 'common/js/constant'
+  import { WEI_SHANG, PROJECT_ARR } from 'common/js/constant'
 
   export default {
     name: 'sell-belling',
@@ -131,11 +131,10 @@
     created() {
       this._getProject()
       this.form.agent_merchant_id = this.$store.state.customName !== '' ? this.$route.query.id : null
-      // this.form.usable_account = this.$route.query.num ? `${this.$route.query.num}套` : ''
       this.form.name = this.$store.state.customName
       this.form.mobile = this.$store.state.customMobile
-      this.form.usable_account = this.$store.state.usable_account !== '' ? this.$store.state.usable_account + '套' : ''
       this.getIndustry()
+      this._getAccountInfo()
     },
     mounted() {
     },
@@ -147,7 +146,18 @@
     methods: {
       _getProject() {
         const project = storage.get('project')
+        const obj = PROJECT_ARR.find(val => val.project === project)
+        this.form.title = obj.name
         this.isWD = project === WEI_SHANG.project
+      },
+      _getAccountInfo() {
+        Account.getAccountInfo().then(res => {
+          if (res.error !== ERR_OK) {
+            this.$refs.toast.show(res.message)
+            return
+          }
+          this.form.usable_account = res.data.usable_account
+        })
       },
       getIndustry() {
         Custom.getIndustry()
@@ -193,7 +203,7 @@
             let id = this.$route.query.id
             setTimeout(() => {
               this.grayTip = false
-              this.$store.commit('SELEC_CUSTOM', {name: '', mobile: '', usable_account: ''})
+              this.$store.commit('SELEC_CUSTOM', {name: '', mobile: ''})
               this.$router.push({path: '/sell-record', query: { id }})
             }, 1000)
           })
@@ -227,7 +237,6 @@
       handlePickerCancel(e) {
       },
       handlePickerConfirm(e) {
-        console.log(e)
         let arr = []
         e.map(item => {
           if (item.value) {

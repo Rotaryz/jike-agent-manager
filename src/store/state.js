@@ -2,7 +2,6 @@ const state = {
   argument: {},
   customName: '',
   customMobile: '',
-  usable_account: '',
   homeTab: 0
 }
 

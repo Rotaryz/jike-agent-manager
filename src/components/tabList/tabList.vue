@@ -5,7 +5,7 @@
       <div class="tab">
         <div class="tab-left">
           <ul>
-            <li class="list" :class="tabLeftIndex == i && 'on'" v-for="(val, i) in industryList" :key="i" @click="tabLeftClick(i)">{{ val.name }}</li>
+            <li class="list" :class="tabLeftIndex == i && 'on'" v-for="(val, i) in industryList" v-if="val.parent_id === 0" :key="i" @click="tabLeftClick(i)">{{ val.name }}</li>
           </ul>
         </div>
         <div class="tab-right">
@@ -93,7 +93,7 @@
         width: 80px
         height: 100%
         overflow-y: scroll
-        background: $color-E4E4E4
+        background: $color-F3F3F3
         .list
           padding: 8px 0
           overflow: hidden
