@@ -37,8 +37,8 @@
       <div class="item-wrapper" @click="callPhone">
         <div class="left">AI商城数量</div>
         <div class="right project-right">
-          <div v-if="userInfo">{{userInfo.usable_account}}/{{userInfo.total_account}}</div>
-          <div v-else>0/0</div>
+          <div v-if="userInfo">{{userInfo.usable_account?userInfo.usable_account:0}}/{{userInfo.total_account?userInfo.total_account:0}}</div>
+          <div>0/0</div>
           <div class="arrow-right"></div>
         </div>
       </div>
@@ -126,7 +126,13 @@
         })
       },
       callPhone() {
-        const content = `数值为“${this.userInfo ? this.userInfo.usable_account : 0}/${this.userInfo ? this.userInfo.total_account : 0}”，若需要增加最大开通数，请联系平台客服。电话：${this.phoneNumber}`
+        let usable = 0
+        let total = 0
+        if (this.userInfo) {
+          usable = this.userInfo.usable_account || 0
+          total = this.userInfo.total_account || 0
+        }
+        const content = `数值为“${usable}/${total}”，若需要增加最大开通数，请联系平台客服。电话：${this.phoneNumber}`
         const confirmTxt = `立即拨打`
         this.$refs.confirmMsg.show({content, confirmTxt})
       },
