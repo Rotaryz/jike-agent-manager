@@ -137,7 +137,9 @@
 @import "~common/stylus/mixin"
 
 .manage-custom
+  fill-box()
   min-height :100vh
+  background: $color-white
   .header
     background: $color-F3F3F3
     color: $color-848484

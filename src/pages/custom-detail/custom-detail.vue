@@ -153,8 +153,11 @@
 <style scoped lang="stylus" rel="stylesheet/stylus">
   @import "~common/stylus/variable"
   @import "~common/stylus/mixin"
+
   .custom-detail
-    padding-bottom: 68px
+    fill-box()
+    min-height: 100vh
+    background: $color-white
     .header
       height: 140px
       bg-image('./pic-banner_team')

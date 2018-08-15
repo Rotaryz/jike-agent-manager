@@ -5,11 +5,11 @@
         <div class="left">
           <div class="list">
             <p class="name">*购买客户</p>
-            <input type="text" class="input" :class="($store.state.customName !== '') && 'readonly'" v-model="form.name" :readonly="($store.state.customName !== '')" placeholder="请输入客户名称">
+            <input type="text" class="input"  v-model="form.name"  placeholder="请输入客户名称">
           </div>
           <div class="list">
             <p class="name">*手机号码</p>
-            <input type="number" class="input" :class="($store.state.customMobile !== '') && 'readonly'" v-model="form.mobile" :readonly="($store.state.customMobile !== '')" placeholder="用于登录商户管理后台">
+            <input type="number" class="input"  v-model="form.mobile" placeholder="用于登录商户管理后台">
           </div>
         </div>
         <div class="right">
@@ -48,7 +48,7 @@
       </li>
       <li class="list">
         <div class="name">*销售总价</div>
-        <input class="input" type="number" v-model="form.total_price" placeholder="请输入销售总价">
+        <input class="input" type="number" v-model="total_price" placeholder="请输入销售总价">
         <div>元</div>
       </li>
     </ul>
@@ -125,6 +125,7 @@
         tabLeftIndex: 0, // 左边tab栏列表
         tabRightIndex: 0, // 右边tab栏列表
         industryList: '',
+        total_price: '',
         cityData,
         isWD: true,
         selecArea: false,
@@ -136,6 +137,14 @@
       this.form.agent_merchant_id = this.$store.state.customName !== '' ? this.$route.query.id : null
       this.form.name = this.$store.state.customName
       this.form.mobile = this.$store.state.customMobile
+      if (this.$store.state.customAddress !== '') {
+        this.selecArea = true
+        this.form.address = this.$store.state.customAddress
+      }
+      if (this.$store.state.customIndustry !== '') {
+        this.selecIndustry = true
+        this.form.industry = this.$store.state.customIndustry
+      }
       this.getIndustry()
       this._getAccountInfo()
     },
@@ -188,7 +197,7 @@
           this.$refs.toast.show('请输入购买AI微店的数量')
           return
         }
-        if (!this.form.total_price) {
+        if (!this.total_price) {
           this.$refs.toast.show('请输入购买AI微店的总价')
           return
         }
@@ -210,7 +219,7 @@
             let id = this.$route.query.id
             setTimeout(() => {
               this.grayTip = false
-              this.$store.commit('SELEC_CUSTOM', {name: '', mobile: ''})
+              this.$store.commit('SELEC_CUSTOM', {name: '', mobile: '', address: '', industry: ''})
               this.$router.push({path: '/sell-record', query: {id}})
             }, 1000)
           })
@@ -259,7 +268,15 @@
         this.$refs.picker.show()
       }
     },
-    watch: {},
+    watch: {
+      total_price(cur, prev) {
+        console.log(cur)
+        let value = cur
+        value = value.match(/\d+(\.\d{0,2})?/) ? value.match(/\d+(\.\d{0,2})?/)[0] : ''
+        this.total_price = value
+        this.form.total_price = value
+      }
+    },
     components: {
       TabList,
       Toast
@@ -273,8 +290,12 @@
 
   .sell-belling
     fill-box()
-    margin-top: 8px
     background: $color-F8F8F8
+    &:before
+      content: ''
+      display: block
+      height: 8px
+      background: $color-F8F8F8
     &::after
       display: block
       height: 65px

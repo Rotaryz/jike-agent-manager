@@ -203,9 +203,13 @@
   @import "~common/stylus/mixin"
 
   .custom-create
-    margin-top: 8px
-    min-height: 95vh
+    min-height: 100vh
     background: $color-white
+    &:before
+      content: ''
+      display: block
+      height: 8px
+      background: $color-F8F8F8
     .input-list
       background: $color-white
       .list

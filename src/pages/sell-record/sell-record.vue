@@ -124,6 +124,8 @@
   @import "~common/stylus/mixin"
 
   .sell-record
+    fill-box()
+    background: $color-white
   .choose-custom
     min-height :100vh
   .header
