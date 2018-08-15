@@ -42,7 +42,7 @@
       <!--&gt;-->
         <ul class="abso-list" v-if="dataArray.length">
           <li v-for="(item,index) in msg.agent_sale_records" :key="item.id" class="list">
-            <div class="date">{{ item.created_at }}</div>
+            <div class="date">{{ item.created_at.split(' ')[0] }}</div>
             <div class="count">{{ item.num }}</div>
             <div class="money">{{ item.total_price }}</div>
           </li>
@@ -241,7 +241,7 @@
         justify-content: space-between
         .custom
           text-align: left
-          width: 50%
+          flex: 1
         .count
           text-align: center
           flex: 1
@@ -285,14 +285,16 @@
         display: flex
         justify-content: space-between
         .date
-          width: 50%
+          flex: 1
+          text-align: left
           color: $color-343439
         .count
           flex: 1
           text-align: center
-          color: $color-AA905
+          color: $color-666666
         .money
           flex: 1
+          color: $color-AA905D
           text-align: right
     .bot-btn
       position: fixed
