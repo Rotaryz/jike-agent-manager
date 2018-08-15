@@ -13,7 +13,7 @@
   import storage from 'storage-controller'
 
   const COMPONENT_NAME = 'App'
-  const DEFAULT_TITLE = '登录'
+  const DEFAULT_TITLE = '代理商后台'
   const HOME_ROUTE = '/home'
 
   export default {
