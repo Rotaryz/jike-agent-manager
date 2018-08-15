@@ -61,7 +61,7 @@
 
     <div class="pop" v-if="popShow">
       <div class="pop-main">
-        <p class="tip">确定为客户开通{{form.num}}个AI微店吗？</p>
+        <p class="tip">确定为客户开通{{form.num}}个{{isWD?'AI微店':'AI名片'}}吗？</p>
         <div class="confirm-btn">
           <span class="pop-btn" @click="cancel">取消</span>
           <span class="pop-btn right" @click="confirm">确定</span>
@@ -97,6 +97,8 @@
   import { ERR_OK } from 'common/js/config'
   import Toast from 'components/toast/toast'
   import utils, { cityData } from 'common/js/utils'
+  import storage from 'storage-controller'
+  import { WEI_SHANG } from 'common/js/constant'
 
   export default {
     name: 'sell-belling',
@@ -122,10 +124,12 @@
         tabLeftIndex: 0, // 左边tab栏列表
         tabRightIndex: 0, // 右边tab栏列表
         industryList: '',
-        cityData
+        cityData,
+        isWD: true
       }
     },
     created() {
+      this._getProject()
       this.form.agent_merchant_id = this.$route.query.id
       this.form.usable_account = this.$route.query.num ? `${this.$route.query.num}套` : ''
       this.form.name = this.$store.state.customName
@@ -140,6 +144,10 @@
       }
     },
     methods: {
+      _getProject() {
+        const project = storage.get('project')
+        this.isWD = project === WEI_SHANG.project
+      },
       getIndustry() {
         Custom.getIndustry()
           .then(res => {
