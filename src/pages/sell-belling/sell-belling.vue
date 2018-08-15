@@ -5,11 +5,11 @@
         <div class="left">
           <div class="list">
             <p class="name">*购买客户</p>
-            <input type="text" class="input" v-model="form.name" :readonly="($store.state.customName !== '')" placeholder="请输入客户名称">
+            <input type="text" class="input" :class="($store.state.customName !== '') && 'readonly'" v-model="form.name" :readonly="($store.state.customName !== '')" placeholder="请输入客户名称">
           </div>
           <div class="list">
             <p class="name">*手机号码</p>
-            <input type="number" class="input" v-model="form.mobile" :readonly="($store.state.customName !== '')" placeholder="用于登录商户管理后台">
+            <input type="number" class="input" :class="($store.state.mobile !== '') && 'readonly'" v-model="form.mobile" :readonly="($store.state.mobile !== '')" placeholder="用于登录商户管理后台">
           </div>
         </div>
         <div class="right">
@@ -33,11 +33,11 @@
     <ul class="msg-list">
       <li class="list">
         <div class="name">商品名称</div>
-        <input class="input" type="text" readonly v-model="form.title" placeholder="请输入商品名称">
+        <input class="input readonly" type="text" readonly v-model="form.title" placeholder="请输入商品名称">
       </li>
       <li class="list">
         <div class="name">剩余库存</div>
-        <input class="input" type="text" readonly  v-model="form.usable_account" placeholder="剩余库存">
+        <input class="input readonly" type="text" readonly  v-model="form.usable_account" placeholder="剩余库存">
       </li>
       <li class="list">
         <div class="name">*购买数量</div>
@@ -286,7 +286,7 @@
             &:last-child
               border-bottom: 0
             .input
-              color: $color-BEB5A3
+              color: $color-111313
               outline: none
               flex: 1
               margin-right: 4px
@@ -294,6 +294,8 @@
               line-height: 60px
               &::-webkit-input-placeholder
                 color: $color-C1C3C3
+              &.readonly
+                color: $color-BEB5A3
             .name
               width: 80px
         .right
@@ -316,7 +318,10 @@
             background-size: 100% 100%
             margin-bottom: 10px
           .choose-custom
-            padding: 4px 6px
+            width: 62px
+            height: 22px
+            text-align: center
+            line-height: 22px
             font-size: 10px
             color: $color-C3A66C
             border:1px solid $color-C3A66C
@@ -336,7 +341,7 @@
         &:last-child
           border-bottom: 0
       .input
-        color: $color-BEB5A3
+        color: $color-111313
         outline: none
         flex: 1
         height: 60px
@@ -364,13 +369,15 @@
         &:last-child
           border-bottom: 0
       .input
-        color: $color-BEB5A3
+        color: $color-111313
         outline: none
         flex: 1
         height: 60px
         line-height: 60px
         &::-webkit-input-placeholder
           color: $color-C1C3C3
+        &.readonly
+          color: $color-BEB5A3
       .name
         width: 80px
 
@@ -388,7 +395,7 @@
     .textarea
       height: 121px
       width: 100%
-      color: $color-BEB5A3
+      color: $color-111313
       margin-top: 5px
       border: 1px solid rgba(0,0,0,0.1)
       box-sizing: border-box
