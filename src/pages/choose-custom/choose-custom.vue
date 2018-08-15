@@ -77,7 +77,7 @@
       },
       getRecordList(limit, page, callback) { // 获取客户列表
         if (!this.more) return
-        Custom.getCustomList(limit, page)
+        Custom.agentMerchant(limit, page)
           .then(res => {
             if (res.error !== ERR_OK) {
               this.$refs.toast.show(res.message)

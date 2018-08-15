@@ -233,7 +233,12 @@
         justify-content: space-between
         .custom
           text-align: left
-        .percent
+          width: 50%
+        .count
+          text-align: center
+          flex: 1
+        .money
+          flex: 1
           text-align right
       .list
         background: $color-white
@@ -272,9 +277,15 @@
         display: flex
         justify-content: space-between
         .date
+          width: 50%
           color: $color-343439
         .count
+          flex: 1
+          text-align: center
           color: $color-AA905
+        .money
+          flex: 1
+          text-align: right
     .bot-btn
       position: fixed
       bottom: 0
