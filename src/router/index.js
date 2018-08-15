@@ -211,8 +211,10 @@ const HOME_ROUTE = '/home'
 route.beforeEach((to, from, next) => {
   document.title = to.meta.title ? to.meta.title : DEFAULT_TITLE
   // const token = storage.has('token')
-  // if (!token) {、
+  // if (!token) {
   //   next({path: DEFAULT_ROUTE, replace: true})
+  // } else {
+  //
   // }
   if (to.path === HOME_ROUTE) {
     const token = storage.has('token')
