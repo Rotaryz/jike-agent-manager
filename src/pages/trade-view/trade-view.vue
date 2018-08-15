@@ -121,8 +121,8 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import {ERR_OK} from 'common/js/config'
-  import {Trade} from 'api'
+  import { ERR_OK } from 'common/js/config'
+  import { Trade } from 'api'
   import Toast from 'components/toast/toast'
 
   export default {
@@ -597,6 +597,10 @@
     box-sizing: border-box
     -moz-box-sizing: border-box
     -webkit-box-sizing: border-box
+
+  .trade-box
+    fill-box()
+    background: $color-F8F8F8
 
   .trade-bg
     position: fixed

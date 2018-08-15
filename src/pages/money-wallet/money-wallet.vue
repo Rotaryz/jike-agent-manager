@@ -33,7 +33,7 @@
             </div>
             <div class="item three">
               <p class="left">{{item.created_at}}</p>
-              <p class="right">累计 <em class="em">{{item.after_remaining}}</em></p>
+              <p class="right">余额 <em class="em">{{item.after_remaining}}</em></p>
             </div>
           </li>
         </ul>
