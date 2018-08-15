@@ -38,7 +38,7 @@
         <div class="left">AI商城数量</div>
         <div class="right project-right">
           <div v-if="userInfo">{{userInfo.usable_account?userInfo.usable_account:0}}/{{userInfo.total_account?userInfo.total_account:0}}</div>
-          <div>0/0</div>
+          <div v-else>0/0</div>
           <div class="arrow-right"></div>
         </div>
       </div>
