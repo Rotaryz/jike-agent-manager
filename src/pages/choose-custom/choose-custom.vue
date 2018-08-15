@@ -141,6 +141,7 @@
     bottom: 0
     left: 0
     right: 0
+    overflow: hidden
     .custom-list
       padding: 0 15px
       .list
