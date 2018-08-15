@@ -50,7 +50,7 @@
       <!--</scroll>-->
     <!--</div>-->
     <footer class="bot-btn">
-      <a :href="`tel:${ dataArray.mobile }`" class="btn">联系客户</a>
+      <a :href="`tel:${ msg.mobile }`" class="btn">联系客户</a>
     </footer>
     <toast ref="toast"></toast>
   </div>

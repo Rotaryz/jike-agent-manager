@@ -7,6 +7,8 @@ const mutations = {
   [TYPES.SELEC_CUSTOM](state, custom) {
     state.customName = custom.name
     state.customMobile = custom.mobile
+    state.usable_account = custom.usable_account
+    console.log(custom, 'ssss')
   },
   [TYPES.HOME_TAB](state, idx) {
     state.homeTab = idx

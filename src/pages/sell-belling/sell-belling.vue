@@ -131,9 +131,10 @@
     created() {
       this._getProject()
       this.form.agent_merchant_id = this.$store.state.customName !== '' ? this.$route.query.id : null
-      this.form.usable_account = this.$route.query.num ? `${this.$route.query.num}套` : ''
+      // this.form.usable_account = this.$route.query.num ? `${this.$route.query.num}套` : ''
       this.form.name = this.$store.state.customName
       this.form.mobile = this.$store.state.customMobile
+      this.form.usable_account = this.$store.state.usable_account !== '' ? this.$store.state.usable_account + '套' : ''
       this.getIndustry()
     },
     mounted() {
@@ -192,7 +193,7 @@
             let id = this.$route.query.id
             setTimeout(() => {
               this.grayTip = false
-              this.$store.commit('SELEC_CUSTOM', {name: '', bobile: ''})
+              this.$store.commit('SELEC_CUSTOM', {name: '', mobile: '', usable_account: ''})
               this.$router.push({path: '/sell-record', query: { id }})
             }, 1000)
           })

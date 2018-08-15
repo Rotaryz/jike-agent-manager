@@ -65,13 +65,14 @@
     },
     methods: {
       selecCustom(obj, id) {
-        this.$store.commit('SELEC_CUSTOM', obj)
         Custom.getCustomMsg(id)
           .then(res => {
             if (res.error !== ERR_OK) {
               this.$refs.toast.show(res.message)
             } else {
-              this.$router.push({ path: '/sell-belling', query: {num: res.data.usable_account, id: res.data.agent_merchant_id} })
+              obj.usable_account = res.data.usable_account
+              this.$store.commit('SELEC_CUSTOM', obj)
+              this.$router.push({ path: '/sell-belling', query: {id: res.data.agent_merchant_id} })
             }
           })
       },
