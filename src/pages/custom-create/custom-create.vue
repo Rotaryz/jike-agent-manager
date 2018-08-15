@@ -203,6 +203,7 @@
   @import "~common/stylus/mixin"
 
   .custom-create
+    font-family: $font-family-regular
     min-height: 100vh
     background: $color-white
     &:before

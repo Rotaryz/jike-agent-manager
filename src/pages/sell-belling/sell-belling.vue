@@ -9,7 +9,7 @@
           </div>
           <div class="list">
             <p class="name">*手机号码</p>
-            <input type="number" class="input"  v-model="form.mobile" placeholder="用于登录商户管理后台">
+            <input type="number" class="input"  v-model="mobile" placeholder="用于登录商户管理后台">
           </div>
         </div>
         <div class="right">
@@ -125,6 +125,7 @@
         industryList: '',
         total_price: '',
         cityData,
+        mobile: '',
         isWD: true,
         selecArea: false,
         selecIndustry: false
@@ -273,6 +274,12 @@
         value = value.match(/\d+(\.\d{0,2})?/) ? value.match(/\d+(\.\d{0,2})?/)[0] : ''
         this.total_price = value
         this.form.total_price = value
+      },
+      mobile(cur, prev) {
+        let num = cur
+        num = num.match(/\d(\d{0,10})/) ? num.match(/\d(\d{0,10})/)[0] : ''
+        this.mobile = num
+        this.form.mobile = num
       }
     },
     components: {
@@ -287,6 +294,7 @@
   @import "~common/stylus/mixin"
 
   .sell-belling
+    font-family: $font-family-regular
     fill-box()
     background: $color-F8F8F8
     &:before

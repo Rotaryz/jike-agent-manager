@@ -155,6 +155,7 @@
   @import "~common/stylus/mixin"
 
   .custom-detail
+    font-family: $font-family-regular
     fill-box()
     min-height: 100vh
     background: $color-white
@@ -209,6 +210,7 @@
             color: $color-C3A66C
             font-size: $font-size-24
             margin-bottom: 10px
+            font-family: $font-family-dinbold
 
     .list-sec
       background: $color-white

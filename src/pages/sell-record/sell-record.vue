@@ -124,6 +124,7 @@
   @import "~common/stylus/mixin"
 
   .sell-record
+    font-family: $font-family-regular
     fill-box()
     background: $color-white
   .choose-custom
