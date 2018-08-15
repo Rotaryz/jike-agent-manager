@@ -7,7 +7,7 @@
     </header>
     <section class="select-wrapper">
       <div class="title">
-        <div class="txt">收益明细</div>
+        <div class="txt">收支明细</div>
         <div class="more">
           <div class="icon-m"></div>
           <div class="txt-m" @click="showSelect">筛选</div>

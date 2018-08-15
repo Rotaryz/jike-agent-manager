@@ -13,8 +13,7 @@
   import storage from 'storage-controller'
 
   const COMPONENT_NAME = 'App'
-  const DEFAULT_TITLE = '登录'
-  const DEFAULT_ROUTE = '/login'
+  const DEFAULT_TITLE = '代理商后台'
   const HOME_ROUTE = '/home'
 
   export default {
@@ -34,8 +33,8 @@
     },
     methods: {
       _checkAuthorize() {
-        if (this.hasToken && this.currentRoute === DEFAULT_ROUTE) {
-          this.$router.replace({path: '/home'})
+        if (!this.hasToken) {
+          this.$router.replace({path: '/login'})
         }
       }
     },
@@ -46,8 +45,8 @@
     },
     watch: {
       '$route'(to, from) {
-        this.currentRoute = to.path
         document.title = to.meta.title ? to.meta.title : DEFAULT_TITLE
+        console.log(this.entryAnimation)
         if (to.path === HOME_ROUTE) {
           this.routerArr = []
           this.entryAnimation = 'out'

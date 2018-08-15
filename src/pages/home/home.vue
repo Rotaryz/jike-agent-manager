@@ -277,7 +277,7 @@
         border-radius: 100px
         margin-top: 11px
       .money
-        font-family: $font-family-bold
+        font-family: $font-family-dinbold
         font-size: 60px
         color: $color-C3A66C
         letter-spacing: 1px
@@ -307,7 +307,7 @@
           row-center()
         .data-item
           .top
-            font-family: $font-family-bold
+            font-family: $font-family-dinbold
             font-size: $font-size-24
             color: $color-C3A66C
             text-align: center

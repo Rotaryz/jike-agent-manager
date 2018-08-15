@@ -68,7 +68,8 @@
             <img src="./icon-upload_recommender@2x.png" alt="">
           </div>
           <div class="updata-text">请上传付款凭证</div>
-          <div class="updata-img-box" v-if="selectImg" :style="{backgroundImage: 'url(' + imgUrl + ')',backgroundPosition: 'center',backgroundRepeat: 'no-repeat',backgroundSize: 'cover'}"></div>
+          <div class="updata-img-box" v-if="selectImg"
+               :style="{backgroundImage: 'url(' + imgUrl + ')',backgroundPosition: 'center',backgroundRepeat: 'no-repeat',backgroundSize: 'cover'}"></div>
           <input type="file" class="avatar-input" id="header-logo" @change="_fileChange($event)" accept="image/*">
           <div class="updata-shadow" v-if="selectImg">
             <div class="shadow-btn">重新上传</div>
@@ -109,10 +110,10 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import {cityData} from 'common/js/utils'
-  import { ERR_OK } from 'common/js/config'
+  import utils, {cityData} from 'common/js/utils'
+  import {ERR_OK} from 'common/js/config'
   import Toast from 'components/toast/toast'
-  import { Agent, UpLoad } from 'api'
+  import {Agent, UpLoad} from 'api'
 
   export default {
     name: 'agent-entering',
@@ -262,8 +263,8 @@
           this.$refs.toast.show('请输入您的名称')
           return
         }
-        if (this.phone.length === 0) {
-          this.$refs.toast.show('请输入您的手机号码')
+        if (!utils.checkIsPhoneNumber(this.phone)) {
+          this.$refs.toast.show('请输入正确的手机号码')
           return
         }
         if (this.level < 1) {
@@ -288,9 +289,7 @@
         }
         Agent.newAddAgent(data).then(res => {
           if (res.error === ERR_OK) {
-            console.log(res)
             this.showShadow = true
-            this.$refs.toast.show('提交成功')
           } else {
             this.$refs.toast.show(res.message)
           }
@@ -313,6 +312,7 @@
 
   .entering-box
     padding-bottom: 85px
+    min-height: 100vh
 
   .entering-list
     padding: 0 15px
@@ -438,6 +438,7 @@
         border-radius: 50px
         border: 1px solid #fff
         font-family: $font-family-regular
+
   .avatar-input
     position: absolute
     width: 100%
@@ -446,6 +447,7 @@
     top: 0
     z-index: 14
     opacity: 0
+
   .updata-img-box
     position: absolute
     width: 100%
@@ -454,6 +456,7 @@
     top: 0
     background: #fff
     z-index: 11
+
   .jump-btn
     height: 65px
     position: fixed

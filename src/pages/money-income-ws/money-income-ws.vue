@@ -56,7 +56,7 @@
   import { ERR_OK } from 'common/js/config'
   import EmptyData from 'components/empty-data/empty-data'
 
-  const selectTab = ['全部', '账号销售', '加盟推荐', '分销收入', '推荐分红', '提现']
+  const selectTab = ['全部', '账号销售', '加盟推荐', '分销收入', '推荐分红']
 
   export default {
     name: 'MoneyWallet',
@@ -168,7 +168,6 @@
             this.reqType = 4
             break
           case 5:
-            this.reqType = 11
             break
           default:
             break
@@ -223,7 +222,7 @@
       },
       // 类型1=账号销售;2=加盟推荐;3=分销收入;4=推荐分红;11提现
       orderType() {
-        return {'1': '账号销售', '2': '加盟推荐', '3': '分销收入', '4': '推荐分红', '11': '提现'}
+        return {'1': '账号销售', '2': '加盟推荐', '3': '分销收入', '4': '推荐分红'}
       }
     }
   }

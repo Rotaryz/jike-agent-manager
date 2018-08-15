@@ -10,7 +10,7 @@
       <div class="big-small text-mt">A、代理商管理系统的所有数据在本日每小时更新一次。例如，8月1日0点、1点、2点...会定时进行更新。</div>
       <div class="big-small text-mt-small">B、生意数据概览的数据统计仅供参考，最终收入以收益明细的实际款项为准。</div>
       <div class="big-title title-mt-two">2. 数据查询范围</div>
-      <div class="big-small text-mt">生意数据概览目前除总收入外，其他数据指标只保留了最近30天，未来根据代理商的实际业务需求，我们会逐步增加年、月、日及自定义时间查询。</div>
+      <div class="big-small text-mt">生意数据概览目前除总收入外，其他数据指标只保留了最近15天，未来根据代理商的实际业务需求，我们会逐步增加年、月、日及自定义时间查询。</div>
       <div class="echarts-title box-mt">
         <div class="line"></div>
         <div class="text">收入统计口径</div>

@@ -7,13 +7,13 @@
     <form action="" class="content">
       <section class="input-wrapper mobile">
         <div class="option">手机号</div>
-        <input class="input" type="text" placeholder="请输入手机号码" maxlength="11" v-model="phoneNumber">
+        <input class="input" type="number" placeholder="请输入手机号码" maxlength="11" v-model="phoneNumber">
         <div class="get-code" v-if="allowGetCode" @click="getCode">获取验证码</div>
         <div class="get-code coding" v-else>重新获取{{codeSeconds}}s</div>
       </section>
       <section class="input-wrapper">
         <div class="option">验证码</div>
-        <input class="input" type="text" placeholder="请输入验证码" maxlength="11" v-model="authCode">
+        <input class="input" type="number" placeholder="请输入验证码" maxlength="11" v-model="authCode">
       </section>
       <section class="input-wrapper more" @click="showSelect">
         <div class="option">{{project[selectIndex].name}}</div>
@@ -201,32 +201,23 @@
             height: 12.5px
             icon-image(icon-expand_login)
         .input
-          outline: none
-          margin-left: 15px
+          height: 40px
           flex: 1
+          margin-left: 15px
           font-size: $font-size-14
           color: $color-111313
-          line-height: 1
           &::-webkit-input-placeholder
-            font-family: $font-family-regular
-            font-size: $font-size-12
             color: $color-C1C3C3
-            line-height: 12px
+            font-size: $font-size-12
           &:-moz-placeholder
-            font-family: $font-family-regular
-            font-size: $font-size-12
             color: $color-C1C3C3
-            line-height: 12px
+            font-size: $font-size-12
           &::-moz-placeholder
-            font-family: $font-family-regular
-            font-size: $font-size-12
             color: $color-C1C3C3
-            line-height: 12px
+            font-size: $font-size-12
           &:-ms-input-placeholder
-            font-family: $font-family-regular
-            font-size: $font-size-12
             color: $color-C1C3C3
-            line-height: 12px
+            font-size: $font-size-12
       .btn-login
         display: block
         margin: 42px 0 10px

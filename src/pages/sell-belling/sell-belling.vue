@@ -39,22 +39,22 @@
       </li>
       <li class="list">
         <div class="name">剩余库存</div>
-        <input class="input readonly" type="text" readonly  v-model="form.usable_account" placeholder="0">
+        <input class="input readonly" type="text" readonly v-model="form.usable_account" placeholder="0">
       </li>
       <li class="list">
         <div class="name">*购买数量</div>
-        <input class="input" type="number"  v-model="form.num" placeholder="请输入购买数量">
+        <input class="input" type="number" v-model="form.num" placeholder="请输入购买数量">
         <div>套</div>
       </li>
       <li class="list">
         <div class="name">*销售总价</div>
-        <input class="input" type="number"  v-model="form.total_price" placeholder="请输入销售总价">
+        <input class="input" type="number" v-model="form.total_price" placeholder="请输入销售总价">
         <div>元</div>
       </li>
     </ul>
     <div class="remark">
       <div class="name">备注</div>
-      <textarea class="textarea" type="textarea" v-model="form.note" maxlength="200" placeholder="可在此写客户备注，不超过200字" ></textarea>
+      <textarea class="textarea" type="textarea" v-model="form.note" maxlength="200" placeholder="可在此写客户备注，不超过200字"></textarea>
       <div class="count">{{ count }}/200</div>
     </div>
     <footer class="bot-btn">
@@ -104,8 +104,7 @@
 
   export default {
     name: 'sell-belling',
-    props: {
-    },
+    props: {},
     data() {
       return {
         form: {
@@ -212,7 +211,7 @@
             setTimeout(() => {
               this.grayTip = false
               this.$store.commit('SELEC_CUSTOM', {name: '', mobile: ''})
-              this.$router.push({path: '/sell-record', query: { id }})
+              this.$router.push({path: '/sell-record', query: {id}})
             }, 1000)
           })
       },
@@ -260,8 +259,7 @@
         this.$refs.picker.show()
       }
     },
-    watch: {
-    },
+    watch: {},
     components: {
       TabList,
       Toast
@@ -274,10 +272,15 @@
   @import "~common/stylus/mixin"
 
   .sell-belling
+    fill-box()
     margin-top: 8px
-    padding-bottom: 68px
+    background: $color-F8F8F8
+    &::after
+      display: block
+      height: 65px
+      content: ''
     .header
-      padding:0 10px
+      padding: 0 10px
       background: $color-white
       .top-msg
         display: flex
@@ -289,7 +292,7 @@
           font-size: $font-size-14
           padding-right: 78px
           .list
-            layout(row,block,nowrap)
+            layout(row, block, nowrap)
             border-bottom: 1px solid $color-E3E6E9
             height: 60px
             line-height: 60px
@@ -317,7 +320,7 @@
           width: 68px
           height: 120px
           background: $color-white
-          layout(column,block,nowrap)
+          layout(column, block, nowrap)
           justify-content: center
           align-items: center
           padding-left: 10px
@@ -336,7 +339,7 @@
             line-height: 22px
             font-size: 10px
             color: $color-C3A66C
-            border:1px solid $color-C3A66C
+            border: 1px solid $color-C3A66C
             border-radius: 100px
 
     .selec-list
@@ -348,7 +351,7 @@
         font-size: $font-size-14
         height: 60px
         line-height: 60px
-        layout(row,block,nowrap)
+        layout(row, block, nowrap)
         align-items: center
         &:last-child
           border-bottom: 0
@@ -387,7 +390,7 @@
         font-size: $font-size-14
         height: 60px
         line-height: 60px
-        layout(row,block,nowrap)
+        layout(row, block, nowrap)
         align-items: center
         &:last-child
           border-bottom: 0
@@ -405,7 +408,6 @@
       .name
         width: 80px
 
-
   .remark
     margin-top: 8px
     padding: 20px 15px
@@ -421,7 +423,7 @@
       width: 100%
       color: $color-111313
       margin-top: 5px
-      border: 1px solid rgba(0,0,0,0.1)
+      border: 1px solid rgba(0, 0, 0, 0.1)
       box-sizing: border-box
       padding: 5px
       padding-bottom: 22px
@@ -446,6 +448,7 @@
     box-sizing: border-box
     border-top-1px(#e3e3e3)
     height: 65px
+
   .btn
     background: $color-C3A66C
     font-size: $font-size-16
@@ -462,8 +465,8 @@
     right: 0
     top: 0
     bottom: 0
-    z-index:100
-    background: rgba(0,0,0,0.6)
+    z-index: 100
+    background: rgba(0, 0, 0, 0.6)
     .pop-main
       position: absolute
       top: 30%
@@ -502,7 +505,7 @@
   .gray-tip
     width: 250px
     height: 40px
-    background: rgba(0,0,0,0.7)
+    background: rgba(0, 0, 0, 0.7)
     border-radius: 4px
     text-align: center
     line-height: 40px
@@ -521,7 +524,7 @@
     right: 0
     top: 0
     bottom: 0
-    background: rgba(0,0,0,0.7)
+    background: rgba(0, 0, 0, 0.7)
     .tab-list
       position: absolute
       left: 0
@@ -541,7 +544,7 @@
 
     .tab
       height: 220px
-      overflow:hidden
+      overflow: hidden
       display: flex
       font-size: $font-size-14
       .tab-left
@@ -553,8 +556,8 @@
           padding: 8px 0
           overflow: hidden
           &.on
-           background: $color-white
-           color: $color-C3A66C
+            background: $color-white
+            color: $color-C3A66C
       .tab-right
         flex: 1
         height: 220px

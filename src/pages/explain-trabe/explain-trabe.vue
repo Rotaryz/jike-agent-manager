@@ -10,7 +10,7 @@
       <div class="big-small text-mt">A、代理商管理系统的所有数据在本日每小时更新一次。例如，8月1日0点、1点、2点...会定时进行更新。</div>
       <div class="big-small text-mt-small">B、生意数据概览的数据统计仅供参考，最终收入以收益明细的实际款项为准。</div>
       <div class="big-title title-mt-two">2. 数据查询范围</div>
-      <div class="big-small text-mt">生意数据概览目前除总收入外，其他数据指标只保留了最近30天，未来根据代理商的实际业务需求，我们会逐步增加年、月、日及自定义时间查询。</div>
+      <div class="big-small text-mt">生意数据概览目前除总收入外，其他数据指标只保留了最近15天，未来根据代理商的实际业务需求，我们会逐步增加年、月、日及自定义时间查询。</div>
       <div class="echarts-title box-mt">
         <div class="line"></div>
         <div class="text">收入统计口径</div>
@@ -26,7 +26,7 @@
       <div class="big-title title-mt-two">3. 核心数据指标</div>
       <div class="big-small text-mt">每日销售账号个数、推荐代理商个数、团队分销单数。这三个指标直接影响代理商收入中的4种类型收入。</div>
       <div class="big-title title-mt-two">4. 新增团队成员</div>
-      <div class="big-small text-mt"><span>新增团队成员会影响团队分销单数，所以对于代理商也较为重要，我们提供了近30天的数据统计。新增团队成员的说明请查看</span><span class="jump-color"><router-link class="jump-color" to="/explain-team">我的团队业务说明</router-link></span>。</div>
+      <div class="big-small text-mt"><span>新增团队成员会影响团队分销单数，所以对于代理商也较为重要，我们提供了近15天的数据统计。新增团队成员的说明请查看</span><span class="jump-color"><router-link class="jump-color" to="/explain-team">我的团队业务说明</router-link></span>。</div>
       <div class="big-title title-mt-two">5. 环比</div>
       <div class="big-small text-mt">环比增长率=（本期数-上期数）/上期数*100%。</div>
     </div>
