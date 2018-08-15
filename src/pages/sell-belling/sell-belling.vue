@@ -5,11 +5,11 @@
         <div class="left">
           <div class="list">
             <p class="name">*购买客户</p>
-            <input type="text" class="input" v-model="form.name" :readonly="this.$route.query.id" placeholder="请输入客户名称">
+            <input type="text" class="input" v-model="form.name" :readonly="($store.state.customName !== '')" placeholder="请输入客户名称">
           </div>
           <div class="list">
             <p class="name">*手机号码</p>
-            <input type="text" class="input" v-model="form.mobile" :readonly="this.$route.query.id" placeholder="用于登录商户管理后台">
+            <input type="number" class="input" v-model="form.mobile" :readonly="($store.state.customName !== '')" placeholder="用于登录商户管理后台">
           </div>
         </div>
         <div class="right">
@@ -130,11 +130,12 @@
     },
     created() {
       this._getProject()
-      this.form.agent_merchant_id = this.$route.query.id
+      this.form.agent_merchant_id = this.$store.state.customName !== '' ? this.$route.query.id : null
       this.form.usable_account = this.$route.query.num ? `${this.$route.query.num}套` : ''
       this.form.name = this.$store.state.customName
-      this.form.mobile = this.$store.state.customCall
+      this.form.mobile = this.$store.state.customMobile
       this.getIndustry()
+      console.log('store', this.$store.state.customName)
     },
     mounted() {
     },
@@ -182,7 +183,6 @@
           this.$refs.toast.show('请输入购买AI微店的总价')
           return
         }
-
         Custom.openBill(this.form)
           .then(res => {
             if (res.error !== ERR_OK) {
@@ -193,6 +193,7 @@
             let id = this.$route.query.id
             setTimeout(() => {
               this.grayTip = false
+              this.$store.commit('SELEC_CUSTOM', {name: '', bobile: ''})
               this.$router.push({path: '/sell-record', query: { id }})
             }, 1000)
           })
