@@ -70,7 +70,6 @@
             if (res.error !== ERR_OK) {
               this.$refs.toast.show(res.message)
             } else {
-              obj.usable_account = res.data.usable_account
               this.$store.commit('SELEC_CUSTOM', obj)
               this.$router.push({ path: '/sell-belling', query: {id: res.data.agent_merchant_id} })
             }
