@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-// import storage from 'storage-controller'
+import storage from 'storage-controller'
 
 const Login = () => import('pages/login/login')
 const Home = () => import('pages/home/home')
@@ -204,19 +204,23 @@ const route = new Router({
   ]
 })
 
-// const DEFAULT_TITLE = '登录'
-// // const DEFAULT_ROUTE = '/login'
-// // const HOME_ROUTE = '/home'
-//
-// route.beforeEach((to, from, next) => {
-//   document.title = to.meta.title ? to.meta.title : DEFAULT_TITLE
-//   // if (to.path === HOME_ROUTE) {
-//   //   const token = storage.has('token')
-//   //   if (!token) {
-//   //     next({path: DEFAULT_ROUTE, replace: true})
-//   //   }
-//   // }
-//   next()
-// })
+const DEFAULT_TITLE = '代理商后台'
+const DEFAULT_ROUTE = '/login'
+const HOME_ROUTE = '/home'
+
+route.beforeEach((to, from, next) => {
+  document.title = to.meta.title ? to.meta.title : DEFAULT_TITLE
+  // const token = storage.has('token')
+  // if (!token) {、
+  //   next({path: DEFAULT_ROUTE, replace: true})
+  // }
+  if (to.path === HOME_ROUTE) {
+    const token = storage.has('token')
+    if (!token) {
+      next({path: DEFAULT_ROUTE, replace: true})
+    }
+  }
+  next()
+})
 
 export default route
