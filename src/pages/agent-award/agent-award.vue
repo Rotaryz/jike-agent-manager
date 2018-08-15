@@ -43,21 +43,40 @@
         <router-link class="btn" to="/agent-entering">推荐代理商加盟</router-link>
       </div>
     </div>
+    <toast ref="toast"></toast>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+  import { Account } from 'api'
+  import { ERR_OK } from 'common/js/config'
+  import Toast from 'components/toast/toast'
   export default {
     name: 'agent-award',
     data() {
       return {
-        mobile: '400-8871-855'
+        mobile: ''
       }
+    },
+    created() {
+      this._getAccountInfo()
     },
     methods: {
       phoneCall() {
         window.location.href = `tel:${this.mobile}`
+      },
+      _getAccountInfo() {
+        Account.getAccountInfo().then(res => {
+          if (res.error !== ERR_OK) {
+            this.$refs.toast.show(res.message)
+            return
+          }
+          this.mobile = res.data.platform_mobile || ''
+        })
       }
+    },
+    components: {
+      Toast
     }
   }
 </script>

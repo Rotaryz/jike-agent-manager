@@ -288,7 +288,6 @@
         }
         Agent.newAddAgent(data).then(res => {
           if (res.error === ERR_OK) {
-            console.log(res)
             this.showShadow = true
             this.$refs.toast.show('提交成功')
           } else {
