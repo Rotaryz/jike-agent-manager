@@ -9,7 +9,7 @@
           </div>
           <div class="list">
             <p class="name">*手机号码</p>
-            <input type="number" class="input" :class="($store.state.mobile !== '') && 'readonly'" v-model="form.mobile" :readonly="($store.state.mobile !== '')" placeholder="用于登录商户管理后台">
+            <input type="number" class="input" :class="($store.state.customMobile !== '') && 'readonly'" v-model="form.mobile" :readonly="($store.state.customMobile !== '')" placeholder="用于登录商户管理后台">
           </div>
         </div>
         <div class="right">
@@ -21,12 +21,14 @@
     <div class="selec-list">
       <div class="list">
         <div class="name">所在地区</div>
-        <input class="input" type="text" readonly  v-model="form.address" @click="selcetAddress" placeholder="请选择所在的地区">
+        <!--<input class="input" type="text" readonly  v-model="form.address" @click="selcetAddress" placeholder="请选择所在的地区">-->
+        <p class="area-selec" :class="selecArea && 'black'" @click="selcetAddress">{{ form.address }}</p>
         <div class="icon"></div>
       </div>
       <div class="list" @click="selecTrade">
         <div class="name">所属行业</div>
-        <input class="input" type="text" readonly  v-model="form.industry" placeholder="请选择所属的行业">
+        <!--<input class="input" type="text" readonly  v-model="form.industry" placeholder="请选择所属的行业">-->
+        <p class="industry-selec" :class="selecIndustry && 'black'">{{ form.industry }}</p>
         <div class="icon"></div>
       </div>
     </div>
@@ -37,16 +39,16 @@
       </li>
       <li class="list">
         <div class="name">剩余库存</div>
-        <input class="input readonly" type="text" readonly  v-model="form.usable_account" placeholder="剩余库存">
+        <input class="input readonly" type="text" readonly  v-model="form.usable_account" placeholder="0">
       </li>
       <li class="list">
         <div class="name">*购买数量</div>
-        <input class="input" type="text"  v-model="form.num" placeholder="请输入购买数量">
+        <input class="input" type="number"  v-model="form.num" placeholder="请输入购买数量">
         <div>套</div>
       </li>
       <li class="list">
         <div class="name">*销售总价</div>
-        <input class="input" type="text"  v-model="form.total_price" placeholder="请输入销售总价">
+        <input class="input" type="number"  v-model="form.total_price" placeholder="请输入销售总价">
         <div>元</div>
       </li>
     </ul>
@@ -109,8 +111,8 @@
         form: {
           name: '',
           mobile: '',
-          address: '',
-          industry: '',
+          address: '请选择所在的地区',
+          industry: '请选择所属的行业',
           title: '',
           num: '',
           usable_account: '0',
@@ -125,7 +127,9 @@
         tabRightIndex: 0, // 右边tab栏列表
         industryList: '',
         cityData,
-        isWD: true
+        isWD: true,
+        selecArea: false,
+        selecIndustry: false
       }
     },
     created() {
@@ -231,6 +235,7 @@
         let tabLeftList = this.industryList[this.tabLeftIndex]
         let tabRightList = this.industryList[this.tabLeftIndex].industry[this.tabRightIndex]
         this.form.industry = tabLeftList.name + ' ' + tabRightList.name
+        this.selecIndustry = true
         // this.tabLeftIndex = 0
         // this.tabRightIndex = 0
       },
@@ -245,6 +250,7 @@
         })
         let str = arr.join('-')
         this.form.address = str
+        this.selecArea = true
       },
       selcetAddress() {
         this.$refs.picker.show()
@@ -283,6 +289,7 @@
             border-bottom: 1px solid $color-E3E6E9
             height: 60px
             line-height: 60px
+            align-items: center
             &:last-child
               border-bottom: 0
             .input
@@ -290,8 +297,8 @@
               outline: none
               flex: 1
               margin-right: 4px
-              height: 60px
-              line-height: 60px
+              height: 20px
+              line-height: 20px
               &::-webkit-input-placeholder
                 color: $color-C1C3C3
               &.readonly
@@ -340,12 +347,22 @@
         align-items: center
         &:last-child
           border-bottom: 0
+        .area-selec
+          flex: 1
+          color: $color-C1C3C3
+          &.black
+            color: $color-111313
+        .industry-selec
+          flex: 1
+          color: $color-C1C3C3
+          &.black
+            color: $color-111313
       .input
         color: $color-111313
         outline: none
         flex: 1
-        height: 60px
-        line-height: 60px
+        height: 20px
+        line-height: 20px
         &::-webkit-input-placeholder
           color: $color-C1C3C3
       .name
@@ -366,14 +383,15 @@
         height: 60px
         line-height: 60px
         layout(row,block,nowrap)
+        align-items: center
         &:last-child
           border-bottom: 0
       .input
         color: $color-111313
         outline: none
         flex: 1
-        height: 60px
-        line-height: 60px
+        height: 20px
+        line-height: 20px
         &::-webkit-input-placeholder
           color: $color-C1C3C3
         &.readonly
