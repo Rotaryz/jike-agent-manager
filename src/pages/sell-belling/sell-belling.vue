@@ -52,7 +52,7 @@
     </ul>
     <div class="remark">
       <div class="name">备注</div>
-      <textarea class="textarea" type="textarea" v-model="form.note" maxlength="200" placehoder="可在此写客户备注，不超过200字" ></textarea>
+      <textarea class="textarea" type="textarea" v-model="form.note" maxlength="200" placeholder="可在此写客户备注，不超过200字" ></textarea>
       <div class="count">{{ count }}/200</div>
     </div>
     <footer class="bot-btn">
@@ -288,8 +288,10 @@
             .input
               color: $color-BEB5A3
               outline: none
-              flex-fix()
+              flex: 1
               margin-right: 4px
+              height: 60px
+              line-height: 60px
               &::-webkit-input-placeholder
                 color: $color-C1C3C3
             .name
@@ -327,7 +329,8 @@
         border-bottom: 1px solid $color-E3E6E9
         color: $color-666666
         font-size: $font-size-14
-        padding: 22px 0
+        height: 60px
+        line-height: 60px
         layout(row,block,nowrap)
         align-items: center
         &:last-child
@@ -335,7 +338,9 @@
       .input
         color: $color-BEB5A3
         outline: none
-        flex-fix()
+        flex: 1
+        height: 60px
+        line-height: 60px
         &::-webkit-input-placeholder
           color: $color-C1C3C3
       .name
@@ -353,14 +358,17 @@
         border-bottom: 1px solid $color-E3E6E9
         color: $color-666666
         font-size: $font-size-14
-        padding: 22px 0
+        height: 60px
+        line-height: 60px
         layout(row,block,nowrap)
         &:last-child
           border-bottom: 0
       .input
         color: $color-BEB5A3
         outline: none
-        flex-fix()
+        flex: 1
+        height: 60px
+        line-height: 60px
         &::-webkit-input-placeholder
           color: $color-C1C3C3
       .name

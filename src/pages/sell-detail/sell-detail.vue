@@ -60,15 +60,15 @@
     data() {
       return {
         form: {
-          name: '国颐堂美发有限公司',
-          mobile: '15527741300',
-          address: '广东-广州-越秀区',
-          industry: 'IT 服务 计算机软件与服务业',
-          title: '赞播AI微店',
-          price: '200.00',
-          num: '100',
-          total_price: '200.00',
-          note: '这是小明家买的，便宜了200块，还没有收款呢！'
+          name: '',
+          mobile: '',
+          address: '',
+          industry: '',
+          title: '',
+          price: '',
+          num: '',
+          total_price: '',
+          note: ''
         }
       }
     },
@@ -88,6 +88,7 @@
               return
             }
             this.form = res.data
+            this.form.num = this.form.num + '个'
           })
       }
     },
@@ -112,12 +113,14 @@
       border-bottom: 1px solid $color-E3E6E9
       color: $color-666666
       font-size: $font-size-14
-      padding: 22px 0
       layout(row,block,nowrap)
+      align-items: center
       .input
         color: $color-343439
         outline: none
-        flex-fix()
+        height: 60px
+        line-height: 60px
+        flex: 1
       .name
         width: 80px
 

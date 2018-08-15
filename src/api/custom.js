@@ -2,11 +2,11 @@ import request from 'common/js/request'
 
 export default {
   /**
-   * 客户列表
+   * 客户管理客户列表
    * @returns {*}
    */
   getCustomList(limit, page) {
-    let url = '/api/agent/agent-merchant'
+    let url = '/api/agent/agent-merchant-report'
     return request.get(url, {limit, page})
   },
   /**
@@ -32,6 +32,14 @@ export default {
   openBill(data) {
     let url = '/api/agent/agent-merchant'
     return request.post(url, data)
+  },
+  /**
+   * 开单销售客户列表
+   * @returns {*}
+   */
+  agentMerchant(limit, page) {
+    let url = '/api/agent/agent-merchant'
+    return request.get(url, {limit, page})
   },
   /**
    * 行业列表
