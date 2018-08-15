@@ -7,7 +7,7 @@
       </li>
       <li class="list">
         <div class="name">手机号码</div>
-        <input class="input" type="number" v-model="mobile" readonly placeholder="请输入手机号">
+        <input class="input readonly" type="number" v-model="mobile" readonly placeholder="请输入手机号">
       </li>
       <li class="list">
         <div class="name">所在地区</div>
@@ -202,13 +202,15 @@
         &:last-child
           border-bottom: 0
         .input
-          color: $color-BEB5A3
+          color: $color-111313
           outline: none
           flex: 1
           height: 60px
           line-height: 60px
           &::-webkit-input-placeholder
             color: $color-C1C3C3
+          &.readonly
+            color: $color-BEB5A3
         .name
           width: 100px
         .icon
@@ -248,7 +250,7 @@
       .textarea
         height: 121px
         width: 100%
-        color: $color-BEB5A3
+        color: $color-111313
         margin-top: 5px
         border: 1px solid rgba(0,0,0,0.1)
         box-sizing: border-box
