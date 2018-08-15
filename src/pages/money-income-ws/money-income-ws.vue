@@ -139,7 +139,7 @@
             this.$refs.toast.show(res.message)
             return
           }
-          this.more = !!res.data.length
+          this.more = res.data.length === 10
           callback(res)
         })
       },
@@ -209,6 +209,9 @@
           this.rebuildScroll()
         },
         deep: true
+      },
+      dataArray(current, prev) {
+        this.pullUpLoad = current.length >= 10
       }
     },
     computed: {

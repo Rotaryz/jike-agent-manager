@@ -79,7 +79,7 @@
         selectTab,
         server: '',
         balance: '0.00',
-        pullUpLoad: true,
+        pullUpLoad: false,
         pullUpLoadThreshold: 0,
         pullUpLoadMoreTxt: '加载更多',
         pullUpLoadNoMoreTxt: '没有更多了',
@@ -122,7 +122,7 @@
             this.$refs.toast.show(res.message)
             return
           }
-          this.more = !!res.data.length
+          this.more = res.data.length === 10
           callback(res)
         })
       },
@@ -193,10 +193,10 @@
         })
       },
       rebuildScroll() {
-        this.nextTick(() => {
+        setTimeout(() => {
           this.$refs.scroll.destroy()
           this.$refs.scroll.initScroll()
-        })
+        }, 30)
       }
     },
     watch: {
@@ -207,6 +207,9 @@
           this.rebuildScroll()
         },
         deep: true
+      },
+      dataArray(current, prev) {
+        this.pullUpLoad = current.length >= 10
       }
     },
     computed: {
