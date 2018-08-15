@@ -65,7 +65,7 @@
     },
     methods: {
       selecCustom(obj, id) {
-        Custom.getCustomMsg(id)
+        Custom.agentMerchantDetail(id)
           .then(res => {
             if (res.error !== ERR_OK) {
               this.$refs.toast.show(res.message)
