@@ -70,7 +70,7 @@
           note: null,
           agent_merchant_id: ''
         },
-        mobile: '15527741300',
+        mobile: '',
         data: {},
         id: '',
         tabShow: false, // 职业类型选择框
@@ -131,6 +131,7 @@
             }
             this.form.name = res.data.name
             this.form.note = res.data.note
+            this.mobile = res.data.mobile
             if (res.data.address) {
               this.form.address = res.data.address
               this.selecArea = true
