@@ -105,6 +105,7 @@
   @import "~common/stylus/mixin"
 
   .sell-detail
+    font-family: $font-family-regular
     background: $color-white
     min-height: 100vh
   .input-list

@@ -137,6 +137,7 @@
 @import "~common/stylus/mixin"
 
 .manage-custom
+  font-family: $font-family-regular
   fill-box()
   min-height :100vh
   background: $color-white

@@ -9,7 +9,7 @@
           </div>
           <div class="list">
             <p class="name">*手机号码</p>
-            <input type="number" class="input"  v-model="form.mobile" placeholder="用于登录商户管理后台">
+            <input type="number" class="input"  v-model="mobile" placeholder="用于登录商户管理后台">
           </div>
         </div>
         <div class="right">
@@ -21,13 +21,11 @@
     <div class="selec-list">
       <div class="list" @click="selcetAddress">
         <div class="name">所在地区</div>
-        <!--<input class="input" type="text" readonly  v-model="form.address" @click="selcetAddress" placeholder="请选择所在的地区">-->
         <p class="area-selec" :class="selecArea && 'black'" >{{ form.address }}</p>
         <div class="icon"></div>
       </div>
       <div class="list" @click="selecTrade">
         <div class="name">所属行业</div>
-        <!--<input class="input" type="text" readonly  v-model="form.industry" placeholder="请选择所属的行业">-->
         <p class="industry-selec" :class="selecIndustry && 'black'">{{ form.industry }}</p>
         <div class="icon"></div>
       </div>
@@ -35,11 +33,11 @@
     <ul class="msg-list">
       <li class="list">
         <div class="name">商品名称</div>
-        <input class="input readonly" type="text" readonly v-model="form.title" placeholder="请输入商品名称">
+        <p class="readonly">{{form.title}}</p>
       </li>
       <li class="list">
         <div class="name">剩余库存</div>
-        <input class="input readonly" type="text" readonly v-model="form.usable_account" placeholder="0">
+        <p class="readonly">{{form.usable_account}}套</p>
       </li>
       <li class="list">
         <div class="name">*购买数量</div>
@@ -127,6 +125,7 @@
         industryList: '',
         total_price: '',
         cityData,
+        mobile: '',
         isWD: true,
         selecArea: false,
         selecIndustry: false
@@ -275,6 +274,12 @@
         value = value.match(/\d+(\.\d{0,2})?/) ? value.match(/\d+(\.\d{0,2})?/)[0] : ''
         this.total_price = value
         this.form.total_price = value
+      },
+      mobile(cur, prev) {
+        let num = cur
+        num = num.match(/\d(\d{0,10})/) ? num.match(/\d(\d{0,10})/)[0] : ''
+        this.mobile = num
+        this.form.mobile = num
       }
     },
     components: {
@@ -289,6 +294,7 @@
   @import "~common/stylus/mixin"
 
   .sell-belling
+    font-family: $font-family-regular
     fill-box()
     background: $color-F8F8F8
     &:before
@@ -415,6 +421,8 @@
         align-items: center
         &:last-child
           border-bottom: 0
+        .readonly
+          color: $color-BEB5A3
       .input
         color: $color-111313
         outline: none
