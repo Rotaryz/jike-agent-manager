@@ -14,7 +14,7 @@
 
   const COMPONENT_NAME = 'App'
   const DEFAULT_TITLE = '登录'
-  // const DEFAULT_ROUTE = '/login'
+  const DEFAULT_ROUTE = '/login'
   const HOME_ROUTE = '/home'
 
   export default {
@@ -24,7 +24,8 @@
         keepAlive: false,
         routerArr: [],
         entryAnimation: 'slide',
-        index: 0
+        index: 0,
+        currentRoute: ''
       }
     },
     created() {
@@ -33,7 +34,7 @@
     },
     methods: {
       _checkAuthorize() {
-        if (this.hasToken) {
+        if (this.hasToken && this.currentRoute === DEFAULT_ROUTE) {
           this.$router.replace({path: '/home'})
         }
       }
@@ -45,6 +46,7 @@
     },
     watch: {
       '$route'(to, from) {
+        this.currentRoute = to.path
         document.title = to.meta.title ? to.meta.title : DEFAULT_TITLE
         if (to.path === HOME_ROUTE) {
           this.routerArr = []
