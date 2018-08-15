@@ -63,6 +63,9 @@
         projectOption: storage.get('project', WEI_SHANG.project)
       }
     },
+    beforeCreate() {
+      storage.clear()
+    },
     beforeDestroy() {
       this.timer && clearInterval(this.timer)
     },
