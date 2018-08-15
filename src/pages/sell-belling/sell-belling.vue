@@ -5,28 +5,28 @@
         <div class="left">
           <div class="list">
             <p class="name">*购买客户</p>
-            <input type="text" class="input" :readonly="(this.$store.state.customName !== '')"  v-model="form.name"  placeholder="请输入客户名称">
+            <input type="text" class="input" :class="(this.$store.state.customName !== '') && 'readonly'" :readonly="(this.$store.state.customName !== '')"  v-model="form.name"  placeholder="请输入客户名称">
           </div>
           <div class="list">
             <p class="name">*手机号码</p>
-            <input type="number" class="input"  :readonly="(this.$store.state.customName !== '')" v-model="mobile" placeholder="用于登录商户管理后台">
+            <input type="number" class="input" :class="(this.$store.state.customName !== '') && 'readonly'"  :readonly="(this.$store.state.customName !== '')" v-model="mobile" placeholder="用于登录商户管理后台">
           </div>
         </div>
         <div class="right">
           <div class="img"></div>
-          <router-link to="/choose-custom" class="choose-custom">选择客户</router-link>
+          <router-link to="/choose-custom" class="choose-custom" >选择客户</router-link>
         </div>
       </div>
     </header>
     <div class="selec-list">
       <div class="list" @click="selcetAddress">
         <div class="name">所在地区</div>
-        <p class="area-selec" :class="selecArea && 'black'" >{{ form.address }}</p>
+        <p class="area-selec" :class="areaClass" >{{ form.address }}</p>
         <div class="icon"></div>
       </div>
       <div class="list" @click="selecTrade">
         <div class="name">所属行业</div>
-        <p class="industry-selec" :class="selecIndustry && 'black'">{{ form.industry }}</p>
+        <p class="industry-selec" :class="industryClass" >{{ form.industry }}</p>
         <div class="icon"></div>
       </div>
     </div>
@@ -133,18 +133,7 @@
     },
     created() {
       this._getProject()
-      this.form.agent_merchant_id = this.$store.state.customName !== '' ? this.$store.state.customId : null
-      this.form.name = this.$store.state.customName
-      this.form.mobile = this.$store.state.customMobile
-      this.mobile = this.$store.state.customMobile
-      if (this.$store.state.customAddress !== '') {
-        this.selecArea = true
-        this.form.address = this.$store.state.customAddress
-      }
-      if (this.$store.state.customIndustry !== '') {
-        this.selecIndustry = true
-        this.form.industry = this.$store.state.customIndustry
-      }
+      this.initialForm()
       this.getIndustry()
       this._getAccountInfo()
     },
@@ -156,6 +145,16 @@
     computed: {
       count() {
         return this.form.note ? this.form.note.length : 0
+      },
+      areaClass() {
+        let black = this.selecArea ? 'black' : ''
+        let readonly = (this.$store.state.customName !== '') ? 'readonly' : ''
+        return `${black} ${readonly}`.trim()
+      },
+      industryClass() {
+        let black = this.selecIndustry ? 'black' : ''
+        let readonly = (this.$store.state.customName !== '') ? 'readonly' : ''
+        return `${black} ${readonly}`.trim()
       }
     },
     methods: {
@@ -275,6 +274,20 @@
           return
         }
         this.$refs.picker.show()
+      },
+      initialForm() {
+        this.form.agent_merchant_id = this.$store.state.customName !== '' ? this.$store.state.customId : null
+        this.form.name = this.$store.state.customName
+        this.form.mobile = this.$store.state.customMobile
+        this.mobile = this.$store.state.customMobile
+        if (this.$store.state.customAddress !== '') {
+          this.selecArea = true
+          this.form.address = this.$store.state.customAddress
+        }
+        if (this.$store.state.customIndustry !== '') {
+          this.selecIndustry = true
+          this.form.industry = this.$store.state.customIndustry
+        }
       }
     },
     watch: {
@@ -396,11 +409,15 @@
           color: $color-C1C3C3
           &.black
             color: $color-111313
+          &.readonly
+            color: $color-BEB5A3
         .industry-selec
           flex: 1
           color: $color-C1C3C3
           &.black
             color: $color-111313
+          &.readonly
+            color: $color-BEB5A3
       .input
         color: $color-111313
         outline: none
@@ -409,6 +426,8 @@
         line-height: 20px
         &::-webkit-input-placeholder
           color: $color-C1C3C3
+        &.readonly
+          color: $color-BEB5A3
       .name
         width: 80px
       .icon
