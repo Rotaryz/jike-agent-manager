@@ -33,11 +33,11 @@
     <ul class="msg-list">
       <li class="list">
         <div class="name">商品名称</div>
-        <input class="input" type="text" readonly v-model="form.title" placeholder="请输入商品名称">
+        <input class="input readonly" type="text" readonly v-model="form.title" placeholder="请输入商品名称">
       </li>
       <li class="list">
         <div class="name">剩余库存</div>
-        <input class="input" type="text" readonly  v-model="form.usable_account" placeholder="剩余库存">
+        <input class="input readonly" type="text" readonly  v-model="form.usable_account" placeholder="剩余库存">
       </li>
       <li class="list">
         <div class="name">*购买数量</div>
@@ -286,7 +286,7 @@
             &:last-child
               border-bottom: 0
             .input
-              color: $color-BEB5A3
+              color: $color-111313
               outline: none
               flex: 1
               margin-right: 4px
@@ -336,7 +336,7 @@
         &:last-child
           border-bottom: 0
       .input
-        color: $color-BEB5A3
+        color: $color-111313
         outline: none
         flex: 1
         height: 60px
@@ -364,13 +364,15 @@
         &:last-child
           border-bottom: 0
       .input
-        color: $color-BEB5A3
+        color: $color-111313
         outline: none
         flex: 1
         height: 60px
         line-height: 60px
         &::-webkit-input-placeholder
           color: $color-C1C3C3
+        &.readonly
+          color: $color-BEB5A3
       .name
         width: 80px
 
@@ -388,7 +390,7 @@
     .textarea
       height: 121px
       width: 100%
-      color: $color-BEB5A3
+      color: $color-111313
       margin-top: 5px
       border: 1px solid rgba(0,0,0,0.1)
       box-sizing: border-box
