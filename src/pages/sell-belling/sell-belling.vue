@@ -5,11 +5,11 @@
         <div class="left">
           <div class="list">
             <p class="name">*购买客户</p>
-            <input type="text" class="input" :class="($store.state.customName !== '') && 'readonly'" v-model="form.name" :readonly="($store.state.customName !== '')" placeholder="请输入客户名称">
+            <input type="text" class="input"  v-model="form.name"  placeholder="请输入客户名称">
           </div>
           <div class="list">
             <p class="name">*手机号码</p>
-            <input type="number" class="input" :class="($store.state.customMobile !== '') && 'readonly'" v-model="form.mobile" :readonly="($store.state.customMobile !== '')" placeholder="用于登录商户管理后台">
+            <input type="number" class="input"  v-model="form.mobile" placeholder="用于登录商户管理后台">
           </div>
         </div>
         <div class="right">
@@ -19,10 +19,10 @@
       </div>
     </header>
     <div class="selec-list">
-      <div class="list">
+      <div class="list" @click="selcetAddress">
         <div class="name">所在地区</div>
         <!--<input class="input" type="text" readonly  v-model="form.address" @click="selcetAddress" placeholder="请选择所在的地区">-->
-        <p class="area-selec" :class="selecArea && 'black'" @click="selcetAddress">{{ form.address }}</p>
+        <p class="area-selec" :class="selecArea && 'black'" >{{ form.address }}</p>
         <div class="icon"></div>
       </div>
       <div class="list" @click="selecTrade">
@@ -48,7 +48,7 @@
       </li>
       <li class="list">
         <div class="name">*销售总价</div>
-        <input class="input" type="number" v-model="form.total_price" placeholder="请输入销售总价">
+        <input class="input" type="number" v-model="total_price" placeholder="请输入销售总价">
         <div>元</div>
       </li>
     </ul>
@@ -125,6 +125,7 @@
         tabLeftIndex: 0, // 左边tab栏列表
         tabRightIndex: 0, // 右边tab栏列表
         industryList: '',
+        total_price: '',
         cityData,
         isWD: true,
         selecArea: false,
@@ -136,6 +137,14 @@
       this.form.agent_merchant_id = this.$store.state.customName !== '' ? this.$route.query.id : null
       this.form.name = this.$store.state.customName
       this.form.mobile = this.$store.state.customMobile
+      if (this.$store.state.customAddress !== '') {
+        this.selecArea = true
+        this.form.address = this.$store.state.customAddress
+      }
+      if (this.$store.state.customIndustry !== '') {
+        this.selecIndustry = true
+        this.form.industry = this.$store.state.customIndustry
+      }
       this.getIndustry()
       this._getAccountInfo()
     },
@@ -159,7 +168,7 @@
             this.$refs.toast.show(res.message)
             return
           }
-          this.form.usable_account = res.data.usable_account
+          this.form.usable_account = res.data.usable_account || 0
         })
       },
       getIndustry() {
@@ -173,10 +182,6 @@
           })
       },
       submit() { // 点击提交
-        this.popShow = true
-      },
-      confirm() { // 确认窗的确定按钮
-        this.popShow = false
         if (!this.form.name) {
           this.$refs.toast.show('请输入客户名称')
           return
@@ -192,10 +197,18 @@
           this.$refs.toast.show('请输入购买AI微店的数量')
           return
         }
-        if (!this.form.total_price) {
+        if (!this.total_price) {
           this.$refs.toast.show('请输入购买AI微店的总价')
           return
         }
+        if (this.form.usable_account === 0 || (this.form.num > this.form.usable_account)) {
+          this.$refs.toast.show('库存不足')
+          return
+        }
+        this.popShow = true
+      },
+      confirm() { // 确认窗的确定按钮
+        this.popShow = false
         Custom.openBill(this.form)
           .then(res => {
             if (res.error !== ERR_OK) {
@@ -206,7 +219,7 @@
             let id = this.$route.query.id
             setTimeout(() => {
               this.grayTip = false
-              this.$store.commit('SELEC_CUSTOM', {name: '', mobile: ''})
+              this.$store.commit('SELEC_CUSTOM', {name: '', mobile: '', address: '', industry: ''})
               this.$router.push({path: '/sell-record', query: {id}})
             }, 1000)
           })
@@ -255,7 +268,15 @@
         this.$refs.picker.show()
       }
     },
-    watch: {},
+    watch: {
+      total_price(cur, prev) {
+        console.log(cur)
+        let value = cur
+        value = value.match(/\d+(\.\d{0,2})?/) ? value.match(/\d+(\.\d{0,2})?/)[0] : ''
+        this.total_price = value
+        this.form.total_price = value
+      }
+    },
     components: {
       TabList,
       Toast
@@ -269,8 +290,12 @@
 
   .sell-belling
     fill-box()
-    margin-top: 8px
     background: $color-F8F8F8
+    &:before
+      content: ''
+      display: block
+      height: 8px
+      background: $color-F8F8F8
     &::after
       display: block
       height: 65px
@@ -302,6 +327,7 @@
               margin-right: 4px
               height: 20px
               line-height: 20px
+              font-size: 14px
               &::-webkit-input-placeholder
                 color: $color-C1C3C3
               &.readonly
@@ -395,6 +421,7 @@
         flex: 1
         height: 20px
         line-height: 20px
+        font-size: 14px
         &::-webkit-input-placeholder
           color: $color-C1C3C3
         &.readonly
@@ -423,8 +450,10 @@
       padding-bottom: 22px
       outline: none
       resize: none
+      font-size: 14px
       &::-webkit-input-placeholder
         color: $color-C1C3C3
+        font-size: 14px
     .count
       position: absolute
       right: 20px

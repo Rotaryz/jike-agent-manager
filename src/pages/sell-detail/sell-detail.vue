@@ -3,40 +3,40 @@
     <ul class="input-list">
       <li class="list">
         <div class="name">客户</div>
-        <input class="input" type="text" readonly v-model="form.name" placeholder="">
+        <p class="msg">{{form.name}}</p>
       </li>
       <li class="list">
         <div class="name">手机号码</div>
-        <input class="input" type="text" readonly v-model="form.mobile" placeholder="">
+        <p class="msg">{{form.mobile}}</p>
       </li>
       <li class="list">
         <div class="name">所在地区</div>
-        <input class="input" type="text" readonly v-model="form.address" placeholder="">
+        <p class="msg">{{form.address}}</p>
         <div class="icon"></div>
       </li>
       <li class="list">
         <div class="name">所属行业</div>
-        <input class="input" type="text" readonly v-model="form.industry" placeholder="">
+        <p class="msg">{{form.industry}}</p>
         <div class="icon"></div>
       </li>
     </ul>
     <ul class="input-list">
       <li class="list">
         <div class="name">商品名称</div>
-        <input class="input" type="text" readonly v-model="form.title" placeholder="">
+        <p class="msg">{{form.title}}</p>
       </li>
       <li class="list">
         <div class="name">购买单价</div>
-        <input class="input" type="text" readonly v-model="form.price" placeholder="">
+        <p class="msg">{{form.price}}</p>
       </li>
       <li class="list">
         <div class="name">数量</div>
-        <input class="input" type="text" readonly v-model="form.num" placeholder="">
+        <p class="msg">{{form.num}}</p>
         <div class="icon"></div>
       </li>
       <li class="list">
         <div class="name">销售总价</div>
-        <input class="input" type="text" readonly v-model="form.total_price" placeholder="">
+        <p class="msg">{{form.total_price}}</p>
         <div class="icon"></div>
       </li>
     </ul>
@@ -115,9 +115,8 @@
       font-size: $font-size-14
       layout(row,block,nowrap)
       align-items: center
-      .input
+      .msg
         color: $color-343439
-        outline: none
         height: 60px
         line-height: 60px
         flex: 1

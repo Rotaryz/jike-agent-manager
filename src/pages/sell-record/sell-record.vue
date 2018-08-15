@@ -10,6 +10,7 @@
               :data="dataArray"
               :pullUpLoad="pullUpLoadObj"
               @pullingUp="onPullingUp"
+              v-if="dataArray.length"
       >
         <section class="msg-list">
           <ul class="main">
@@ -20,6 +21,7 @@
           </ul>
         </section>
       </scroll>
+      <empty-data v-else></empty-data>
     </div>
     <toast ref="toast"></toast>
   </div>
@@ -30,6 +32,7 @@
   import { Custom } from 'api'
   import { ERR_OK } from 'common/js/config'
   import Toast from 'components/toast/toast'
+  import EmptyData from 'components/empty-data/empty-data'
 
   const LIMIT = 10
 
@@ -110,7 +113,8 @@
     },
     components: {
       Scroll,
-      Toast
+      Toast,
+      EmptyData
     }
   }
 </script>
@@ -120,6 +124,8 @@
   @import "~common/stylus/mixin"
 
   .sell-record
+    fill-box()
+    background: $color-white
   .choose-custom
     min-height :100vh
   .header

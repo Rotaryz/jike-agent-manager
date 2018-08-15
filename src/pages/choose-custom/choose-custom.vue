@@ -10,6 +10,7 @@
               :data="dataArray"
               :pullUpLoad="pullUpLoadObj"
               @pullingUp="onPullingUp"
+              v-if="dataArray.length"
       >
         <section class="custom-list">
           <ul class="main">
@@ -20,6 +21,7 @@
           </ul>
         </section>
       </scroll>
+      <empty-data v-else></empty-data>
     </div>
     <toast ref="toast"></toast>
   </div>
@@ -30,6 +32,7 @@
   import { Custom } from 'api'
   import { ERR_OK } from 'common/js/config'
   import Toast from 'components/toast/toast'
+  import EmptyData from 'components/empty-data/empty-data'
 
   const LIMIT = 10
 
@@ -70,6 +73,8 @@
             if (res.error !== ERR_OK) {
               this.$refs.toast.show(res.message)
             } else {
+              obj.address = res.data.address
+              obj.industry = res.data.industry
               this.$store.commit('SELEC_CUSTOM', obj)
               this.$router.push({ path: '/sell-belling', query: {id: res.data.agent_merchant_id} })
             }
@@ -119,7 +124,8 @@
     },
     components: {
       Scroll,
-      Toast
+      Toast,
+      EmptyData
     }
   }
 </script>
@@ -129,7 +135,9 @@
   @import "~common/stylus/mixin"
 
   .choose-custom
+    fill-box()
     min-height :100vh
+    background: $color-white
   .header
     background: $color-F3F3F3
     color: $color-848484

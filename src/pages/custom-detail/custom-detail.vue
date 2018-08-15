@@ -33,14 +33,14 @@
         </div>
       </div>
     </section>
-    <!--<div class="list-scroll">-->
+    <div class="list-scroll">
       <!--<scroll ref="scroll"-->
               <!--bcColor="#fff"-->
               <!--:data="dataArray"-->
               <!--:pullUpLoad="pullUpLoadObj"-->
               <!--@pullingUp="onPullingUp"-->
       <!--&gt;-->
-        <ul class="abso-list">
+        <ul class="abso-list" v-if="dataArray.length">
           <li v-for="(item,index) in msg.agent_sale_records" :key="item.id" class="list">
             <div class="date">{{ item.created_at }}</div>
             <div class="count">{{ item.num }}</div>
@@ -48,7 +48,8 @@
           </li>
         </ul>
       <!--</scroll>-->
-    <!--</div>-->
+        <empty-data v-else></empty-data>
+    </div>
     <footer class="bot-btn">
       <a :href="`tel:${ msg.mobile }`" class="btn">联系客户</a>
     </footer>
@@ -61,6 +62,7 @@
   import { Custom } from 'api'
   import { ERR_OK } from 'common/js/config'
   import Toast from 'components/toast/toast'
+  import EmptyData from 'components/empty-data/empty-data'
 
   export default {
     name: 'custom-detail',
@@ -109,6 +111,7 @@
               return
             }
             this.msg = res.data
+            this.dataArray = res.data.agent_sale_records
             this.more = !!res.data.agent_sale_records.length
             callback(res)
           })
@@ -141,7 +144,8 @@
     },
     components: {
       Scroll,
-      Toast
+      Toast,
+      EmptyData
     }
   }
 </script>
@@ -149,11 +153,15 @@
 <style scoped lang="stylus" rel="stylesheet/stylus">
   @import "~common/stylus/variable"
   @import "~common/stylus/mixin"
+
   .custom-detail
-    padding-bottom: 68px
+    fill-box()
+    min-height: 100vh
+    background: $color-white
     .header
       height: 140px
-      background: linear-gradient(180deg, #2D2C28 0%, #3D3834 100%);
+      bg-image('./pic-banner_team')
+      background-size: 100% 100%
       color: $color-C3A66C
       font-size: $font-size-16
       line-height: $font-size-16
