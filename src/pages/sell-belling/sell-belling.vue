@@ -136,6 +136,7 @@
       this.form.agent_merchant_id = this.$store.state.customName !== '' ? this.$route.query.id : null
       this.form.name = this.$store.state.customName
       this.form.mobile = this.$store.state.customMobile
+      this.mobile = this.$store.state.customMobile
       if (this.$store.state.customAddress !== '') {
         this.selecArea = true
         this.form.address = this.$store.state.customAddress
