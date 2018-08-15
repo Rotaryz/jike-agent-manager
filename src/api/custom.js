@@ -34,6 +34,14 @@ export default {
     return request.post(url, data)
   },
   /**
+   * 开单销售详情
+   * @returns {*}
+   */
+  agentMerchantDetail(id) {
+    let url = `/api/agent/agent-merchant/${id}`
+    return request.get(url)
+  },
+  /**
    * 开单销售客户列表
    * @returns {*}
    */
