@@ -25,7 +25,9 @@
       <textarea class="textarea" type="textarea" v-model="form.note" maxlength="200" placehoder="可在此写客户备注，不超过200字" ></textarea>
       <div class="count">{{ count }}/200</div>
     </div>
-
+    <footer class="bot-btn">
+      <div class="btn" @click="saveCustomMsg">保存</div>
+    </footer>
     <tab-list
       v-if="tabShow"
       :tabLeftIndex="tabLeftIndex"
@@ -138,14 +140,18 @@
             this.industryList = res.data
           })
       },
-      customMsg() { // 客户资料
+      saveCustomMsg() { // 保存客户资料
         Custom.createCustom(this.form)
           .then(res => {
             if (res.error !== ERR_OK) {
               this.$refs.toast.show(res.message)
               return
             }
-            this.form = res.data
+            this.$refs.toast.show('保存成功')
+            console.log(this.$route)
+            setTimeout(() => {
+              this.$router.back()
+            }, 1500)
           })
       },
       handlePickerCancel(e) {
@@ -180,6 +186,8 @@
 
   .custom-create
     margin-top: 8px
+    min-height: 95vh
+    background: $color-white
     .input-list
       background: $color-white
       .list
@@ -207,7 +215,25 @@
           height: 10px
           bg-image('./icon-arrow_home')
           background-size: 100% 100%
-
+    .bot-btn
+      position: fixed
+      bottom: 0
+      left: 0
+      width: 100%;
+      background: $color-white
+      padding: 10px 15px
+      box-sizing: border-box
+      border-top-1px(#e3e3e3)
+      height: 65px
+      .btn
+        background: $color-C3A66C
+        font-size: $font-size-16
+        color: #FFFFFF
+        text-align: center
+        border-radius: 4px
+        height: 45px
+        line-height: 45px
+        display: block
     .remark
       margin-top: 8px
       padding: 20px 15px

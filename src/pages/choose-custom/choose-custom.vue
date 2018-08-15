@@ -31,6 +31,8 @@
   import { ERR_OK } from 'common/js/config'
   import Toast from 'components/toast/toast'
 
+  const LIMIT = 10
+
   export default {
     name: 'choose-custom',
     props: {
@@ -69,18 +71,19 @@
             if (res.error !== ERR_OK) {
               this.$refs.toast.show(res.message)
             } else {
-              this.$router.push({ path: '/sell-belling', query: {num: res.data.usable_account} })
+              this.$router.push({ path: '/sell-belling', query: {num: res.data.usable_account, id: res.data.agent_merchant_id} })
             }
           })
       },
       getRecordList(callback) { // 获取客户列表
+        if (!this.more) return
         Custom.getCustomList(10, this.page)
           .then(res => {
             if (res.error !== ERR_OK) {
               this.$refs.toast.show(res.message)
               return
             }
-            this.more = !!res.data.length
+            this.more = !!res.data.length || res.data.length < LIMIT
             callback(res)
           })
       },

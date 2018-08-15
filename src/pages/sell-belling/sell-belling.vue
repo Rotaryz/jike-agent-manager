@@ -5,11 +5,11 @@
         <div class="left">
           <div class="list">
             <p class="name">*购买客户</p>
-            <input type="text" class="input" v-model="$store.state.customName || form.name" placeholder="请输入客户名称">
+            <input type="text" class="input" v-model="form.name" :readonly="this.$route.query.id" placeholder="请输入客户名称">
           </div>
           <div class="list">
             <p class="name">*手机号码</p>
-            <input type="text" class="input" v-model="$store.state.customCall || form.mobile" placeholder="用于登录商户管理后台">
+            <input type="text" class="input" v-model="form.mobile" :readonly="this.$route.query.id" placeholder="用于登录商户管理后台">
           </div>
         </div>
         <div class="right">
@@ -110,10 +110,10 @@
           address: '',
           industry: '',
           title: '',
-          num: null,
+          num: '',
           usable_account: '0',
           total_price: '',
-          note: null,
+          note: '',
           agent_merchant_id: ''
         },
         popShow: false, // 弹出确认窗口
@@ -128,6 +128,8 @@
     created() {
       this.form.agent_merchant_id = this.$route.query.id
       this.form.usable_account = this.$route.query.num ? `${this.$route.query.num}套` : ''
+      this.form.name = this.$store.state.customName
+      this.form.mobile = this.$store.state.customCall
       this.getIndustry()
     },
     mounted() {
@@ -257,6 +259,7 @@
           flex: 1
           color: $color-666666
           font-size: $font-size-14
+          padding-right: 78px
           .list
             layout(row,block,nowrap)
             border-bottom: 1px solid $color-E3E6E9
@@ -268,6 +271,7 @@
               color: $color-BEB5A3
               outline: none
               flex-fix()
+              margin-right: 4px
               &::-webkit-input-placeholder
                 color: $color-C1C3C3
             .name

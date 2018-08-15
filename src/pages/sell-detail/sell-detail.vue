@@ -105,7 +105,7 @@
 
   .sell-detail
     background: $color-white
-    padding-bottom: 20px
+    min-height: 100vh
   .input-list
     .list
       margin: 0 15px

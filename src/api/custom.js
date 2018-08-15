@@ -45,9 +45,9 @@ export default {
    * 销售记录列表
    * @returns {*}
    */
-  getRecordList(limit, id) {
+  getRecordList(limit, page, id) {
     let url = '/api/agent/agent-sale-record'
-    return request.get(url, {limit, agent_merchant_id: id})
+    return request.get(url, {limit, page, agent_merchant_id: id})
   },
   /**
    * 销售记录详情
