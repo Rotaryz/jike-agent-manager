@@ -4,6 +4,7 @@ const state = {
   customMobile: '',
   customAddress: '',
   customIndustry: '',
+  customId: '',
   homeTab: 0
 }
 
