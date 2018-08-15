@@ -9,6 +9,7 @@ const mutations = {
     state.customMobile = custom.mobile
     state.customAddress = custom.address
     state.customIndustry = custom.industry
+    state.customId = custom.id
   },
   [TYPES.HOME_TAB](state, idx) {
     state.homeTab = idx

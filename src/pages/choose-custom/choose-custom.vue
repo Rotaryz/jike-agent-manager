@@ -14,7 +14,7 @@
       >
         <section class="custom-list">
           <ul class="main">
-            <li v-for="(item,index) in dataArray" :key="index" class="list" @click="selecCustom(dataArray[index],item.id)">
+            <li v-for="(item,index) in dataArray" :key="index" class="list" @click="selecCustom(item.id)">
               <div class="name">{{ item.name }}</div>
               <div class="call">{{ item.mobile }}</div>
             </li>
@@ -67,16 +67,14 @@
       }
     },
     methods: {
-      selecCustom(obj, id) {
+      selecCustom(id) {
         Custom.agentMerchantDetail(id)
           .then(res => {
             if (res.error !== ERR_OK) {
               this.$refs.toast.show(res.message)
             } else {
-              obj.address = res.data.address
-              obj.industry = res.data.industry
-              this.$store.commit('SELEC_CUSTOM', obj)
-              this.$router.push({ path: '/sell-belling', query: {id: res.data.agent_merchant_id} })
+              this.$store.commit('SELEC_CUSTOM', res.data)
+              this.$router.back()
             }
           })
       },

@@ -5,11 +5,11 @@
         <div class="left">
           <div class="list">
             <p class="name">*购买客户</p>
-            <input type="text" class="input"  v-model="form.name"  placeholder="请输入客户名称">
+            <input type="text" class="input" :readonly="(this.$store.state.customName !== '')"  v-model="form.name"  placeholder="请输入客户名称">
           </div>
           <div class="list">
             <p class="name">*手机号码</p>
-            <input type="number" class="input"  v-model="mobile" placeholder="用于登录商户管理后台">
+            <input type="number" class="input"  :readonly="(this.$store.state.customName !== '')" v-model="mobile" placeholder="用于登录商户管理后台">
           </div>
         </div>
         <div class="right">
@@ -133,7 +133,7 @@
     },
     created() {
       this._getProject()
-      this.form.agent_merchant_id = this.$store.state.customName !== '' ? this.$route.query.id : null
+      this.form.agent_merchant_id = this.$store.state.customName !== '' ? this.$store.state.customId : null
       this.form.name = this.$store.state.customName
       this.form.mobile = this.$store.state.customMobile
       this.mobile = this.$store.state.customMobile
@@ -147,6 +147,9 @@
       }
       this.getIndustry()
       this._getAccountInfo()
+    },
+    beforeDestroy() {
+      this.$store.commit('SELEC_CUSTOM', {name: '', mobile: '', address: '', industry: '', id: ''})
     },
     mounted() {
     },
@@ -219,7 +222,7 @@
             let id = this.$route.query.id
             setTimeout(() => {
               this.grayTip = false
-              this.$store.commit('SELEC_CUSTOM', {name: '', mobile: '', address: '', industry: ''})
+              this.$store.commit('SELEC_CUSTOM', {name: '', mobile: '', address: '', industry: '', id: ''})
               this.$router.push({path: '/sell-record', query: {id}})
             }, 1000)
           })
@@ -228,6 +231,9 @@
         this.popShow = false
       },
       selecTrade() {
+        if (this.$store.state.customName !== '') {
+          return
+        }
         this.tabShow = true
       },
       tabLeftClick(num) { // 左tab栏点击
@@ -265,12 +271,14 @@
         this.selecArea = true
       },
       selcetAddress() {
+        if (this.$store.state.customName !== '') {
+          return
+        }
         this.$refs.picker.show()
       }
     },
     watch: {
       total_price(cur, prev) {
-        console.log(cur)
         let value = cur
         value = value.match(/\d+(\.\d{0,2})?/) ? value.match(/\d+(\.\d{0,2})?/)[0] : ''
         this.total_price = value
