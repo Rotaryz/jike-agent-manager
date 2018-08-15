@@ -11,6 +11,7 @@
               :data="dataArray"
               :pullUpLoad="pullUpLoadObj"
               @pullingUp="onPullingUp"
+              v-if="dataArray.length"
       >
         <section class="custom-list">
           <ul class="main">
@@ -30,6 +31,7 @@
           </ul>
         </section>
       </scroll>
+      <empty-data v-else></empty-data>
     </div>
     <!--<footer class="bot-btn">-->
       <!--<router-link to="/custom-create" class="btn">新建客户</router-link>-->
@@ -43,6 +45,7 @@
   import { Custom } from 'api'
   import { ERR_OK } from 'common/js/config'
   import Toast from 'components/toast/toast'
+  import EmptyData from 'components/empty-data/empty-data'
 
   const LIMIT = 10
 
@@ -123,7 +126,8 @@
     },
     components: {
       Scroll,
-      Toast
+      Toast,
+      EmptyData
     }
   }
 </script>

@@ -9,14 +9,16 @@
         <div class="name">手机号码</div>
         <input class="input readonly" type="number" v-model="mobile" readonly placeholder="请输入手机号">
       </li>
-      <li class="list">
+      <li class="list" @click="selcetAddress">
         <div class="name">所在地区</div>
-        <input class="input" type="text" readonly v-model="form.address" @click="selcetAddress" placeholder="请选择所在的地区">
+        <!--<input class="input" type="text" readonly v-model="form.address"  placeholder="请选择所在的地区">-->
+        <p class="area-selec" :class="selecArea && 'black'" >{{ form.address }}</p>
         <div class="icon"></div>
       </li>
       <li class="list" @click="selecTrade">
         <div class="name">所属行业</div>
-        <input class="input" type="text" readonly v-model="form.industry" placeholder="请选择所属的行业">
+        <!--<input class="input" type="text" readonly v-model="form.industry" placeholder="请选择所属的行业">-->
+        <p class="industry-selec" :class="selecIndustry && 'black'">{{ form.industry }}</p>
         <div class="icon"></div>
       </li>
     </ul>
@@ -63,8 +65,8 @@
       return {
         form: {
           name: '',
-          address: null,
-          industry: null,
+          address: '请选择所在的地区',
+          industry: '请选择所属的行业',
           note: null,
           agent_merchant_id: ''
         },
@@ -75,7 +77,9 @@
         tabLeftIndex: 0, // 左边tab栏列表
         tabRightIndex: 0, // 右边tab栏列表
         industryList: [],
-        cityData
+        cityData,
+        selecArea: false,
+        selecIndustry: false
       }
     },
     created() {
@@ -114,6 +118,7 @@
         let tabLeftList = this.industryList[this.tabLeftIndex]
         let tabRightList = this.industryList[this.tabLeftIndex].industry[this.tabRightIndex]
         this.form.industry = tabLeftList.name + ' ' + tabRightList.name
+        this.selecIndustry = true
         // this.tabLeftIndex = 0
         // this.tabRightIndex = 0
       },
@@ -125,9 +130,15 @@
               return
             }
             this.form.name = res.data.name
-            this.form.address = res.data.address
-            this.form.industry = res.data.industry
             this.form.note = res.data.note
+            if (res.data.address) {
+              this.form.address = res.data.address
+              this.selecArea = true
+            }
+            if (res.data.industry) {
+              this.form.industry = res.data.industry
+              this.selecIndustry = true
+            }
           })
       },
       getIndustry() {
@@ -141,14 +152,20 @@
           })
       },
       saveCustomMsg() { // 保存客户资料
-        Custom.createCustom(this.form)
+        let form = this.form
+        if (form.address === '请选择所在的地区') {
+          form.address = ''
+        }
+        if (form.industry === '请选择所属的行业') {
+          form.industry = ''
+        }
+        Custom.createCustom(form)
           .then(res => {
             if (res.error !== ERR_OK) {
               this.$refs.toast.show(res.message)
               return
             }
             this.$refs.toast.show('保存成功')
-            console.log(this.$route)
             setTimeout(() => {
               this.$router.back()
             }, 1500)
@@ -166,6 +183,7 @@
         })
         let str = arr.join('-')
         this.form.address = str
+        this.selecArea = true
       },
       selcetAddress() {
         this.$refs.picker.show()
@@ -205,12 +223,23 @@
           color: $color-111313
           outline: none
           flex: 1
-          height: 60px
-          line-height: 60px
+          height: 20px
+          line-height: 20px
+          font-size: 14px
           &::-webkit-input-placeholder
             color: $color-C1C3C3
           &.readonly
             color: $color-BEB5A3
+        .area-selec
+          flex: 1
+          color: $color-C1C3C3
+          &.black
+            color: $color-111313
+        .industry-selec
+          flex: 1
+          color: $color-C1C3C3
+          &.black
+            color: $color-111313
         .name
           width: 100px
         .icon
@@ -258,8 +287,10 @@
         padding-bottom: 22px
         outline: none
         resize: none
+        font-size: 14px
         &::-webkit-input-placeholder
           color: $color-C1C3C3
+          font-size: 14px
       .count
         position: absolute
         right: 20px

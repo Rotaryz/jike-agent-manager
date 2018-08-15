@@ -19,10 +19,10 @@
       </div>
     </header>
     <div class="selec-list">
-      <div class="list">
+      <div class="list" @click="selcetAddress">
         <div class="name">所在地区</div>
         <!--<input class="input" type="text" readonly  v-model="form.address" @click="selcetAddress" placeholder="请选择所在的地区">-->
-        <p class="area-selec" :class="selecArea && 'black'" @click="selcetAddress">{{ form.address }}</p>
+        <p class="area-selec" :class="selecArea && 'black'" >{{ form.address }}</p>
         <div class="icon"></div>
       </div>
       <div class="list" @click="selecTrade">
@@ -160,7 +160,7 @@
             this.$refs.toast.show(res.message)
             return
           }
-          this.form.usable_account = res.data.usable_account
+          this.form.usable_account = res.data.usable_account || 0
         })
       },
       getIndustry() {
@@ -174,10 +174,6 @@
           })
       },
       submit() { // 点击提交
-        this.popShow = true
-      },
-      confirm() { // 确认窗的确定按钮
-        this.popShow = false
         if (!this.form.name) {
           this.$refs.toast.show('请输入客户名称')
           return
@@ -197,6 +193,14 @@
           this.$refs.toast.show('请输入购买AI微店的总价')
           return
         }
+        if (this.form.usable_account === 0 || (this.form.num > this.form.usable_account)) {
+          this.$refs.toast.show('库存不足')
+          return
+        }
+        this.popShow = true
+      },
+      confirm() { // 确认窗的确定按钮
+        this.popShow = false
         Custom.openBill(this.form)
           .then(res => {
             if (res.error !== ERR_OK) {
@@ -299,6 +303,7 @@
               margin-right: 4px
               height: 20px
               line-height: 20px
+              font-size: 14px
               &::-webkit-input-placeholder
                 color: $color-C1C3C3
               &.readonly
@@ -392,6 +397,7 @@
         flex: 1
         height: 20px
         line-height: 20px
+        font-size: 14px
         &::-webkit-input-placeholder
           color: $color-C1C3C3
         &.readonly
@@ -421,8 +427,10 @@
       padding-bottom: 22px
       outline: none
       resize: none
+      font-size: 14px
       &::-webkit-input-placeholder
         color: $color-C1C3C3
+        font-size: 14px
     .count
       position: absolute
       right: 20px
