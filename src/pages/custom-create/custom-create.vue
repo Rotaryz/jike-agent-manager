@@ -3,11 +3,11 @@
     <ul class="input-list">
       <li class="list">
         <div class="name">客户</div>
-        <input class="input" type="text" v-model="form.name" placeholder="国颐堂美发有限公司">
+        <input class="input" type="text" v-model="form.name" placeholder="请输入公司名">
       </li>
       <li class="list">
         <div class="name">手机号码</div>
-        <input class="input" type="text" v-model="mobile" readonly placeholder="15527741300">
+        <input class="input" type="number" v-model="mobile" readonly placeholder="请输入手机号">
       </li>
       <li class="list">
         <div class="name">所在地区</div>
@@ -53,7 +53,7 @@
   import { Custom } from 'api'
   import { ERR_OK } from 'common/js/config'
   import Toast from 'components/toast/toast'
-  import {cityData} from 'common/js/utils'
+  import { cityData } from 'common/js/utils'
 
   export default {
     name: 'custom-create',
@@ -62,7 +62,7 @@
     data() {
       return {
         form: {
-          name: '国颐堂美发有限公司',
+          name: '',
           address: null,
           industry: null,
           note: null,
