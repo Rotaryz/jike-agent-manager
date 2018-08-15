@@ -312,6 +312,7 @@
 
   .entering-box
     padding-bottom: 85px
+    min-height: 100vh
 
   .entering-list
     padding: 0 15px
