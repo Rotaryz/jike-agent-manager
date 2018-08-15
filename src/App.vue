@@ -46,6 +46,7 @@
     watch: {
       '$route'(to, from) {
         document.title = to.meta.title ? to.meta.title : DEFAULT_TITLE
+        console.log(this.entryAnimation)
         if (to.path === HOME_ROUTE) {
           this.routerArr = []
           this.entryAnimation = 'out'
