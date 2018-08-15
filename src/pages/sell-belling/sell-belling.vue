@@ -135,7 +135,6 @@
       this.form.name = this.$store.state.customName
       this.form.mobile = this.$store.state.customMobile
       this.getIndustry()
-      console.log('store', this.$store.state.customName)
     },
     mounted() {
     },

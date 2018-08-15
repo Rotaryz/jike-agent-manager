@@ -44,7 +44,7 @@
   import { ERR_OK } from 'common/js/config'
   import Toast from 'components/toast/toast'
 
-  const  LIMIT = 10
+  const LIMIT = 10
 
   export default {
     name: 'Demo',
