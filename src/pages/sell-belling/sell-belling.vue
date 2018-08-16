@@ -346,7 +346,7 @@
           flex: 1
           color: $color-666666
           font-size: $font-size-14
-          padding-right: 78px
+          padding-right: 82px
           width: 100%;
           box-sizing: border-box;
           .list
@@ -398,7 +398,7 @@
           layout(column, block, nowrap)
           justify-content: center
           align-items: center
-          padding-left: 10px
+          padding-left: 15px
           border-left-1px($color-E3E6E9)
           .img
             width: 34px
@@ -463,7 +463,7 @@
         background-size: 100% 100%
     .msg-list
       background: $color-white
-      padding: 0 10px
+      padding: 0 15px
       margin-top: 8px
       .list
         border-bottom-1px($color-E3E6E9)
@@ -531,9 +531,8 @@
       color: $color-C1C3C3
 
   .bot-btn
-    right: 0
     background: $color-white
-    padding: 16px 10px
+    padding: 16px 15px
     box-sizing: border-box
     margin-top: 14px
   .btn
@@ -573,7 +572,7 @@
       .confirm-btn
         height: 45px
         line-height: 45px
-        border-top: 0.5px solid $color-E3E6E9
+        border-top-1px($color-E3E6E9)
         color: $color-C1C3C3
         display: flex
         position: absolute
@@ -582,7 +581,7 @@
         right: 0
         .pop-btn
           width: 50%
-          border-right: 0.5px solid $color-E3E6E9
+          border-right-1px($color-E3E6E9)
           color: $color-A3A2A0
           font-size: 16px
           &.right
@@ -651,7 +650,7 @@
         overflow-y: scroll
         .list
           padding: 8px 0
-          border-bottom: 0.5px solid $color-E3E6E9
+          border-bottom-1px($color-E3E6E9)
           text-align: left
           margin-left: 10px
           overflow: hidden
@@ -662,11 +661,11 @@
       height: 40px
       display: flex
       line-height: 40px
-      border-top: 0.5px solid $color-E3E6E9
+      border-top-1px($color-E3E6E9)
       .pop-btn
         width: 50%
         box-sizing: border-box
-        border-right: 0.5px solid $color-E3E6E9
+        border-right-1px($color-E3E6E9)
         color: $color-C1C3C3
         &.right
           border-right: 0
