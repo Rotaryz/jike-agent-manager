@@ -63,14 +63,19 @@
         projectOption: storage.get('project', WEI_SHANG.project)
       }
     },
-    beforeCreate() {
-      storage.clear()
+    created() {
+      this._checkAuthorize()
     },
     beforeDestroy() {
       this.timer && clearInterval(this.timer)
     },
     methods: {
       ...mapActions(['updateHomeTab']),
+      _checkAuthorize() {
+        if (this.hasToken) {
+          this.$router.replace({path: '/'})
+        }
+      },
       login() {
         if (!this.allowLogin) return
         this.allowLogin = false
@@ -83,7 +88,7 @@
             return
           }
           this._saveAuthInfo(res)
-          this.$router.replace({path: '/home'})
+          this.$router.push({path: '/'})
         })
       },
       getCode() {
@@ -145,6 +150,11 @@
           this.allowGetCode = true
           this.codeSeconds = 60
         }
+      }
+    },
+    computed: {
+      hasToken() {
+        return storage.has('token')
       }
     }
   }

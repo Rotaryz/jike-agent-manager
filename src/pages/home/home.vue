@@ -136,6 +136,7 @@
       }
     },
     created() {
+      if (!this.hasToken) return
       this.tabIndex = this.homeTabIdx
       this._getProject()
       this._getHomeInfo()
@@ -241,7 +242,10 @@
       }
     },
     computed: {
-      ...mapGetters(['homeTabIdx'])
+      ...mapGetters(['homeTabIdx']),
+      hasToken() {
+        return storage.has('token')
+      }
     }
   }
 </script>
@@ -260,14 +264,14 @@
       align-items: center
       padding-top: 27px
       .company
-        min-height :12px
+        min-height: 12px
         font-family: $font-family-regular
         font-size: $font-size-12
         color: $color-A3A2A0
         text-align: center
         line-height: 1
       .position
-        min-height :12px
+        min-height: 12px
         font-family: $font-family-light
         font-size: $font-size-12
         color: $color-9E8F70
