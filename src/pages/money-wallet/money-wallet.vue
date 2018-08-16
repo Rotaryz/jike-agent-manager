@@ -261,7 +261,7 @@
       .btn
         width: 86px
         height: 30px
-        font-family: $font-family-regular
+        font-family: $font-family-light
         font-size: $font-size-14
         color: $color-C3A66C
         text-align: center
@@ -294,6 +294,7 @@
             background: $color-C3A66C
             left: 0
         .more
+          font-family: $font-family-light
           width: 57px
           height: 22px
           border-1px($color-C3A66C, 25px)

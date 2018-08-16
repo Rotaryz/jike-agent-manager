@@ -2,7 +2,7 @@
   <div class="home">
     <header class="header" v-if="isWD">
       <h3 class="company">{{userInfo?userInfo.company_name:''}}</h3>
-      <h4 class="position">{{userInfo?userInfo.role_name:''}}</h4>
+      <h4 class="position" :class="(userInfo && userInfo.role_name)? '': 'hide'">{{userInfo?userInfo.role_name:''}}</h4>
       <div class="money">{{userInfo?userInfo.real_income:0}}</div>
       <div class="explain">今日实际收入</div>
       <ul class="data-wrapper">
@@ -282,6 +282,8 @@
         border: 0.5px solid $color-676052
         border-radius: 100px
         margin-top: 11px
+        &.hide
+          opacity: 0
       .money
         font-family: $font-family-dinbold
         font-size: 60px

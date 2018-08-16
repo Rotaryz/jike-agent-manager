@@ -319,6 +319,7 @@
             background: $color-C3A66C
             left: 0
         .more
+          font-family: $font-family-light
           width: 57px
           height: 22px
           border-1px($color-C3A66C, 25px)

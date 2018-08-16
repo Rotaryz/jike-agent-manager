@@ -24,9 +24,6 @@
     z-index: 10
     layout(row, block, nowrap)
     align-items: center
-    font-family: $font-family-regular
-    font-size: 3.2vw
-    color: $color-FFFFFF
     background: $color-C3A66C
     .icon
       width: 4.4vw
@@ -39,5 +36,8 @@
       height: @width
       icon-image(icon-arrow_home)
     .txt
+      font-family: $font-family-light
+      font-size: 3.2vw
+      color: $color-FFFFFF
       flex: 1
 </style>
