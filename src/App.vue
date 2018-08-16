@@ -13,7 +13,7 @@
   import storage from 'storage-controller'
 
   const COMPONENT_NAME = 'App'
-  // const DEFAULT_TITLE = '代理商后台'
+  const DEFAULT_TITLE = '代理商后台'
   const HOME_ROUTE = '/home'
   const DEFAULT_ROUTE = '/login'
 
@@ -30,12 +30,32 @@
     },
     created() {
       console.log(process.env)
-      // this._checkAuthorize()
+      this._checkAuthorize()
     },
     methods: {
       _checkAuthorize() {
         if (!this.hasToken) {
           this.$router.replace({path: '/login'})
+        }
+      },
+      _backNull(to) {
+        if (to.path === HOME_ROUTE || to.path === DEFAULT_ROUTE) {
+          this.routerArr = []
+          this.entryAnimation = 'out'
+          window.history.pushState(null, null)
+          return true
+        }
+        return false
+      },
+      _changeAnimation(to) {
+        let path = to.path
+        let flag = this.routerArr.some(val => val === path)
+        if (flag) {
+          this.routerArr.pop()
+          this.entryAnimation = 'out'
+        } else {
+          this.routerArr.push(path)
+          this.entryAnimation = 'slide'
         }
       }
     },
@@ -46,23 +66,11 @@
     },
     watch: {
       '$route'(to, from) {
-        // document.title = to.meta.title ? to.meta.title : DEFAULT_TITLE
-        if (to.path === HOME_ROUTE || to.path === DEFAULT_ROUTE) {
-          this.routerArr = []
-          this.entryAnimation = 'out'
-          window.history.pushState(null, null)
-          return
-        }
+        document.title = to.meta.title ? to.meta.title : DEFAULT_TITLE
         this.keepAlive = to.meta.keepAlive
-        let path = to.path
-        let flag = this.routerArr.some(val => val === path)
-        if (flag) {
-          this.routerArr.pop()
-          this.entryAnimation = 'out'
-        } else {
-          this.routerArr.push(path)
-          this.entryAnimation = 'slide'
-        }
+        this._checkAuthorize()
+        if (this._backNull(to)) return
+        this._changeAnimation(to)
       }
     }
   }
