@@ -38,7 +38,7 @@
             </div>
             <div class="item three">
               <p class="left">{{item.created_at}}</p>
-              <p class="right">累计 <em class="em">{{item.after_total_income}}</em></p>
+              <p class="right">累计 <span class="em">{{item.after_total_income}}</span></p>
             </div>
           </li>
         </ul>

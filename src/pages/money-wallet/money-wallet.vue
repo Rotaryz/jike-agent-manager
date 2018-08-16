@@ -33,7 +33,7 @@
             </div>
             <div class="item three">
               <p class="left">{{item.created_at}}</p>
-              <p class="right">余额 <em class="em">{{item.after_remaining}}</em></p>
+              <p class="right">余额 <span class="em">{{item.after_remaining}}</span></p>
             </div>
           </li>
         </ul>
@@ -247,7 +247,7 @@
       align-items: center
       background-image: linear-gradient(-180deg, #2D2C28 0%, #3D3834 100%)
       .money
-        font-family: $font-family-bold
+        font-family: $font-family-dinbold
         font-size: 60px
         color: $color-C3A66C
         letter-spacing: 1px
@@ -297,7 +297,7 @@
         .more
           width: 57px
           height: 22px
-          border: 1px solid $color-C3A66C
+          border: 0.5px solid $color-C3A66C
           border-radius: 25px
           font-size: 12px
           line-height: 1

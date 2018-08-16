@@ -97,4 +97,5 @@
         &.active
           color: $color-FFFFFF
           background : $color-C3A66C
+          border-color: $color-C3A66C
 </style>
