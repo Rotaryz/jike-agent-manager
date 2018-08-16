@@ -1,27 +1,27 @@
 <template>
   <div class="sell-belling">
     <header class="header">
-      <div class="top-msg">
+      <div class="top-msg border-bottom-1px">
         <div class="left">
-          <div class="list">
-            <p class="name">*购买客户</p>
+          <div class="list border-bottom-1px">
+            <p class="name">购买客户</p>
             <input type="text" class="input" v-if="(this.$store.state.customName === '')" :class="(this.$store.state.customName !== '') && 'readonly'" :readonly="(this.$store.state.customName !== '')" v-model="form.name" placeholder="请输入客户名称">
             <div class="readonly" v-else>{{form.name}}</div>
           </div>
-          <div class="list">
-            <p class="name">*手机号码</p>
+          <div class="list border-bottom-1px">
+            <p class="name">手机号码</p>
             <input type="number" class="input" v-if="(this.$store.state.customMobile === '')" :class="(this.$store.state.customName !== '') && 'readonly'" :readonly="(this.$store.state.customName !== '')" v-model="mobile" placeholder="请输入手机号码">
             <div class="readonly" v-else>{{form.mobile}}</div>
           </div>
         </div>
-        <div class="right">
+        <div class="right border-left-1px">
           <div class="img"></div>
           <router-link to="/choose-custom" class="choose-custom">选择客户</router-link>
         </div>
       </div>
     </header>
     <div class="selec-list">
-      <div class="list" @click="selectAddress">
+      <div class="list border-bottom-1px" @click="selectAddress">
         <div class="name">所在地区</div>
         <p class="area-selec" :class="areaClass">{{ form.address }}</p>
         <div class="icon"></div>
@@ -33,34 +33,35 @@
       </div>
     </div>
     <ul class="msg-list">
-      <li class="list">
+      <li class="list border-bottom-1px">
         <div class="name">商品名称</div>
         <p class="readonly">{{form.title}}</p>
       </li>
-      <li class="list">
+      <li class="list border-bottom-1px">
         <div class="name">剩余库存</div>
         <p class="readonly">{{form.usable_account}}套</p>
       </li>
-      <li class="list">
-        <div class="name">*购买数量</div>
+      <li class="list border-bottom-1px">
+        <div class="name before">购买数量</div>
         <input class="input" type="number" v-model="form.num" placeholder="请输入购买数量">
         <div>套</div>
       </li>
       <li class="list">
-        <div class="name">*销售总价</div>
+        <div class="name before">销售总价</div>
         <input class="input" type="number" v-model="total_price" placeholder="请输入销售总价">
         <div>元</div>
       </li>
     </ul>
-    <div class="remark">
-      <div class="name">备注</div>
-      <textarea class="textarea" type="textarea" v-model="form.note" maxlength="200" placeholder="可在此写客户备注，不超过200字"></textarea>
-      <div class="count">{{ count }}/200</div>
+    <div class="footer">
+      <div class="remark">
+        <div class="name">备注</div>
+        <textarea class="textarea" type="textarea" v-model="form.note" maxlength="200" placeholder="可在此写客户备注，不超过200字"></textarea>
+        <div class="count">{{ count }}/200</div>
+      </div>
+      <div class="bot-btn">
+        <div class="btn" @click="submit">立即开通</div>
+      </div>
     </div>
-    <footer class="bot-btn">
-      <div class="btn" @click="submit">立即开通</div>
-    </footer>
-
     <div class="pop" v-if="popShow">
       <div class="pop-main">
         <p class="tip">确定为客户开通{{form.num}}个{{isWD?'AI微店':'AI名片'}}吗？</p>
@@ -309,6 +310,8 @@
         num = num.match(/\d{0,11}/) ? num.match(/\d{0,11}/)[0] : ''
         this.mobile = num
         this.form.mobile = num
+      },
+      'form.name': (val, oldVal) => {
       }
     },
     components: {
@@ -332,30 +335,27 @@
       display: block
       height: 8px
       background: $color-F8F8F8
-    &::after
-      display: block
-      height: 65px
-      content: ''
     .header
-      padding: 0 10px
+      padding: 0 15px
       background: $color-white
       .top-msg
         display: flex
-        border-bottom: 1px solid $color-E3E6E9
+        border-bottom-1px($color-E3E6E9)
         position: relative
         .left
           flex: 1
           color: $color-666666
           font-size: $font-size-14
-          padding-right: 78px
+          padding-right: 82px
           width: 100%;
           box-sizing: border-box;
           .list
             layout(row, block, nowrap)
-            border-bottom: 1px solid $color-E3E6E9
+            border-bottom-1px($color-E3E6E9)
             height: 60px
             line-height: 60px
             align-items: center
+            position: relative
             &:last-child
               border-bottom: 0
             .input
@@ -383,18 +383,23 @@
 
             .name
               width: 80px
+              &:before
+                content:'*'
+                display: block
+                left: -6px
+                col-center()
         .right
           position: absolute
           right: 0
-          bottom: 0
+          bottom: 0.5px
           width: 68px
           height: 120px
           background: $color-white
           layout(column, block, nowrap)
           justify-content: center
           align-items: center
-          padding-left: 10px
-          border-left: 1px solid $color-E3E6E9
+          padding-left: 15px
+          border-left-1px($color-E3E6E9)
           .img
             width: 34px
             height: 34px
@@ -409,14 +414,14 @@
             line-height: 22px
             font-size: 10px
             color: $color-C3A66C
-            border: 1px solid $color-C3A66C
+            border: 0.5px solid $color-C3A66C
             border-radius: 100px
 
     .selec-list
       background: $color-white
-      padding: 0 10px
+      padding: 0 15px
       .list
-        border-bottom: 1px solid $color-E3E6E9
+        border-bottom-1px($color-E3E6E9)
         color: $color-666666
         font-size: $font-size-14
         height: 60px
@@ -458,16 +463,17 @@
         background-size: 100% 100%
     .msg-list
       background: $color-white
-      padding: 0 10px
+      padding: 0 15px
       margin-top: 8px
       .list
-        border-bottom: 1px solid $color-E3E6E9
+        border-bottom-1px($color-E3E6E9)
         color: $color-666666
         font-size: $font-size-14
         height: 60px
         line-height: 60px
         layout(row, block, nowrap)
         align-items: center
+        position: relative
         &:last-child
           border-bottom: 0
         .readonly
@@ -485,7 +491,14 @@
           color: $color-BEB5A3
       .name
         width: 80px
-
+        &.before
+          &:before
+            content:'*'
+            display: block
+            left: -6px
+            col-center()
+  .footer
+    background: $color-white
   .remark
     margin-top: 8px
     padding: 20px 15px
@@ -501,7 +514,7 @@
       width: 100%
       color: $color-111313
       margin-top: 5px
-      border: 1px solid rgba(0, 0, 0, 0.1)
+      border: 0.5px solid rgba(0, 0, 0, 0.1)
       box-sizing: border-box
       padding: 5px
       padding-bottom: 22px
@@ -510,23 +523,18 @@
       font-size: 14px
       &::-webkit-input-placeholder
         color: $color-C1C3C3
-        font-size: 14px
+        font-size: 12px
     .count
       position: absolute
       right: 20px
       bottom: 28px
+      color: $color-C1C3C3
 
   .bot-btn
-    position: fixed
-    bottom: 0
-    left: 0
-    right: 0
     background: $color-white
-    padding: 10px 15px
+    padding: 16px 15px
     box-sizing: border-box
-    box-shadow: 0 0px 15px 0 rgba(100, 100, 100, .1)
-    height: 65px
-
+    margin-top: 14px
   .btn
     background: $color-C3A66C
     font-size: $font-size-16
@@ -564,7 +572,7 @@
       .confirm-btn
         height: 45px
         line-height: 45px
-        border-top: 1px solid $color-E3E6E9
+        border-top-1px($color-E3E6E9)
         color: $color-C1C3C3
         display: flex
         position: absolute
@@ -573,7 +581,7 @@
         right: 0
         .pop-btn
           width: 50%
-          border-right: 1px solid $color-E3E6E9
+          border-right-1px($color-E3E6E9)
           color: $color-A3A2A0
           font-size: 16px
           &.right
@@ -642,7 +650,7 @@
         overflow-y: scroll
         .list
           padding: 8px 0
-          border-bottom: 1px solid $color-E3E6E9
+          border-bottom-1px($color-E3E6E9)
           text-align: left
           margin-left: 10px
           overflow: hidden
@@ -653,11 +661,11 @@
       height: 40px
       display: flex
       line-height: 40px
-      border-top: 1px solid $color-E3E6E9
+      border-top-1px($color-E3E6E9)
       .pop-btn
         width: 50%
         box-sizing: border-box
-        border-right: 1px solid $color-E3E6E9
+        border-right-1px($color-E3E6E9)
         color: $color-C1C3C3
         &.right
           border-right: 0

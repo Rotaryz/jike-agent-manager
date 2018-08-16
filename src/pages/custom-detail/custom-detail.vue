@@ -41,7 +41,7 @@
               <!--@pullingUp="onPullingUp"-->
       <!--&gt;-->
         <ul class="abso-list" v-if="dataArray.length">
-          <li v-for="(item,index) in msg.agent_sale_records" :key="item.id" class="list">
+          <li v-for="(item,index) in msg.agent_sale_records" :key="item.id" class="list border-bottom-1px">
             <div class="date">{{ item.created_at.split(' ')[0] }}</div>
             <div class="count">{{ item.num }}</div>
             <div class="money">{{ item.total_price }}</div>
@@ -197,7 +197,7 @@
         .top-data
           height: 50px
           background: $color-white;
-          box-shadow: 0 13px 13px 0 rgba(0,0,0,0.05);
+          box-shadow: 0 6px 6px 0 rgba(0,0,0,0.05);
           border-radius: 4px;
           display: flex
           justify-content: space-around
@@ -256,7 +256,7 @@
         line-height: 60px
         font-size: $font-size-14
         margin: 0 15px
-        border-bottom: 1px solid $color-E3E6E9
+        border-bottom-1px($color-E3E6E9)
         display: flex
         justify-content: space-between
         .date
@@ -283,7 +283,7 @@
         line-height: 60px
         font-size: $font-size-14
         margin: 0 15px
-        border-bottom: 1px solid $color-E3E6E9
+        border-bottom-1px($color-E3E6E9)
         display: flex
         justify-content: space-between
         .date

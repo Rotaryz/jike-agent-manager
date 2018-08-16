@@ -14,7 +14,7 @@
       >
         <section class="custom-list">
           <ul class="main">
-            <li v-for="(item,index) in dataArray" :key="index" class="list" @click="selecCustom(item.id)">
+            <li v-for="(item,index) in dataArray" :key="index" class="list border-bottom-1px" @click="selecCustom(item.id)">
               <div class="name">{{ item.name }}</div>
               <div class="call">{{ item.mobile }}</div>
             </li>
@@ -163,7 +163,7 @@
         font-size: $font-size-14
         height: 60px
         line-height: 60px
-        border-bottom: 1px solid $color-E3E6E9
+        border-bottom-1px($color-E3E6E9)
         .name
           color: $color-343439
         .call
