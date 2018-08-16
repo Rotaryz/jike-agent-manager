@@ -130,5 +130,5 @@
             border: 0.5px solid $color-C3A66C
             &.active
               icon-image(icon-select_recommender)
-              border-color: transparent
+              border: none
 </style>
