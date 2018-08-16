@@ -48,7 +48,7 @@
           </li>
         </ul>
       <!--</scroll>-->
-        <empty-data v-else></empty-data>
+        <empty-data v-else-if="showEmpty"></empty-data>
     </div>
     <footer class="bot-btn">
       <a :href="`tel:${ msg.mobile }`" class="btn">联系客户</a>
@@ -80,13 +80,15 @@
         company: '国颐堂美发有限公司',
         id: null,
         agentId: '',
-        msg: ''
+        msg: '',
+        showEmpty: false
       }
     },
     created() {
       this.id = this.$route.query.id
       this.getCustomMsg(res => {
         this.dataArray = res.data.agent_sale_records
+        this._checkEmpty()
       })
     },
     mounted() {
@@ -100,6 +102,9 @@
       }
     },
     methods: {
+      _checkEmpty() {
+        this.showEmpty = !this.dataArray.length
+      },
       jump(agentId) {
         this.$router.push({path: '/custom-create', query: { id: this.id, agentId }})
       },

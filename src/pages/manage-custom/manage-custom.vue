@@ -31,7 +31,7 @@
           </ul>
         </section>
       </scroll>
-      <empty-data v-else></empty-data>
+      <empty-data v-else-if="showEmpty"></empty-data>
     </div>
     <!--<footer class="bot-btn">-->
       <!--<router-link to="/custom-create" class="btn">新建客户</router-link>-->
@@ -61,12 +61,14 @@
         pullUpLoadMoreTxt: '加载更多',
         pullUpLoadNoMoreTxt: '没有更多了',
         page: 1,
-        more: true
+        more: true,
+        showEmpty: false
       }
     },
     created() {
       this.getCustomList(10, 1, res => {
         this.dataArray = res.data
+        this._checkEmpty()
       })
     },
     mounted() {
@@ -80,6 +82,9 @@
       }
     },
     methods: {
+      _checkEmpty() {
+        this.showEmpty = !this.dataArray.length
+      },
       jump(id) {
         this.$router.push({path: '/custom-detail', query: {id}})
       },

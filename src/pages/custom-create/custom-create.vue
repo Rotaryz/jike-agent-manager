@@ -25,7 +25,9 @@
     <div class="gray-bar"></div>
     <div class="remark">
       <div class="name">备注</div>
-      <textarea class="textarea" type="textarea" v-model="form.note" maxlength="200" placeholder="可在此写客户备注，不超过200字" ></textarea>
+      <div class="text-line">
+        <textarea class="textarea" type="textarea" v-model="form.note" maxlength="200" placeholder="可在此写客户备注，不超过200字" ></textarea>
+      </div>
       <div class="count">{{ count }}/200</div>
     </div>
     <footer class="bot-btn border-top-1px">
@@ -287,21 +289,23 @@
       position: relative
       .name
         width: 100px
-      .textarea
-        height: 121px
-        width: 100%
-        color: $color-111313
+      .text-line
+        border-1px(#E3E6E9)
         margin-top: 5px
-        border: 0.5px solid rgba(0,0,0,0.1)
-        box-sizing: border-box
-        padding: 5px
-        padding-bottom: 22px
-        outline: none
-        resize: none
-        font-size: 14px
-        &::-webkit-input-placeholder
-          color: $color-C1C3C3
-          font-size: 12px
+        .textarea
+          height: 121px
+          width: 100%
+          color: $color-111313
+          border: none
+          box-sizing: border-box
+          padding: 5px
+          padding-bottom: 22px
+          outline: none
+          resize: none
+          font-size: 14px
+          &::-webkit-input-placeholder
+            color: $color-C1C3C3
+            font-size: 12px
       .count
         position: absolute
         right: 20px

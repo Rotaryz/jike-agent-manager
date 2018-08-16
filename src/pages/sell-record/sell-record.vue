@@ -21,7 +21,7 @@
           </ul>
         </section>
       </scroll>
-      <empty-data v-else></empty-data>
+      <empty-data v-else-if="showEmpty"></empty-data>
     </div>
     <toast ref="toast"></toast>
   </div>
@@ -48,12 +48,14 @@
         pullUpLoadMoreTxt: '加载更多',
         pullUpLoadNoMoreTxt: '没有更多了',
         page: 1,
-        more: true
+        more: true,
+        showEmpty: false
       }
     },
     created() {
       this.getRecordList(10, 1, res => {
         this.dataArray = res.data
+        this._checkEmpty()
       })
     },
     mounted() {
@@ -67,6 +69,9 @@
       }
     },
     methods: {
+      _checkEmpty() {
+        this.showEmpty = !this.dataArray.length
+      },
       jump(id) {
         this.$router.push({path: '/sell-detail', query: {id}})
       },
