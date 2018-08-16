@@ -71,7 +71,7 @@
     right: 0
     top: 0
     bottom: 0
-    background: rgba(0,0,0,0.2)
+    background: rgba(0,0,0,0)
     transition: background 0.3s
     z-index: -10
     .tab-list
@@ -84,8 +84,8 @@
       height: 360px
       background: $color-white
       text-align: center
-      transition: all 0.2s
-      opacity: 0.5
+      transition: all 0.3s
+      opacity: 0
     .title
       height: 40px
       line-height: 40px
