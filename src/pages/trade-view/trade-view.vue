@@ -77,11 +77,11 @@
           </div>
           <div class="list">
             <div class="icon two"></div>
-            <div class="text">团队分销</div>
+            <div class="text">加盟推荐</div>
           </div>
           <div class="list">
             <div class="icon thr"></div>
-            <div class="text">团队推荐奖励</div>
+            <div class="text">分销单数</div>
           </div>
         </div>
       </div>
@@ -398,7 +398,7 @@
               }
             },
             {
-              name: '团队分销',
+              name: '加盟推荐',
               type: 'bar',
               stack: '总量',
               barWidth: 24,
@@ -422,7 +422,7 @@
               }
             },
             {
-              name: '团队推荐奖励',
+              name: '分销单数',
               type: 'bar',
               stack: '总量',
               barWidth: 24,
