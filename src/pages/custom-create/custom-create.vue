@@ -34,7 +34,7 @@
       <div class="btn" @click="saveCustomMsg">保存</div>
     </footer>
     <tab-list
-      v-if="tabShow"
+      :show="tabShow"
       :tabLeftIndex="tabLeftIndex"
       :tabRightIndex="tabRightIndex"
       :industryList="industryList"

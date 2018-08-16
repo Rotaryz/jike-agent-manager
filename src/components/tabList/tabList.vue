@@ -1,15 +1,15 @@
 <template>
-  <div class="tab-bg">
+  <div class="tab-bg" :class="show ? 'show' : ''">
     <div class="tab-list">
       <h3 class="title">行业类型</h3>
       <div class="tab">
         <div class="tab-left">
           <ul>
-            <li class="list" :class="tabLeftIndex == i && 'on'" v-for="(val, i) in industryList" v-if="val.parent_id === 0" :key="i" @click="tabLeftClick(i)">{{ val.name }}</li>
+            <li class="list" :class="tabLeftIndex == i && 'on'" v-for="(val, i) in industryList" v-if="val&&val.parent_id === 0" :key="i" @click="tabLeftClick(i)">{{ val&&val.name }}</li>
           </ul>
         </div>
         <div class="tab-right">
-          <li class="list border-bottom-1px" :class="tabRightIndex == i && 'on'" v-for="(val, i) in industryList[tabLeftIndex].industry" :key="i" @click="tabRightClick(i)">{{ val.name }}</li>
+          <li class="list border-bottom-1px" :class="tabRightIndex == i && 'on'" v-for="(val, i) in industry" :key="i" @click="tabRightClick(i)">{{ val&&val.name }}</li>
         </div>
       </div>
       <div class="confirm-btn border-top-1px">
@@ -25,13 +25,18 @@
     props: [
       'tabLeftIndex', // 左边tab栏选中
       'tabRightIndex', // 右边tab栏选中
-      'industryList'
+      'industryList',
+      'show'
     ],
     data() {
       return {
       }
     },
     computed: {
+      industry() {
+        let industry = this.industryList[this.tabLeftIndex] ? this.industryList[this.tabLeftIndex].industry : []
+        return industry
+      }
     },
     created() {
     },
@@ -66,7 +71,9 @@
     right: 0
     top: 0
     bottom: 0
-    background: rgba(0,0,0,0.7)
+    background: rgba(0,0,0,0.2)
+    transition: background 0.3s
+    z-index: -10
     .tab-list
       position: absolute
       left: 0
@@ -77,6 +84,8 @@
       height: 360px
       background: $color-white
       text-align: center
+      transition: all 0.2s
+      opacity: 0.5
     .title
       height: 40px
       line-height: 40px
@@ -130,5 +139,11 @@
         &.right
           border-right: 0
           color: $color-C3A66C
+
+  .show
+    background: rgba(0,0,0,0.7)
+    z-index: 10
+    .tab-list
+      opacity: 1
 
 </style>

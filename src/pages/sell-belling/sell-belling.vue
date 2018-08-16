@@ -77,7 +77,7 @@
     <div class="gray-tip" v-if="grayTip">恭喜您，已成功开单了~</div>
 
     <tab-list
-      v-if="tabShow"
+      :show="tabShow"
       :tabLeftIndex="tabLeftIndex"
       :tabRightIndex="tabRightIndex"
       :industryList="industryList"
@@ -416,9 +416,9 @@
             line-height: 22px
             font-size: 10px
             color: $color-C3A66C
-            border: 0.5px solid $color-C3A66C
-            border-radius: 100px
 
+            border-radius: 100px
+            border-1px($color-C3A66C,100px,solid)
     .selec-list
       background: $color-white
       padding: 0 15px
