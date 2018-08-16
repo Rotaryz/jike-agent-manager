@@ -110,10 +110,10 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import utils, {cityData} from 'common/js/utils'
-  import {ERR_OK} from 'common/js/config'
+  import utils, { cityData } from 'common/js/utils'
+  import { ERR_OK } from 'common/js/config'
   import Toast from 'components/toast/toast'
-  import {Agent, UpLoad} from 'api'
+  import { Agent, UpLoad } from 'api'
 
   export default {
     name: 'agent-entering',
@@ -311,9 +311,9 @@
     -webkit-box-sizing: border-box
 
   .entering-box
-    padding-bottom: 85px
+    fill-box()
     min-height: 100vh
-    background :$color-F8F8F8
+    background: $color-F8F8F8
 
   .entering-list
     padding: 0 15px

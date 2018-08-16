@@ -68,6 +68,7 @@
       '$route'(to, from) {
         document.title = to.meta.title ? to.meta.title : DEFAULT_TITLE
         this.keepAlive = to.meta.keepAlive
+        window.scrollTo(0, 0)
         this._checkAuthorize()
         if (this._backNull(to)) return
         this._changeAnimation(to)

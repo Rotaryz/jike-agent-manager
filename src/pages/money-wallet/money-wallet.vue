@@ -178,6 +178,7 @@
         this.$refs.scroll && this.$refs.scroll.scrollTo(0, 0)
       },
       toDetailPage(item) {
+        if (+item.order_type !== 11) return
         const path = '/deposit-detail'
         const id = item.order_sn
         this.$router.push({path, query: {id}})
