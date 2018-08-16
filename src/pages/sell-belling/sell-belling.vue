@@ -32,6 +32,7 @@
         <div class="icon"></div>
       </div>
     </div>
+    <div class="f8"></div>
     <ul class="msg-list">
       <li class="list border-bottom-1px">
         <div class="name">商品名称</div>
@@ -52,6 +53,7 @@
         <div>元</div>
       </li>
     </ul>
+    <div class="f8"></div>
     <div class="footer">
       <div class="remark">
         <div class="name">备注</div>
@@ -463,10 +465,12 @@
         height: 10px
         bg-image('./icon-arrow_home')
         background-size: 100% 100%
+    .f8
+      height: 8px
+      background: $color-F8F8F8
     .msg-list
       background: $color-white
       padding: 0 15px
-      margin-top: 8px
       .list
         border-bottom-1px($color-E3E6E9)
         color: $color-666666
@@ -499,10 +503,12 @@
             display: block
             left: -6px
             col-center()
+  .f8
+    height: 8px
+    background: $color-F8F8F8
   .footer
     background: $color-white
   .remark
-    margin-top: 8px
     padding: 20px 15px
     color: $color-666666
     background: $color-white
