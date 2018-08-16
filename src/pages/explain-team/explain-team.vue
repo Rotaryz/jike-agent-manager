@@ -69,7 +69,7 @@
       background: $color-C3A66C
       height: 22px
       width: 3.5px
-      margin-right: 13.5px
+      margin-right: 11.5px
     .text
       font-size: $font-size-18
       color: $color-343439

@@ -239,6 +239,12 @@
         let myChart = this.$echarts.init(document.getElementById('myLine'))
         // 我的收入
         myChart.setOption({
+          grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+          },
           xAxis: {
             type: 'category',
             boundaryGap: false,
@@ -657,7 +663,7 @@
       padding: 0 15px
       .order-box
         background: #FFFFFF
-        box-shadow: 0 13px 13px 0 rgba(0, 0, 0, 0.05)
+        box-shadow: 0 6px 6px 0 rgba(0, 0, 0, 0.05)
         border-radius: 3px
         layout(row)
         .item
@@ -667,7 +673,7 @@
           align-items: center
           .number
             font-size: $font-size-24
-            font-family: $font-family-regular
+            font-family: $font-family-dinbold
             color: $color-C3A66C
             margin-bottom: 12px
           .text
@@ -740,7 +746,7 @@
       width: 100%
       height: 300px
       margin: 0 auto
-      padding: 0px 0px 0
+      padding: 0px 10px 0
       top: -5px
     #myAddLine
       width: 100%

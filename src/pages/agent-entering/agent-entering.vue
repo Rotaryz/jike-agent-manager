@@ -14,23 +14,23 @@
           </div>
           <input type="number" class="item-input" v-model="phone" placeholder="请输入负责人的手机号码"/>
         </div>
-        <div class="item-box">
+        <div class="item-box" @click="selcetAddress">
           <div class="item-left">
             所在地区
           </div>
           <div class="item-right" v-if="address.length === 0">请选择所在的地区</div>
           <div class="money-main" v-if="address.length !== 0">{{address}}</div>
-          <div class="item-img" @click="selcetAddress">
+          <div class="item-img" >
             <img src="./icon-arrow_home@2x.png" alt="">
           </div>
         </div>
-        <div class="item-box">
+        <div class="item-box"  @click="selcetLevel">
           <div class="item-left">
             *代理级别
           </div>
           <div class="item-right" v-if="levelName.length === 0">请选择代理级别</div>
           <div class="money-main" v-if="levelName.length !== 0">{{levelName}}</div>
-          <div class="item-img" @click="selcetLevel">
+          <div class="item-img">
             <img src="./icon-arrow_home@2x.png" alt="">
           </div>
         </div>
@@ -465,7 +465,7 @@
     background: $color-FFFFFF
     width: 100%
     left: 0
-    border-top: 1px solid #eee
+    border-top: 0.5px solid #e3e6e9
     padding: 10px 15px
     .btn
       color: $color-FFFFFF
