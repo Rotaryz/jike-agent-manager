@@ -26,14 +26,14 @@
           <li class="item-wrapper" @click="toDetailPage(item)" v-for="(item,index) in dataArray" :key="index">
             <div class="item one">
               <p class="left">{{item.title}}</p>
-              <p class="right">+{{item.total}}</p>
+              <p class="right">{{item.total}}</p>
             </div>
             <div class="item two">
               <p class="left">【{{orderType['' + item.order_type]}}】</p>
             </div>
             <div class="item three">
               <p class="left">{{item.created_at}}</p>
-              <p class="right">累计 <em class="em">{{item.after_remaining}}</em></p>
+              <p class="right">余额 <em class="em">{{item.after_remaining}}</em></p>
             </div>
           </li>
         </ul>

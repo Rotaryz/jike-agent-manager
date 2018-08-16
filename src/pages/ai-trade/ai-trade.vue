@@ -271,6 +271,7 @@
     -webkit-box-sizing: border-box
 
   .ai-box
+    fill-box()
     background: $color-FFFFFF
 
   .ai-top
@@ -349,6 +350,7 @@
     justify-content: center
     position: relative
     z-index: 90
+    background: $color-FFFFFF
     .data-item
       width: 50px
       margin: 0 10px
@@ -366,6 +368,7 @@
       background $color-343439
 
   .pie-box
+    background: $color-FFFFFF !important
     position: relative
     background: linear-gradient(rgba(255, 255, 255, .1) 0%, #fff 100%)
     height: 305px
@@ -502,6 +505,7 @@
     font-family: $font-family-regular
     color: $color-343439
     text-align: center
+    background: $color-FFFFFF
 
   .z
     width: 100%

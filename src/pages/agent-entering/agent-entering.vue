@@ -313,6 +313,7 @@
   .entering-box
     padding-bottom: 85px
     min-height: 100vh
+    background :$color-F8F8F8
 
   .entering-list
     padding: 0 15px
