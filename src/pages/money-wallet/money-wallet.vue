@@ -38,7 +38,7 @@
           </li>
         </ul>
       </scroll>
-      <empty-data v-else></empty-data>
+      <empty-data v-else-if="showEmpty"></empty-data>
     </div>
     <wallet-ad></wallet-ad>
     <select-com ref="selectCom" :data="selectTab" :idx="selectIdx" top="318.5px" @choose="choose"></select-com>
