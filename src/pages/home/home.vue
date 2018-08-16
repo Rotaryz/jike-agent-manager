@@ -45,7 +45,7 @@
         <div class="tab-line-wrapper" :style="'transform :translate3d('+ tabIndex*100 +'%,0,0)'">
           <div class="tab-line"></div>
         </div>
-        <ul class="tab-wrapper">
+        <ul class="tab-wrapper border-bottom-1px">
           <li class="tab-item" :class="tabIndex===index?'active':''"
               v-for="(item,index) in tabInfo"
               :key="index"
@@ -356,7 +356,6 @@
           layout(row, block, nowrap)
           align-items: center
           justify-content: space-between
-          border-bottom: 0.5px solid $color-E4E4E4
           .tab-item
             flex: 1
             height: 100%
