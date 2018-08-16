@@ -380,7 +380,7 @@
               barWidth: 24,
               label: {
                 normal: {
-                  show: true,
+                  show: false,
                   position: 'inside',
                   fontSize: 10,
                   color: '#fff'
@@ -404,7 +404,7 @@
               barWidth: 24,
               label: {
                 normal: {
-                  show: true,
+                  show: false,
                   position: 'inside',
                   fontSize: 10,
                   color: '#fff'
@@ -428,7 +428,7 @@
               barWidth: 24,
               label: {
                 normal: {
-                  show: true,
+                  show: false,
                   position: 'inside',
                   fontSize: 10,
                   color: '#fff'
@@ -472,7 +472,7 @@
           },
           tooltip: {
             trigger: 'axis',
-            formatter: '新增团队：{c}',
+            formatter: '新增团队成员：{c}',
             axisPointer: {
               type: 'none'
             }
