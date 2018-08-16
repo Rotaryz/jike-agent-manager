@@ -23,7 +23,7 @@
               v-if="dataArray.length"
       >
         <ul class="content">
-          <li class="item-wrapper" @click="toDetailPage(item)" v-for="(item,index) in dataArray" :key="index">
+          <li class="item-wrapper border-bottom-1px" @click="toDetailPage(item)" v-for="(item,index) in dataArray" :key="index">
             <div class="item one">
               <p class="left">{{item.title}}</p>
               <p class="right">{{item.total}}</p>
@@ -33,7 +33,7 @@
             </div>
             <div class="item three">
               <p class="left">{{item.created_at}}</p>
-              <p class="right">余额 <em class="em">{{item.after_remaining}}</em></p>
+              <p class="right">余额 <span class="em">{{item.after_remaining}}</span></p>
             </div>
           </li>
         </ul>
@@ -178,6 +178,7 @@
         this.$refs.scroll && this.$refs.scroll.scrollTo(0, 0)
       },
       toDetailPage(item) {
+        if (+item.order_type !== 11) return
         const path = '/deposit-detail'
         const id = item.order_sn
         this.$router.push({path, query: {id}})
@@ -246,7 +247,7 @@
       align-items: center
       background-image: linear-gradient(-180deg, #2D2C28 0%, #3D3834 100%)
       .money
-        font-family: $font-family-bold
+        font-family: $font-family-dinbold
         font-size: 60px
         color: $color-C3A66C
         letter-spacing: 1px
@@ -296,7 +297,7 @@
         .more
           width: 57px
           height: 22px
-          border: 1px solid $color-C3A66C
+          border: 0.5px solid $color-C3A66C
           border-radius: 25px
           font-size: 12px
           line-height: 1
@@ -323,7 +324,6 @@
         background: $color-FFFFFF
         .item-wrapper
           height: 94px
-          border-bottom: 0.5px solid $color-E4E4E4
           padding-right: 15px
           .item
             layout(row, block, nowrap)

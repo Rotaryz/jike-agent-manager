@@ -39,7 +39,7 @@
           <div class="scale-thr">分销收入/元</div>
         </div>
         <ul class="team-list" v-if="dataArray.length !== 0">
-          <li class="item" v-for="item in dataArray" v-bind:key="item.id">
+          <li class="item border-bottom-1px" v-for="item in dataArray" v-bind:key="item.id">
             <div class="item-one">{{item.name}}</div>
             <div class="item-two">{{item.commission_num}}</div>
             <div class="item-thr">{{item.commission_income}}</div>
@@ -199,7 +199,7 @@
       padding: 0 15px
       .team-box-samll
         background: #FFFFFF
-        box-shadow: 0 13px 13px 0 rgba(0, 0, 0, 0.05)
+        box-shadow: 0 6px 6px 0 rgba(0, 0, 0, 0.05)
         border-radius: 3px
         height: 100px
         layout(row)
@@ -226,7 +226,7 @@
       background: $color-C3A66C
       height: 22px
       width: 3.5px
-      margin-right: 13.5px
+      margin-right: 11.5px
     .text
       font-size: $font-size-16
       color: $color-343439
@@ -260,7 +260,6 @@
     .item
       layout(row)
       height: 60px
-      border-bottom: 0.5px solid #e3e6e9
       align-items: center
       .item-one
         width: 46%

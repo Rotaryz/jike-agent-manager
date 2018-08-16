@@ -49,6 +49,10 @@
     box-sizing: border-box
     -moz-box-sizing: border-box
     -webkit-box-sizing: border-box
+
+  .box
+    fill-box()
+
   .tem-box
     padding: 28px 0
     position: relative
@@ -65,7 +69,7 @@
       background: $color-C3A66C
       height: 22px
       width: 3.5px
-      margin-right: 13.5px
+      margin-right: 11.5px
     .text
       font-size: $font-size-18
       color: $color-343439

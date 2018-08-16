@@ -68,7 +68,7 @@
         </div>
       </div>
       <!--核心数据指标-->
-      <div class="pie-box line-box">
+      <div class="pie-box line-box line-box-change">
         <div id="myDataBar"></div>
         <div class="pie-list">
           <div class="list">
@@ -77,11 +77,11 @@
           </div>
           <div class="list">
             <div class="icon two"></div>
-            <div class="text">团队分销</div>
+            <div class="text">加盟推荐</div>
           </div>
           <div class="list">
             <div class="icon thr"></div>
-            <div class="text">团队推荐奖励</div>
+            <div class="text">分销单数</div>
           </div>
         </div>
       </div>
@@ -239,6 +239,12 @@
         let myChart = this.$echarts.init(document.getElementById('myLine'))
         // 我的收入
         myChart.setOption({
+          grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+          },
           xAxis: {
             type: 'category',
             boundaryGap: false,
@@ -380,7 +386,7 @@
               barWidth: 24,
               label: {
                 normal: {
-                  show: true,
+                  show: false,
                   position: 'inside',
                   fontSize: 10,
                   color: '#fff'
@@ -398,13 +404,13 @@
               }
             },
             {
-              name: '团队分销',
+              name: '加盟推荐',
               type: 'bar',
               stack: '总量',
               barWidth: 24,
               label: {
                 normal: {
-                  show: true,
+                  show: false,
                   position: 'inside',
                   fontSize: 10,
                   color: '#fff'
@@ -422,13 +428,13 @@
               }
             },
             {
-              name: '团队推荐奖励',
+              name: '分销单数',
               type: 'bar',
               stack: '总量',
               barWidth: 24,
               label: {
                 normal: {
-                  show: true,
+                  show: false,
                   position: 'inside',
                   fontSize: 10,
                   color: '#fff'
@@ -472,7 +478,7 @@
           },
           tooltip: {
             trigger: 'axis',
-            formatter: '新增团队：{c}',
+            formatter: '新增团队成员：{c}',
             axisPointer: {
               type: 'none'
             }
@@ -657,7 +663,7 @@
       padding: 0 15px
       .order-box
         background: #FFFFFF
-        box-shadow: 0 13px 13px 0 rgba(0, 0, 0, 0.05)
+        box-shadow: 0 6px 6px 0 rgba(0, 0, 0, 0.05)
         border-radius: 3px
         layout(row)
         .item
@@ -667,7 +673,7 @@
           align-items: center
           .number
             font-size: $font-size-24
-            font-family: $font-family-regular
+            font-family: $font-family-dinbold
             color: $color-C3A66C
             margin-bottom: 12px
           .text
@@ -740,7 +746,7 @@
       width: 100%
       height: 300px
       margin: 0 auto
-      padding: 0px 0px 0
+      padding: 0px 10px 0
       top: -5px
     #myAddLine
       width: 100%
@@ -814,7 +820,7 @@
       layout(row)
       position: absolute
       width: 100%
-      bottom: 15px
+      bottom: 25px
       left: 0
       .list
         flex: 1
@@ -847,12 +853,15 @@
       font-family: $font-family-medium
       position: absolute
       width: 100%
-      bottom: 10px
+      bottom: 20px
       left: 0
       text-align: center
 
   .pie-box-change
-    height: 250px
+    height: 270px
+
+  .line-box-change
+    height: 325px
 
   .z
     width: 100%

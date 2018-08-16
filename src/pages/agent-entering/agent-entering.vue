@@ -14,23 +14,23 @@
           </div>
           <input type="number" class="item-input" v-model="phone" placeholder="请输入负责人的手机号码"/>
         </div>
-        <div class="item-box">
+        <div class="item-box" @click="selcetAddress">
           <div class="item-left">
             所在地区
           </div>
           <div class="item-right" v-if="address.length === 0">请选择所在的地区</div>
           <div class="money-main" v-if="address.length !== 0">{{address}}</div>
-          <div class="item-img" @click="selcetAddress">
+          <div class="item-img" >
             <img src="./icon-arrow_home@2x.png" alt="">
           </div>
         </div>
-        <div class="item-box">
+        <div class="item-box"  @click="selcetLevel">
           <div class="item-left">
             *代理级别
           </div>
           <div class="item-right" v-if="levelName.length === 0">请选择代理级别</div>
           <div class="money-main" v-if="levelName.length !== 0">{{levelName}}</div>
-          <div class="item-img" @click="selcetLevel">
+          <div class="item-img">
             <img src="./icon-arrow_home@2x.png" alt="">
           </div>
         </div>
@@ -77,7 +77,7 @@
         </div>
       </div>
     </div>
-    <div class="jump-btn">
+    <div class="jump-btn border-top-1px">
       <div class="btn" @click="sumbitData">立即提交</div>
     </div>
     <div class="show-box" v-if="showShadow" @click="colseShadow">
@@ -110,10 +110,10 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import utils, {cityData} from 'common/js/utils'
-  import {ERR_OK} from 'common/js/config'
+  import utils, { cityData } from 'common/js/utils'
+  import { ERR_OK } from 'common/js/config'
   import Toast from 'components/toast/toast'
-  import {Agent, UpLoad} from 'api'
+  import { Agent, UpLoad } from 'api'
 
   export default {
     name: 'agent-entering',
@@ -138,7 +138,10 @@
         loading: false,
         projectName: '',
         selectImg: false,
-        showShadow: false
+        showShadow: false,
+        province: '',
+        city: '',
+        area: ''
       }
     },
     created() {
@@ -152,6 +155,9 @@
         this.name = ''
         this.phone = ''
         this.address = ''
+        this.province = ''
+        this.city = ''
+        this.area = ''
         this.ispaly = 1
         this.level = 0
         this.levelName = ''
@@ -168,9 +174,13 @@
       },
       handlePickerConfirm(e) {
         let text = ''
+        console.log(e)
         for (var i = 0; i < e.length; i++) {
           text += e[i].value
         }
+        this.province = e[0].value
+        this.city = e[1].value
+        this.area = e[2].value
         this.address = text
       },
       cancelLevel(e) {
@@ -282,10 +292,12 @@
         let data = {
           name: this.name,
           mobile: this.phone,
-          address: this.address,
           level: this.level,
           is_paid: this.ispaly,
-          paid_image_id: this.imgId
+          paid_image_id: this.imgId,
+          area: this.area,
+          city: this.city,
+          province: this.province
         }
         Agent.newAddAgent(data).then(res => {
           if (res.error === ERR_OK) {
@@ -311,9 +323,9 @@
     -webkit-box-sizing: border-box
 
   .entering-box
-    padding-bottom: 85px
+    fill-box()
     min-height: 100vh
-    background :$color-F8F8F8
+    background: $color-F8F8F8
 
   .entering-list
     padding: 0 15px
@@ -465,7 +477,6 @@
     background: $color-FFFFFF
     width: 100%
     left: 0
-    border-top: 1px solid #eee
     padding: 10px 15px
     .btn
       color: $color-FFFFFF
