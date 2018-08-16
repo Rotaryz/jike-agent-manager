@@ -62,9 +62,9 @@
     data() {
       return {
         incomeList: ['近3天', '近7天', '近15天'],
-        incomeIndex: 0,
+        incomeIndex: 1,
         accountList: ['近3天', '近7天', '近15天'],
-        accountIndex: 0,
+        accountIndex: 1,
         tradeData: {
           company_name: '',
           role_name: '',
@@ -77,8 +77,8 @@
     },
     created() {
       this.getData()
-      this.getMyIncomeData(1)
-      this.getAccountSaleData(1)
+      this.getMyIncomeData(2)
+      this.getAccountSaleData(2)
     },
     mounted() {
       setTimeout(() => {
@@ -129,6 +129,11 @@
         let myChart = this.$echarts.init(document.getElementById('myLine'))
         // 我的收入
         myChart.setOption({
+          grid: {
+            left: '3%',
+            right: '4%',
+            containLabel: true
+          },
           xAxis: {
             type: 'category',
             boundaryGap: false,
@@ -194,6 +199,11 @@
         let myChart = this.$echarts.init(document.getElementById('myTwoLine'))
         // 我的收入
         myChart.setOption({
+          grid: {
+            left: '3%',
+            right: '4%',
+            containLabel: true
+          },
           xAxis: {
             type: 'category',
             boundaryGap: false,
@@ -382,13 +392,15 @@
       width: 100%
       height: 320px
       margin: 0 auto
-      padding: 0px 0px 0
+      padding: 0px 10px 0
+      box-sizing: border-box
       top: -15px
     #myTwoLine
       width: 100%
       height: 320px
       margin: 0 auto
-      padding: 0px 0px 0
+      padding: 0px 10px 0
+      box-sizing: border-box
       top: -15px
     #myAddLine
       width: 100%

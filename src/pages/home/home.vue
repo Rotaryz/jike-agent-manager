@@ -140,7 +140,7 @@
       this.tabIndex = this.homeTabIdx
       this._getProject()
       this._getHomeInfo()
-      this.getMyIncomeData(1)
+      this.getMyIncomeData(2)
     },
     beforeDestroy() {
       this.updateHomeTab(this.tabIndex)
@@ -161,6 +161,12 @@
         let myChart = this.$echarts.init(document.getElementById('myHomeLine'))
         // 我的收入
         myChart.setOption({
+          grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+          },
           xAxis: {
             type: 'category',
             boundaryGap: false,
@@ -484,8 +490,9 @@
       width: 100%
       height: 300px
       margin: 0 auto
-      padding: 0px 0px 0
+      padding: 0px 10px 0
       top: -5px
+      box-sizing: border-box
     #myAddLine
       width: 100%
       height: 300px

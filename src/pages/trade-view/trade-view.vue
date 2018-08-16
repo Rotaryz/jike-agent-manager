@@ -130,11 +130,11 @@
     data() {
       return {
         incomeList: ['近3天', '近7天', '近15天'],
-        incomeIndex: 0,
+        incomeIndex: 1,
         newAddList: ['近3天', '近7天', '近15天'],
-        newAddIndex: 0,
+        newAddIndex: 1,
         teamIncomeList: ['近3天', '近7天', '近15天'],
-        teamIncomeIndex: 0,
+        teamIncomeIndex: 1,
         tradeData: {
           real_income: '',
           account_sale: '',
@@ -153,12 +153,12 @@
       }
     },
     created() {
-      this.getMyIncomeData(1)
+      this.getMyIncomeData(2)
       this.getData()
       this.getMyIncomePidData()
       this.getMyBarData()
-      this.getNewMemberData(1)
-      this.getTeamIncomeData(1)
+      this.getNewMemberData(2)
+      this.getTeamIncomeData(2)
     },
     mounted() {
     },
@@ -242,7 +242,7 @@
           grid: {
             left: '3%',
             right: '4%',
-            bottom: '3%',
+            bottom: '5%',
             containLabel: true
           },
           xAxis: {
@@ -457,6 +457,11 @@
       drawMember() {
         let myChart = this.$echarts.init(document.getElementById('myMember'))
         myChart.setOption({
+          grid: {
+            left: '3%',
+            right: '4%',
+            containLabel: true
+          },
           xAxis: {
             type: 'category',
             boundaryGap: false,
@@ -523,6 +528,12 @@
         let myChart = this.$echarts.init(document.getElementById('myMemberMoney'))
         myChart.setOption({
           xAxis: {
+            grid: {
+              left: '3%',
+              right: '4%',
+              bottom: '3%',
+              containLabel: true
+            },
             type: 'category',
             boundaryGap: false,
             data: this.TeamIncomeData.x,

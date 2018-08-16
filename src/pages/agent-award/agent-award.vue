@@ -2,7 +2,7 @@
   <div class="award-box">
     <div class="trade-bg"></div>
     <div class="award-con">
-      <img src="./pic-banner_@2x.png" alt="" class="award-img">
+      <div class="award-img" ></div>
       <div class="echarts-title mt-35">
         <div class="line"></div>
         <div class="text">推荐步骤</div>
@@ -103,8 +103,10 @@
     position: relative
     z-index: 2
   .award-img
-    width: 100%
+    height: 172px
     display: block
+    width: 100%
+    icon-image(pic-banner_)
   .echarts-title
     layout(row)
     align-items: center
