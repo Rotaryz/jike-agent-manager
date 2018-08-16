@@ -15,7 +15,7 @@
           <!--<div class="text">另外还有被推荐团队的长期分红！</div>-->
         <!--</div>-->
         <img src="./pic-banner_@2x.png" alt="" class="award-img" @click="jumpAward">
-        <div class="select-tab">
+        <div class="select-tab border-bottom-1px">
           <div class="tab" :class="menuIdx * 1 === 0 ? 'select-tab-active' : ''" @click="switchTab(0)"><span>推荐成功</span><span v-if="successTotal * 1 !== 0">({{successTotal}})</span></div>
           <div class="tab" :class="menuIdx * 1 === 1 ? 'select-tab-active' : ''" @click="switchTab(1)"><span>推荐记录</span><span v-if="allTotal * 1 !== 0">({{allTotal}})</span></div>
           <div class="line" :style="'transform:translate3d('+ (100 * menuIdx) + '%, 0, 0)'">
@@ -261,7 +261,6 @@
     width: 100%
     position: relative
     z-index: 11
-    border: 0.5px solid #e3e6e9
     .tab
       flex: 1
       text-align: center
