@@ -23,7 +23,7 @@
               v-if="dataArray.length"
       >
         <ul class="content">
-          <li class="item-wrapper" @click="toDetailPage(item)" v-for="(item,index) in dataArray" :key="index">
+          <li class="item-wrapper border-bottom-1px" @click="toDetailPage(item)" v-for="(item,index) in dataArray" :key="index">
             <div class="item one">
               <p class="left">{{item.title}}</p>
               <p class="right">{{item.total}}</p>
@@ -324,7 +324,6 @@
         background: $color-FFFFFF
         .item-wrapper
           height: 94px
-          border-bottom: 0.5px solid $color-E4E4E4
           padding-right: 15px
           .item
             layout(row, block, nowrap)

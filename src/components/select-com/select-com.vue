@@ -3,6 +3,7 @@
     <ul class="select-container">
       <li class="item" :class="idx===index?'active':''" v-for="(item,index) in data" :key="index" @click="choose(index)">{{item}}</li>
     </ul>
+    <div class="triangle"></div>
   </div>
 </template>
 
@@ -59,22 +60,23 @@
     left: 15px
     right: 15px
     background: $color-FFFFFF
-    border: 0.5px solid $color-E4E4E4
     box-shadow: 0 13px 13px 0 rgba(0, 0, 0, 0.05)
     border-radius: 3px
     &.show
       opacity: 1
       height: 100px
       overflow: visible
-    &:after
+    .triangle
       content: ''
       position: absolute
       width: 16px
       height: 8px
-      top: -7.5px
+      top: -6.5px
       right: 15px
       icon-image(icon-Screening_Earnings)
+      z-index :30
     .select-container
+      border-1px()
       height: 100%
       width: 100%
       padding: 15px 0 16.5px 15px
@@ -87,15 +89,15 @@
         float: left
         height: 24.5px
         width: 69.5px
-        border: 1px solid $color-E4E4E4
         border-radius: 3px
         color: $color-343439
         background: $color-FFFFFF
         box-sizing: border-box
         margin-bottom: 15px
         margin-right: 12px
+        border-1px($color-E4E4E4)
         &.active
           color: $color-FFFFFF
           background : $color-C3A66C
-          border-color: $color-C3A66C
+          border-none()
 </style>
