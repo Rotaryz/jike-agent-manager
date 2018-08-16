@@ -10,7 +10,7 @@
           </div>
           <div class="list">
             <p class="name">*手机号码</p>
-            <input type="number" class="input" v-if="(this.$store.state.customMobile === '')" :class="(this.$store.state.customName !== '') && 'readonly'" :readonly="(this.$store.state.customName !== '')" v-model="mobile" placeholder="用于登录商户管理后台">
+            <input type="number" class="input" v-if="(this.$store.state.customMobile === '')" :class="(this.$store.state.customName !== '') && 'readonly'" :readonly="(this.$store.state.customName !== '')" v-model="mobile" placeholder="请输入手机号码">
             <div class="readonly" v-else>{{form.mobile}}</div>
           </div>
         </div>
