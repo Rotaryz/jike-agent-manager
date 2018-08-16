@@ -2,7 +2,7 @@
   <div class="change-project">
     <div class="f3"></div>
     <ul class="info-wrapper" v-if="projectList.length">
-      <li class="item-wrapper" @click="selectProject(index)" v-for="(item,index) in projectList" :key="index">
+      <li class="item-wrapper border-bottom-1px" @click="selectProject(index)" v-for="(item,index) in projectList" :key="index">
         <div class="left" v-if="item.image_url">
           <img class="logo-img" :src="item.image_url" alt="">
         </div>
@@ -86,7 +86,6 @@
       font-family: $font-family-regular
       .item-wrapper
         height: 80px
-        border-bottom: 0.5px solid $color-E4E4E4
         line-height: 80px
         layout(row, block, nowrap)
         align-items: center
