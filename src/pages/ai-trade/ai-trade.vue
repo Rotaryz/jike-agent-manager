@@ -357,8 +357,7 @@
       text-align: center
       line-height: 24px
       height: 25px
-      border-radius: 2px
-      border: 0.5px solid #e4e4e4
+      border-1px(#e4e4e4)
       font-size: $font-size-12
       font-family: $font-family-medium
       color $color-343439
@@ -366,6 +365,7 @@
       border: 0px solid #e4e4e4
       color: $color-C3A66C
       background $color-343439
+      border-1px(rgba(0,0,0,0))
 
   .pie-box
     background: $color-FFFFFF !important
