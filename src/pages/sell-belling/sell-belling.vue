@@ -5,28 +5,30 @@
         <div class="left">
           <div class="list">
             <p class="name">*购买客户</p>
-            <input type="text" class="input" :readonly="(this.$store.state.customName !== '')"  v-model="form.name"  placeholder="请输入客户名称">
+            <input type="text" class="input" v-if="(this.$store.state.customName === '')" :class="(this.$store.state.customName !== '') && 'readonly'"  :readonly="(this.$store.state.customName !== '')"  v-model="form.name"  placeholder="请输入客户名称">
+            <div class="readonly" v-else>{{form.name}}</div>
           </div>
           <div class="list">
             <p class="name">*手机号码</p>
-            <input type="number" class="input"  :readonly="(this.$store.state.customName !== '')" v-model="mobile" placeholder="用于登录商户管理后台">
+            <input type="number" class="input" v-if="(this.$store.state.customMobile === '')" :class="(this.$store.state.customName !== '') && 'readonly'"  :readonly="(this.$store.state.customName !== '')" v-model="mobile" placeholder="用于登录商户管理后台">
+            <div class="readonly" v-else>{{form.mobile}}</div>
           </div>
         </div>
         <div class="right">
           <div class="img"></div>
-          <router-link to="/choose-custom" class="choose-custom">选择客户</router-link>
+          <router-link to="/choose-custom" class="choose-custom" >选择客户</router-link>
         </div>
       </div>
     </header>
     <div class="selec-list">
-      <div class="list" @click="selcetAddress">
+      <div class="list" @click="selectAddress">
         <div class="name">所在地区</div>
-        <p class="area-selec" :class="selecArea && 'black'" >{{ form.address }}</p>
+        <p class="area-selec" :class="areaClass" >{{ form.address }}</p>
         <div class="icon"></div>
       </div>
       <div class="list" @click="selecTrade">
         <div class="name">所属行业</div>
-        <p class="industry-selec" :class="selecIndustry && 'black'">{{ form.industry }}</p>
+        <p class="industry-selec" :class="industryClass" >{{ form.industry }}</p>
         <div class="icon"></div>
       </div>
     </div>
@@ -133,18 +135,6 @@
     },
     created() {
       this._getProject()
-      this.form.agent_merchant_id = this.$store.state.customName !== '' ? this.$store.state.customId : null
-      this.form.name = this.$store.state.customName
-      this.form.mobile = this.$store.state.customMobile
-      this.mobile = this.$store.state.customMobile
-      if (this.$store.state.customAddress !== '') {
-        this.selecArea = true
-        this.form.address = this.$store.state.customAddress
-      }
-      if (this.$store.state.customIndustry !== '') {
-        this.selecIndustry = true
-        this.form.industry = this.$store.state.customIndustry
-      }
       this.getIndustry()
       this._getAccountInfo()
     },
@@ -152,10 +142,21 @@
       this.$store.commit('SELEC_CUSTOM', {name: '', mobile: '', address: '', industry: '', id: ''})
     },
     mounted() {
+      this.initialForm() // 防止开发的时候出现清掉store数据之前拿到数据的问题
     },
     computed: {
       count() {
         return this.form.note ? this.form.note.length : 0
+      },
+      areaClass() {
+        let black = this.selecArea ? 'black' : ''
+        let readonly = (this.$store.state.customAddress !== '') ? 'readonly' : ''
+        return `${black} ${readonly}`.trim()
+      },
+      industryClass() {
+        let black = this.selecIndustry ? 'black' : ''
+        let readonly = (this.$store.state.customIndustry !== '') ? 'readonly' : ''
+        return `${black} ${readonly}`.trim()
       }
     },
     methods: {
@@ -210,9 +211,16 @@
         }
         this.popShow = true
       },
-      confirm() { // 确认窗的确定按钮
+      confirm() { // 确认窗的确定按钮，发送数据给后台
         this.popShow = false
-        Custom.openBill(this.form)
+        let form = this.form
+        if (form.address === '请选择所在的地区') {
+          form.address = ''
+        }
+        if (form.industry === '请选择所属的行业') {
+          form.industry = ''
+        }
+        Custom.openBill(form)
           .then(res => {
             if (res.error !== ERR_OK) {
               this.$refs.toast.show(res.message)
@@ -222,6 +230,7 @@
             let id = this.$route.query.id
             setTimeout(() => {
               this.grayTip = false
+              // 提交后清掉store中不用的数据
               this.$store.commit('SELEC_CUSTOM', {name: '', mobile: '', address: '', industry: '', id: ''})
               this.$router.push({path: '/sell-record', query: {id}})
             }, 1000)
@@ -231,10 +240,16 @@
         this.popShow = false
       },
       selecTrade() {
-        if (this.$store.state.customName !== '') {
+        if (this.$store.state.customIndustry !== '') {
           return
         }
         this.tabShow = true
+      },
+      selectAddress() {
+        if (this.$store.state.customAddress !== '') {
+          return
+        }
+        this.$refs.picker.show()
       },
       tabLeftClick(num) { // 左tab栏点击
         this.tabLeftIndex = num
@@ -246,7 +261,6 @@
         this.tabLeftIndex = 0
         this.tabRightIndex = 0
         this.tabShow = false
-        // this.form.trade = this.tabLeftList[0] + ' ' + this.tabRightList[0][0]
       },
       tabConfirm() { // 确定选择职业类型
         this.tabShow = false
@@ -254,8 +268,6 @@
         let tabRightList = this.industryList[this.tabLeftIndex].industry[this.tabRightIndex]
         this.form.industry = tabLeftList.name + ' ' + tabRightList.name
         this.selecIndustry = true
-        // this.tabLeftIndex = 0
-        // this.tabRightIndex = 0
       },
       handlePickerCancel(e) {
       },
@@ -270,11 +282,19 @@
         this.form.address = str
         this.selecArea = true
       },
-      selcetAddress() {
-        if (this.$store.state.customName !== '') {
-          return
+      initialForm() {
+        this.form.agent_merchant_id = this.$store.state.customName !== '' ? this.$store.state.customId : null
+        this.form.name = this.$store.state.customName
+        this.form.mobile = this.$store.state.customMobile
+        this.mobile = this.$store.state.customMobile
+        if (this.$store.state.customAddress !== '') {
+          this.selecArea = true
+          this.form.address = this.$store.state.customAddress
         }
-        this.$refs.picker.show()
+        if (this.$store.state.customIndustry !== '') {
+          this.selecIndustry = true
+          this.form.industry = this.$store.state.customIndustry
+        }
       }
     },
     watch: {
@@ -327,6 +347,8 @@
           color: $color-666666
           font-size: $font-size-14
           padding-right: 78px
+          width: 100%;
+          box-sizing: border-box;
           .list
             layout(row, block, nowrap)
             border-bottom: 1px solid $color-E3E6E9
@@ -343,10 +365,21 @@
               height: 20px
               line-height: 20px
               font-size: 14px
+              text-overflow: ellipsis
+              overflow: hidden
+              white-space: nowrap
               &::-webkit-input-placeholder
                 color: $color-C1C3C3
               &.readonly
                 color: $color-BEB5A3
+            .readonly
+              flex: 1
+              color: $color-BEB5A3
+              text-overflow: ellipsis
+              overflow: hidden
+              white-space: nowrap
+              margin-right: 4px
+
             .name
               width: 80px
         .right
@@ -396,11 +429,15 @@
           color: $color-C1C3C3
           &.black
             color: $color-111313
+          &.readonly
+            color: $color-BEB5A3
         .industry-selec
           flex: 1
           color: $color-C1C3C3
           &.black
             color: $color-111313
+          &.readonly
+            color: $color-BEB5A3
       .input
         color: $color-111313
         outline: none
@@ -409,6 +446,8 @@
         line-height: 20px
         &::-webkit-input-placeholder
           color: $color-C1C3C3
+        &.readonly
+          color: $color-BEB5A3
       .name
         width: 80px
       .icon
