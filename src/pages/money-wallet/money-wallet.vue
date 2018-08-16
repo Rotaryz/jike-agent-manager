@@ -261,13 +261,12 @@
       .btn
         width: 86px
         height: 30px
-        border: 1px solid $color-C3A66C
-        border-radius: 3px
         font-family: $font-family-regular
         font-size: $font-size-14
         color: $color-C3A66C
         text-align: center
         line-height: 30px
+        border-1px($color-C3A66C, 3px)
     .select-wrapper
       position: fixed
       top: 266px
@@ -297,8 +296,7 @@
         .more
           width: 57px
           height: 22px
-          border: 0.5px solid $color-C3A66C
-          border-radius: 25px
+          border-1px($color-C3A66C, 25px)
           font-size: 12px
           line-height: 1
           color: $color-C3A66C

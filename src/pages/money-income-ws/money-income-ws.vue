@@ -321,8 +321,7 @@
         .more
           width: 57px
           height: 22px
-          border: 0.5px solid $color-C3A66C
-          border-radius: 25px
+          border-1px($color-C3A66C, 25px)
           font-size: 12px
           line-height: 1
           color: $color-C3A66C

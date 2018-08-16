@@ -2,7 +2,7 @@
   <div class="account">
     <div class="f3"></div>
     <section class="info-wrapper">
-      <label for="header-logo" class="item-wrapper avatar-item">
+      <label for="header-logo" class="item-wrapper avatar-item border-bottom-1px">
         <div class="left">更换头像</div>
         <div class="middle"></div>
         <div class="right avatar-right">
@@ -14,7 +14,7 @@
           <div class="arrow-right"></div>
         </div>
       </label>
-      <router-link class="item-wrapper" to="/change-project">
+      <router-link class="item-wrapper border-bottom-1px" to="/change-project">
         <div class="left">当前项目</div>
         <div class="middle"></div>
         <div class="right project-right">
@@ -22,22 +22,22 @@
           <div class="arrow-right"></div>
         </div>
       </router-link>
-      <div class="item-wrapper">
+      <div class="item-wrapper border-bottom-1px">
         <div class="left">代理商名称</div>
         <div class="middle"></div>
         <div class="right new-right">{{userInfo?userInfo.name:''}}</div>
       </div>
-      <div class="item-wrapper">
+      <div class="item-wrapper border-bottom-1px">
         <div class="left">代理级别</div>
         <div class="middle"></div>
         <div class="right new-right">{{userInfo?userInfo.role:''}}</div>
       </div>
-      <div class="item-wrapper">
+      <div class="item-wrapper border-bottom-1px">
         <div class="left">所在地区</div>
         <div class="middle"></div>
         <div class="right new-right">{{userInfo?userInfo.address:''}}</div>
       </div>
-      <div class="item-wrapper" @click="callPhone">
+      <div class="item-wrapper border-bottom-1px" @click="callPhone">
         <div class="left">AI商城数量</div>
         <div class="right project-right">
           <div v-if="userInfo">{{userInfo.usable_account?userInfo.usable_account:0}}/{{userInfo.total_account?userInfo.total_account:0}}</div>
@@ -251,7 +251,6 @@
       font-family: $font-family-regular
       .item-wrapper
         height: 60px
-        border-bottom: 0.5px solid $color-E4E4E4
         line-height: 60px
         layout(row, block, nowrap)
         &.avatar-item
@@ -293,16 +292,15 @@
           color: $color-343439
 
     .btn-cancel
+      border-1px($color-C3A66C, 3px)
       position: fixed
       bottom: 17px
       left: 15px
       right: 15px
-      font-family: $font-family-regular
+      font-family: $font-family-light
       font-size: $font-size-16
       color: $color-C3A66C
       text-align: center
       height: 44px
       line-height: 44px
-      border: 0.5px solid $color-C3A66C
-      border-radius: 3px
 </style>
