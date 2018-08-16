@@ -183,7 +183,7 @@
     background: $color-FFFFFF
     width: 100%
     left: 0
-    border-top: 1px solid #eee
+    border-top: 0.5px solid #e3e6e9
     padding: 10px 15px
     .btn
       color: $color-FFFFFF

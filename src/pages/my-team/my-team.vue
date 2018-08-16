@@ -199,7 +199,7 @@
       padding: 0 15px
       .team-box-samll
         background: #FFFFFF
-        box-shadow: 0 13px 13px 0 rgba(0, 0, 0, 0.05)
+        box-shadow: 0 6px 6px 0 rgba(0, 0, 0, 0.05)
         border-radius: 3px
         height: 100px
         layout(row)
@@ -226,7 +226,7 @@
       background: $color-C3A66C
       height: 22px
       width: 3.5px
-      margin-right: 13.5px
+      margin-right: 11.5px
     .text
       font-size: $font-size-16
       color: $color-343439
