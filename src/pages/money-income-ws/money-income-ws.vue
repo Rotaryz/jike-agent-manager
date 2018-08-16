@@ -26,7 +26,7 @@
               v-if="dataArray.length"
       >
         <ul class="content">
-          <li class="item-wrapper" v-for="(item,index) in dataArray" :key="index">
+          <li class="item-wrapper border-bottom-1px" v-for="(item,index) in dataArray" :key="index">
             <div class="item one">
               <p class="left">{{item.title}}</p>
               <p class="right">{{item.total}}</p>
@@ -36,7 +36,7 @@
             </div>
             <div class="item three">
               <p class="left">{{item.created_at}}</p>
-              <p class="right">累计 <em class="em">{{item.after_total_income}}</em></p>
+              <p class="right">累计 <span class="em">{{item.after_total_income}}</span></p>
             </div>
           </li>
         </ul>
@@ -321,7 +321,7 @@
         .more
           width: 57px
           height: 22px
-          border: 1px solid $color-C3A66C
+          border: 0.5px solid $color-C3A66C
           border-radius: 25px
           font-size: 12px
           line-height: 1
@@ -348,7 +348,6 @@
         background: $color-FFFFFF
         .item-wrapper
           height: 94px
-          border-bottom: 0.5px solid $color-E4E4E4
           padding-right: 15px
           .item
             layout(row, block, nowrap)
