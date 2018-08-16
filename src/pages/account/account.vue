@@ -264,7 +264,7 @@
         .right
           flex: 1
           font-size: $font-size-14
-          color: $color-666666
+          color: $color-343439
           layout(row, block, nowrap)
           justify-content: flex-end
           margin-right: 15px
