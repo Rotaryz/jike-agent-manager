@@ -167,9 +167,10 @@
     overflow: hidden
   .custom-list
     padding: 0 15px
+    padding-top: 30px
     background: $color-white
     .list
-      padding: 20px 0
+      padding-bottom: 30px
       color: #AA905D
       font-size: $font-size-14
       .msg
