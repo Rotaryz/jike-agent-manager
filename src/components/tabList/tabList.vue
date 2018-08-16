@@ -9,11 +9,11 @@
           </ul>
         </div>
         <div class="tab-right">
-          <li class="list" :class="tabRightIndex == i && 'on'" v-for="(val, i) in industryList[tabLeftIndex].industry" :key="i" @click="tabRightClick(i)">{{ val.name }}</li>
+          <li class="list border-bottom-1px" :class="tabRightIndex == i && 'on'" v-for="(val, i) in industryList[tabLeftIndex].industry" :key="i" @click="tabRightClick(i)">{{ val.name }}</li>
         </div>
       </div>
-      <div class="confirm-btn">
-        <span class="pop-btn" @click="tabCancel">取消</span>
+      <div class="confirm-btn border-top-1px">
+        <span class="pop-btn border-right-1px" @click="tabCancel">取消</span>
         <span class="pop-btn right" @click="tabConfirm">确定</span>
       </div>
     </div>
@@ -108,7 +108,7 @@
         overflow-y: scroll
         .list
           padding: 8px 0
-          border-bottom: 1px solid $color-E3E6E9
+          border-bottom-1px($color-E3E6E9)
           text-align: left
           margin-left: 10px
           overflow: hidden
@@ -121,11 +121,11 @@
       height: 40px
       display: flex
       line-height: 40px
-      border-top: 1px solid $color-E3E6E9
+      border-top-1px($color-E3E6E9)
       .pop-btn
         width: 50%
         box-sizing: border-box
-        border-right: 1px solid $color-E3E6E9
+        border-right-1px($color-E3E6E9)
         color: $color-C1C3C3
         &.right
           border-right: 0

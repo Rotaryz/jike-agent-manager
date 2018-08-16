@@ -14,7 +14,7 @@
       >
         <section class="msg-list">
           <ul class="main">
-            <li v-for="(item,index) in dataArray" :key="index" class="list" @click="jump(item.id)">
+            <li v-for="(item,index) in dataArray" :key="index" class="list border-bottom-1px" @click="jump(item.id)">
               <div class="name">{{ item.name }}</div>
               <div class="money">{{ item.total_price }}</div>
             </li>
@@ -154,7 +154,7 @@
         font-size: $font-size-14
         height: 60px
         line-height: 60px
-        border-bottom: 1px solid $color-E3E6E9
+        border-bottom-1px($color-E3E6E9)
         .name
           color: $color-343439
         .money

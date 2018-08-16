@@ -1,33 +1,34 @@
 <template>
   <div class="custom-create">
     <ul class="input-list">
-      <li class="list">
+      <li class="list border-bottom-1px">
         <div class="name">客户</div>
         <input class="input" type="text" v-model="form.name" placeholder="请输入公司名">
       </li>
-      <li class="list">
+      <li class="list border-bottom-1px">
         <div class="name">手机号码</div>
         <input class="input readonly" type="number" v-model="mobile" readonly placeholder="请输入手机号">
       </li>
-      <li class="list" @click="selcetAddress">
+      <li class="list border-bottom-1px" @click="selcetAddress">
         <div class="name">所在地区</div>
         <!--<input class="input" type="text" readonly v-model="form.address"  placeholder="请选择所在的地区">-->
         <p class="area-selec" :class="selecArea && 'black'" >{{ form.address }}</p>
         <div class="icon"></div>
       </li>
-      <li class="list" @click="selecTrade">
+      <li class="list border-bottom-1px" @click="selecTrade">
         <div class="name">所属行业</div>
         <!--<input class="input" type="text" readonly v-model="form.industry" placeholder="请选择所属的行业">-->
         <p class="industry-selec" :class="selecIndustry && 'black'">{{ form.industry }}</p>
         <div class="icon"></div>
       </li>
     </ul>
+    <div class="gray-bar"></div>
     <div class="remark">
       <div class="name">备注</div>
       <textarea class="textarea" type="textarea" v-model="form.note" maxlength="200" placeholder="可在此写客户备注，不超过200字" ></textarea>
       <div class="count">{{ count }}/200</div>
     </div>
-    <footer class="bot-btn">
+    <footer class="bot-btn border-top-1px">
       <div class="btn" @click="saveCustomMsg">保存</div>
     </footer>
     <tab-list
@@ -216,7 +217,7 @@
       background: $color-white
       .list
         margin: 0 15px
-        border-bottom: 1px solid $color-E3E6E9
+        border-bottom-1px($color-E3E6E9)
         color: $color-666666
         font-size: $font-size-14
         height: 60px
@@ -224,7 +225,8 @@
         layout(row,block,nowrap)
         align-items: center
         &:last-child
-          border-bottom: 0
+          &:after
+            border-bottom: 0
         .input
           color: $color-111313
           outline: none
@@ -272,6 +274,9 @@
         height: 45px
         line-height: 45px
         display: block
+    .gray-bar
+      background: $color-F8F8F8
+      height: 8px
     .remark
       margin-top: 8px
       padding: 20px 15px
@@ -287,7 +292,7 @@
         width: 100%
         color: $color-111313
         margin-top: 5px
-        border: 1px solid rgba(0,0,0,0.1)
+        border: 0.5px solid rgba(0,0,0,0.1)
         box-sizing: border-box
         padding: 5px
         padding-bottom: 22px
@@ -296,9 +301,10 @@
         font-size: 14px
         &::-webkit-input-placeholder
           color: $color-C1C3C3
-          font-size: 14px
+          font-size: 12px
       .count
         position: absolute
         right: 20px
         bottom: 28px
+        color: $color-C1C3C3
 </style>
