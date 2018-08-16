@@ -39,7 +39,7 @@
           <div class="phone" @click="phoneCall">{{mobile}}</div>
         </div>
       </div>
-      <div class="jump-btn">
+      <div class="jump-btn border-top-1px">
         <router-link class="btn" to="/agent-entering">推荐代理商加盟</router-link>
       </div>
     </div>
@@ -183,7 +183,6 @@
     background: $color-FFFFFF
     width: 100%
     left: 0
-    border-top: 0.5px solid #e3e6e9
     padding: 10px 15px
     .btn
       color: $color-FFFFFF
