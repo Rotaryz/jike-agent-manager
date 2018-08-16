@@ -16,23 +16,26 @@
       </label>
       <router-link class="item-wrapper" to="/change-project">
         <div class="left">当前项目</div>
-        <div class="middle">{{projectName}}</div>
+        <div class="middle"></div>
         <div class="right project-right">
-          <div>切换</div>
+          <div>{{projectName}}(切换)</div>
           <div class="arrow-right"></div>
         </div>
       </router-link>
       <div class="item-wrapper">
         <div class="left">代理商名称</div>
-        <div class="middle">{{userInfo?userInfo.name:''}}</div>
+        <div class="middle"></div>
+        <div class="right new-right">{{userInfo?userInfo.name:''}}</div>
       </div>
       <div class="item-wrapper">
         <div class="left">代理级别</div>
-        <div class="middle">{{userInfo?userInfo.role:''}}</div>
+        <div class="middle"></div>
+        <div class="right new-right">{{userInfo?userInfo.role:''}}</div>
       </div>
       <div class="item-wrapper">
         <div class="left">所在地区</div>
-        <div class="middle">{{userInfo?userInfo.address:''}}</div>
+        <div class="middle"></div>
+        <div class="right new-right">{{userInfo?userInfo.address:''}}</div>
       </div>
       <div class="item-wrapper" @click="callPhone">
         <div class="left">AI商城数量</div>
@@ -266,6 +269,8 @@
           justify-content: flex-end
           margin-right: 15px
           position: relative
+          &.new-right
+            margin-right: 30px
           &.avatar-right, &.project-right
             layout(row, block, nowrap)
             align-items: center
