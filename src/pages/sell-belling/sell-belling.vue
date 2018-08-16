@@ -5,30 +5,30 @@
         <div class="left">
           <div class="list">
             <p class="name">*购买客户</p>
-            <input type="text" class="input" v-if="(this.$store.state.customName === '')" :class="(this.$store.state.customName !== '') && 'readonly'"  :readonly="(this.$store.state.customName !== '')"  v-model="form.name"  placeholder="请输入客户名称">
+            <input type="text" class="input" v-if="(this.$store.state.customName === '')" :class="(this.$store.state.customName !== '') && 'readonly'" :readonly="(this.$store.state.customName !== '')" v-model="form.name" placeholder="请输入客户名称">
             <div class="readonly" v-else>{{form.name}}</div>
           </div>
           <div class="list">
             <p class="name">*手机号码</p>
-            <input type="number" class="input" v-if="(this.$store.state.customMobile === '')" :class="(this.$store.state.customName !== '') && 'readonly'"  :readonly="(this.$store.state.customName !== '')" v-model="mobile" placeholder="用于登录商户管理后台">
+            <input type="number" class="input" v-if="(this.$store.state.customMobile === '')" :class="(this.$store.state.customName !== '') && 'readonly'" :readonly="(this.$store.state.customName !== '')" v-model="mobile" placeholder="用于登录商户管理后台">
             <div class="readonly" v-else>{{form.mobile}}</div>
           </div>
         </div>
         <div class="right">
           <div class="img"></div>
-          <router-link to="/choose-custom" class="choose-custom" >选择客户</router-link>
+          <router-link to="/choose-custom" class="choose-custom">选择客户</router-link>
         </div>
       </div>
     </header>
     <div class="selec-list">
       <div class="list" @click="selectAddress">
         <div class="name">所在地区</div>
-        <p class="area-selec" :class="areaClass" >{{ form.address }}</p>
+        <p class="area-selec" :class="areaClass">{{ form.address }}</p>
         <div class="icon"></div>
       </div>
       <div class="list" @click="selecTrade">
         <div class="name">所属行业</div>
-        <p class="industry-selec" :class="industryClass" >{{ form.industry }}</p>
+        <p class="industry-selec" :class="industryClass">{{ form.industry }}</p>
         <div class="icon"></div>
       </div>
     </div>
@@ -326,6 +326,7 @@
     font-family: $font-family-regular
     fill-box()
     background: $color-F8F8F8
+    min-height: 100vh
     &:before
       content: ''
       display: block
@@ -519,11 +520,11 @@
     position: fixed
     bottom: 0
     left: 0
-    width: 100%;
+    right: 0
     background: $color-white
     padding: 10px 15px
     box-sizing: border-box
-    border-top-1px(#e3e3e3)
+    box-shadow: 0 0px 15px 0 rgba(100, 100, 100, .1)
     height: 65px
 
   .btn
