@@ -29,7 +29,7 @@
             <div class="scale-thr">推荐奖励/元</div>
           </div>
           <ul class="team-list">
-            <li class="item" v-for="(item, index) in successList" v-bind:key="index">
+            <li class="item border-bottom-1px" v-for="(item, index) in successList" v-bind:key="index">
               <div class="item-one">{{item.name}}</div>
               <div class="item-two">{{item.level_name}}</div>
               <div class="item-thr">{{item.money}}</div>
@@ -47,7 +47,7 @@
             <div class="scale-thr">推荐状态</div>
           </div>
           <ul class="team-list">
-            <li class="item" v-for="(item, index) in allList" v-bind:key="index">
+            <li class="item border-bottom-1px" v-for="(item, index) in allList" v-bind:key="index">
               <div class="item-one">{{item.name}}</div>
               <div class="item-two">{{item.level_name}}</div>
               <div class="item-thr ing" v-if="item.check_status * 1 === 0">待审核</div>
@@ -62,7 +62,7 @@
         </div>
       </scroll>
     </div>
-    <div class="jump-btn">
+    <div class="jump-btn border-top-1px">
       <router-link class="btn" to="/agent-entering">推荐代理商加盟</router-link>
     </div>
   </div>
@@ -310,7 +310,6 @@
     .item
       layout(row)
       height: 60px
-      border-bottom: 0.5px solid #e3e6e9
       align-items: center
       .item-one
         width: 46%
@@ -344,7 +343,6 @@
     background: $color-FFFFFF
     width: 100%
     left: 0
-    border-top: 0.5px solid #e3e6e9
     padding: 10px 15px
     .btn
       color: $color-FFFFFF

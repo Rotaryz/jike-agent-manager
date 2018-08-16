@@ -77,7 +77,7 @@
         </div>
       </div>
     </div>
-    <div class="jump-btn">
+    <div class="jump-btn border-top-1px">
       <div class="btn" @click="sumbitData">立即提交</div>
     </div>
     <div class="show-box" v-if="showShadow" @click="colseShadow">
@@ -138,7 +138,10 @@
         loading: false,
         projectName: '',
         selectImg: false,
-        showShadow: false
+        showShadow: false,
+        province: '',
+        city: '',
+        area: ''
       }
     },
     created() {
@@ -152,6 +155,9 @@
         this.name = ''
         this.phone = ''
         this.address = ''
+        this.province = ''
+        this.city = ''
+        this.area = ''
         this.ispaly = 1
         this.level = 0
         this.levelName = ''
@@ -168,9 +174,13 @@
       },
       handlePickerConfirm(e) {
         let text = ''
+        console.log(e)
         for (var i = 0; i < e.length; i++) {
           text += e[i].value
         }
+        this.province = e[0].value
+        this.city = e[1].value
+        this.area = e[2].value
         this.address = text
       },
       cancelLevel(e) {
@@ -282,10 +292,12 @@
         let data = {
           name: this.name,
           mobile: this.phone,
-          address: this.address,
           level: this.level,
           is_paid: this.ispaly,
-          paid_image_id: this.imgId
+          paid_image_id: this.imgId,
+          area: this.area,
+          city: this.city,
+          province: this.province
         }
         Agent.newAddAgent(data).then(res => {
           if (res.error === ERR_OK) {
@@ -465,7 +477,6 @@
     background: $color-FFFFFF
     width: 100%
     left: 0
-    border-top: 0.5px solid #e3e6e9
     padding: 10px 15px
     .btn
       color: $color-FFFFFF

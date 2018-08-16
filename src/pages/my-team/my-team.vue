@@ -39,7 +39,7 @@
           <div class="scale-thr">分销收入/元</div>
         </div>
         <ul class="team-list" v-if="dataArray.length !== 0">
-          <li class="item" v-for="item in dataArray" v-bind:key="item.id">
+          <li class="item border-bottom-1px" v-for="item in dataArray" v-bind:key="item.id">
             <div class="item-one">{{item.name}}</div>
             <div class="item-two">{{item.commission_num}}</div>
             <div class="item-thr">{{item.commission_income}}</div>
@@ -260,7 +260,6 @@
     .item
       layout(row)
       height: 60px
-      border-bottom: 0.5px solid #e3e6e9
       align-items: center
       .item-one
         width: 46%
