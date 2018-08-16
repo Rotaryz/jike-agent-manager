@@ -68,7 +68,7 @@
         </div>
       </div>
       <!--核心数据指标-->
-      <div class="pie-box line-box">
+      <div class="pie-box line-box line-box-change">
         <div id="myDataBar"></div>
         <div class="pie-list">
           <div class="list">
@@ -820,7 +820,7 @@
       layout(row)
       position: absolute
       width: 100%
-      bottom: 15px
+      bottom: 25px
       left: 0
       .list
         flex: 1
@@ -853,12 +853,15 @@
       font-family: $font-family-medium
       position: absolute
       width: 100%
-      bottom: 10px
+      bottom: 20px
       left: 0
       text-align: center
 
   .pie-box-change
-    height: 250px
+    height: 270px
+
+  .line-box-change
+    height: 325px
 
   .z
     width: 100%
