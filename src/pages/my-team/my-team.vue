@@ -1,6 +1,37 @@
 <template>
   <div class="team-box">
-    <div class="trade-scroll">
+    <div class="team-scroll-top">
+      <div class="team-top">
+        <div class="team-title">
+          <div class="text">我的团队</div>
+          <router-link class="title-img" to="/explain-team">
+            <img src="./icon-help_myteam@2x.png" alt="">
+          </router-link>
+        </div>
+        <div class="team-ab">
+          <div class="team-box-samll">
+            <div class="item">
+              <div class="number">{{order}}</div>
+              <div class="number-order">分销单数/单</div>
+            </div>
+            <div class="item">
+              <div class="number">{{money}}</div>
+              <div class="number-order">分销收入/元</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="echarts-title">
+        <div class="line"></div>
+        <div class="text">团队成员列表</div>
+      </div>
+      <div class="scale-list">
+        <div class="scale-one">企业名称</div>
+        <div class="scale-two">分销单数/个</div>
+        <div class="scale-thr">分销收入/元</div>
+      </div>
+    </div>
+    <div class="team-scroll">
       <scroll ref="scroll"
               :probeType="probeType"
               :bcColor="bcColor"
@@ -9,43 +40,14 @@
               :listenScroll="listenScroll"
               :pullUpLoad="pullUpLoadObj"
               @pullingUp="onPullingUp">
-        <div class="team-top">
-          <div class="team-title">
-            <div class="text">我的团队</div>
-            <router-link class="title-img" to="/explain-team">
-              <img src="./icon-help_myteam@2x.png" alt="">
-            </router-link>
-          </div>
-          <div class="team-ab">
-            <div class="team-box-samll">
-              <div class="item">
-                <div class="number">{{order}}</div>
-                <div class="number-order">分销单数/单</div>
-              </div>
-              <div class="item">
-                <div class="number">{{money}}</div>
-                <div class="number-order">分销收入/元</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="echarts-title">
-          <div class="line"></div>
-          <div class="text">团队成员列表</div>
-        </div>
-        <div class="scale-list">
-          <div class="scale-one">企业名称</div>
-          <div class="scale-two">分销单数/个</div>
-          <div class="scale-thr">分销收入/元</div>
-        </div>
         <ul class="team-list" v-if="dataArray.length !== 0">
-          <li class="item border-bottom-1px" v-for="item in dataArray" v-bind:key="item.id">
+          <li class="item border-bottom-1px" v-for="(item, index) in dataArray" v-bind:key="'' + item.id + index">
             <div class="item-one">{{item.name}}</div>
             <div class="item-two">{{item.commission_num}}</div>
             <div class="item-thr">{{item.commission_income}}</div>
           </li>
         </ul>
-        <div class="null-box"  v-if="dataArray.length === 0">
+        <div class="null-box" v-if="dataArray.length === 0">
           <img src="./pic-nodata@2x.png" class="null-box-img">
           <div class="null-box-text">暂还没有数据</div>
         </div>
@@ -57,8 +59,8 @@
 <script type="text/ecmascript-6">
   import Scroll from 'components/scroll/scroll'
   import Toast from 'components/toast/toast'
-  import { ERR_OK } from 'common/js/config'
-  import { Agent } from 'api'
+  import {ERR_OK} from 'common/js/config'
+  import {Agent} from 'api'
 
   export default {
     name: 'my-team',
@@ -160,12 +162,26 @@
     box-sizing: border-box
     -moz-box-sizing: border-box
     -webkit-box-sizing: border-box
+
   .team-box
     fill-box(fixed)
+
   .trade-scroll
     fill-box()
     overflow: hidden
     z-index: 11
+
+  .team-scroll-top
+    background: #fff
+
+  .team-scroll
+    position: absolute
+    left: 0
+    right: 0
+    top: 300px
+    bottom: 0
+    overflow: hidden
+
   .team-top
     height: 150px
     background-image: linear-gradient(-180deg, #2D2C28 0%, #3D3834 100%)
@@ -218,6 +234,7 @@
             font-family: $font-family-dinbold
             color: $color-C3A66C
             font-size: $font-size-24
+
   .echarts-title
     layout(row)
     align-items: center
@@ -231,6 +248,7 @@
       font-size: $font-size-16
       color: $color-343439
       font-family: $font-family-regular
+
   .scale-list
     height: 38px
     layout(row)
@@ -255,6 +273,7 @@
       font-size: $font-size-12
       color: $color-848484
       font-family: $font-family-regular
+
   .team-list
     padding: 0 15px
     .item
@@ -280,6 +299,7 @@
         font-size: $font-size-14
         color: $color-AA905D
         font-family: $font-family-regular
+
   .null-box
     padding-top: 50px
     .null-box-img
@@ -291,6 +311,7 @@
       font-size: $font-size-14
       color: #a6a6a6
       font-family: $font-family-regular
+
   .z
     width: 100%
 
