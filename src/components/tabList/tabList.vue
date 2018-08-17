@@ -1,23 +1,25 @@
 <template>
-  <div class="tab-bg" :class="show ? 'show' : ''">
-    <div class="tab-list">
-      <h3 class="title">行业类型</h3>
-      <div class="tab">
-        <div class="tab-left">
-          <ul>
-            <li class="list border-bottom-1px" :class="tabLeftIndex == i && 'on'" v-for="(val, i) in industryList" v-if="val&&val.parent_id === 0" :key="i" @click="tabLeftClick(i)">{{ val&&val.name }}</li>
-          </ul>
+  <transition name="fade">
+    <div class="tab-bg" v-show="show" @click="tabCancel">
+      <div class="tab-list" @click.stop>
+        <h3 class="title">行业类型</h3>
+        <div class="tab">
+          <div class="tab-left">
+            <ul>
+              <li class="list border-bottom-1px" :class="tabLeftIndex == i && 'on'" v-for="(val, i) in industryList" v-if="val&&val.parent_id === 0" :key="i" @click="tabLeftClick(i)">{{ val&&val.name }}</li>
+            </ul>
+          </div>
+          <div class="tab-right">
+            <li class="list border-bottom-1px" :class="tabRightIndex == i && 'on'" v-for="(val, i) in industry" :key="i" @click="tabRightClick(i)">{{ val&&val.name }}</li>
+          </div>
         </div>
-        <div class="tab-right">
-          <li class="list border-bottom-1px" :class="tabRightIndex == i && 'on'" v-for="(val, i) in industry" :key="i" @click="tabRightClick(i)">{{ val&&val.name }}</li>
+        <div class="confirm-btn border-top-1px">
+          <span class="pop-btn border-right-1px" @click="tabCancel">取消</span>
+          <span class="pop-btn right" @click="tabConfirm">确定</span>
         </div>
-      </div>
-      <div class="confirm-btn border-top-1px">
-        <span class="pop-btn border-right-1px" @click="tabCancel">取消</span>
-        <span class="pop-btn right" @click="tabConfirm">确定</span>
       </div>
     </div>
-  </div>
+  </transition>
 </template>
 
 <script type="text/ecmascript-6">
@@ -72,14 +74,12 @@
     right: 0
     top: 0
     bottom: 0
-    background: rgba(0,0,0,0)
-    transition: background 0.3s
-    z-index: -10
+    background: rgba(0,0,0,0.7)
     .tab-list
       position: absolute
       left: 0
       right: 0
-      top: 20%
+      top: 13.6vh
       margin: 0 auto
       width: 80%
       height: 415px
@@ -87,8 +87,6 @@
       text-align: center
       overflow: hidden
       border-radius: 8px
-      transition: all 0.3s
-      opacity: 0
     .title
       height: 45px
       line-height: 45px
