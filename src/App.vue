@@ -34,7 +34,8 @@
     },
     methods: {
       _checkAuthorize() {
-        if (!this.hasToken) {
+        const hasToken = storage.has('token')
+        if (!hasToken) {
           this.$router.replace({path: '/login'})
         }
       },
@@ -57,11 +58,6 @@
           this.routerArr.push(path)
           this.entryAnimation = 'slide'
         }
-      }
-    },
-    computed: {
-      hasToken() {
-        return storage.has('token')
       }
     },
     watch: {

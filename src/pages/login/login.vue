@@ -88,7 +88,7 @@
             return
           }
           this._saveAuthInfo(res)
-          this.$router.push({path: '/'})
+          this.$router.replace({path: '/'})
         })
       },
       getCode() {
