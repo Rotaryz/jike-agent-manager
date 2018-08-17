@@ -1,142 +1,142 @@
 <template>
   <div class="trade-box">
-      <div class="trade-scroll">
-        <scroll
-          ref="scroll"
-          :listenScroll="listenScroll"
-          :probeType="probeType"
-          @scroll="scroll">
-          <div class="trade-bg"></div>
-          <div class="trade-top">
-            <div class="top-title">本日数据统计</div>
-            <div class="top-number">
-              {{tradeData.real_income || 0}}
-            </div>
-            <div class="top-text">今日实际收入</div>
-            <router-link class="que-img" to="/explain-trade">
-              <img src="./icon-help_myteam@2x.png">
-            </router-link>
-            <div class="trade-ab">
-              <div class="order-box">
-                <div class="item">
-                  <div class="number">{{tradeData.account_sale || 0}}</div>
-                  <div class="text">账号销量</div>
-                  <div class="line"></div>
-                  <div class="color-text">环比{{tradeData.account_sale_percent || '0%'}}</div>
-                </div>
-                <div class="item">
-                  <div class="number">{{tradeData.invite_join || 0}}</div>
-                  <div class="text">推荐加盟</div>
-                  <div class="line"></div>
-                  <div class="color-text">环比{{tradeData.invite_join_percent || '0%'}}</div>
-                </div>
-                <div class="item">
-                  <div class="number">{{tradeData.sale_count || 0}}</div>
-                  <div class="text">分销单数</div>
-                  <div class="line"></div>
-                  <div class="color-text">环比{{tradeData.invite_join_percent || '0%'}}</div>
-                </div>
+    <div class="trade-scroll">
+      <scroll
+        ref="scroll"
+        :listenScroll="listenScroll"
+        :probeType="probeType"
+        @scroll="scroll">
+        <div class="trade-bg"></div>
+        <div class="trade-top">
+          <div class="top-title">本日数据统计</div>
+          <div class="top-number">
+            {{tradeData.real_income || 0}}
+          </div>
+          <div class="top-text">今日实际收入</div>
+          <router-link class="que-img" to="/explain-trade">
+            <img src="./icon-help_myteam@2x.png">
+          </router-link>
+          <div class="trade-ab">
+            <div class="order-box">
+              <div class="item">
+                <div class="number">{{tradeData.account_sale || 0}}</div>
+                <div class="text">账号销量</div>
+                <div class="line"></div>
+                <div class="color-text">环比{{tradeData.account_sale_percent || '0%'}}</div>
+              </div>
+              <div class="item">
+                <div class="number">{{tradeData.invite_join || 0}}</div>
+                <div class="text">推荐加盟</div>
+                <div class="line"></div>
+                <div class="color-text">环比{{tradeData.invite_join_percent || '0%'}}</div>
+              </div>
+              <div class="item">
+                <div class="number">{{tradeData.sale_count || 0}}</div>
+                <div class="text">分销单数</div>
+                <div class="line"></div>
+                <div class="color-text">环比{{tradeData.invite_join_percent || '0%'}}</div>
               </div>
             </div>
           </div>
-          <div class="echarts-box">
+        </div>
+        <div class="echarts-box">
+          <div class="echarts-title">
+            <div class="line"></div>
+            <div class="text">生意数据概览</div>
+          </div>
+          <div class="income-data">
+            <div class="data-item" v-for="(item, index) in incomeList" @click="selectIncome(index)"
+                 :class="incomeIndex * 1 ===index ? 'data-item-active' : ''">{{item}}
+            </div>
+          </div>
+          <!--我的收入-->
+          <div class="pie-box line-box">
+            <div id="myLine"></div>
+            <div class="title-box">
+              <div class="sub-title">我的收入</div>
+            </div>
+          </div>
+          <div class="echarts-title-box">
             <div class="echarts-title">
               <div class="line"></div>
-              <div class="text">生意数据概览</div>
+              <div class="text">我的收入占比</div>
             </div>
-            <div class="income-data">
-              <div class="data-item" v-for="(item, index) in incomeList" @click="selectIncome(index)"
-                   :class="incomeIndex * 1 ===index ? 'data-item-active' : ''">{{item}}
+          </div>
+          <!--我的收入占比-->
+          <div class="pie-box pie-box-change" ref="pie">
+            <div id="myPie"></div>
+            <div class="my-pie-moeny">累计收入：¥{{pieMoney || 0}}</div>
+          </div>
+          <div class="echarts-title-box">
+            <div class="echarts-title">
+              <div class="line"></div>
+              <div class="text">核心数据指标</div>
+            </div>
+          </div>
+          <!--核心数据指标-->
+          <div class="pie-box line-box-change" ref="bar">
+            <div id="myDataBar"></div>
+            <div class="pie-list">
+              <div class="list">
+                <div class="icon one"></div>
+                <div class="text">账号销量</div>
               </div>
-            </div>
-            <!--我的收入-->
-            <div class="pie-box line-box">
-              <div id="myLine"></div>
-              <div class="title-box">
-                <div class="sub-title">我的收入</div>
+              <div class="list">
+                <div class="icon two"></div>
+                <div class="text">加盟推荐</div>
               </div>
-            </div>
-            <div class="echarts-title-box">
-              <div class="echarts-title">
-                <div class="line"></div>
-                <div class="text">我的收入占比</div>
-              </div>
-            </div>
-            <!--我的收入占比-->
-            <div class="pie-box pie-box-change" ref="pie">
-              <div id="myPie"></div>
-              <div class="my-pie-moeny">累计收入：¥{{pieMoney || 0}}</div>
-            </div>
-            <div class="echarts-title-box">
-              <div class="echarts-title">
-                <div class="line"></div>
-                <div class="text">核心数据指标</div>
-              </div>
-            </div>
-            <!--核心数据指标-->
-            <div class="pie-box line-box-change" ref="bar">
-              <div id="myDataBar"></div>
-              <div class="pie-list">
-                <div class="list">
-                  <div class="icon one"></div>
-                  <div class="text">账号销量</div>
-                </div>
-                <div class="list">
-                  <div class="icon two"></div>
-                  <div class="text">加盟推荐</div>
-                </div>
-                <div class="list">
-                  <div class="icon thr"></div>
-                  <div class="text">分销单数</div>
-                </div>
-              </div>
-            </div>
-            <!--新增团队队员-->
-            <div class="echarts-title-box">
-              <div class="echarts-title">
-                <div class="line"></div>
-                <div class="text">新增团队成员</div>
-              </div>
-            </div>
-            <div class="income-data">
-              <div class="data-item" v-for="(item, index) in newAddList" @click="selectNewAdd(index)"
-                   :class="newAddIndex * 1 ===index ? 'data-item-active' : ''">{{item}}
-              </div>
-            </div>
-            <div class="pie-box line-box" ref="addmember">
-              <div id="myMember"></div>
-              <div class="title-box">
-                <div class="sub-title">新增团队成员</div>
-              </div>
-            </div>
-            <!--我的团队分销收入-->
-            <div class="echarts-title-box">
-              <div class="echarts-title">
-                <div class="line"></div>
-                <div class="text">我的团队分销收入</div>
-              </div>
-            </div>
-            <div class="income-data">
-              <div class="data-item" v-for="(item, index) in teamIncomeList" @click="selectTeamIncome(index)"
-                   :class="teamIncomeIndex * 1 ===index ? 'data-item-active' : ''">{{item}}
-              </div>
-            </div>
-            <div class="pie-box line-box" ref="team">
-              <div id="myMemberMoney"></div>
-              <div class="title-box">
-                <div class="sub-title">我的团队分销收入</div>
+              <div class="list">
+                <div class="icon thr"></div>
+                <div class="text">分销单数</div>
               </div>
             </div>
           </div>
-        </scroll>
-      </div>
+          <!--新增团队队员-->
+          <div class="echarts-title-box">
+            <div class="echarts-title">
+              <div class="line"></div>
+              <div class="text">新增团队成员</div>
+            </div>
+          </div>
+          <div class="income-data">
+            <div class="data-item" v-for="(item, index) in newAddList" @click="selectNewAdd(index)"
+                 :class="newAddIndex * 1 ===index ? 'data-item-active' : ''">{{item}}
+            </div>
+          </div>
+          <div class="pie-box line-box" ref="addmember">
+            <div id="myMember"></div>
+            <div class="title-box">
+              <div class="sub-title">新增团队成员</div>
+            </div>
+          </div>
+          <!--我的团队分销收入-->
+          <div class="echarts-title-box">
+            <div class="echarts-title">
+              <div class="line"></div>
+              <div class="text">我的团队分销收入</div>
+            </div>
+          </div>
+          <div class="income-data">
+            <div class="data-item" v-for="(item, index) in teamIncomeList" @click="selectTeamIncome(index)"
+                 :class="teamIncomeIndex * 1 ===index ? 'data-item-active' : ''">{{item}}
+            </div>
+          </div>
+          <div class="pie-box line-box" ref="team">
+            <div id="myMemberMoney"></div>
+            <div class="title-box">
+              <div class="sub-title">我的团队分销收入</div>
+            </div>
+          </div>
+        </div>
+      </scroll>
+    </div>
     <toast ref="toast"></toast>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
-  import {ERR_OK} from 'common/js/config'
-  import {Trade} from 'api'
+  import { ERR_OK } from 'common/js/config'
+  import { Trade } from 'api'
   import Toast from 'components/toast/toast'
   import Scroll from 'components/scroll/scroll'
 
@@ -210,10 +210,10 @@
         const el = item.el
         const fn = item.fn
         if (!el || (!this.drawArr[index] && !this.drawReq[index])) return
-        console.log(!el || (!this.drawArr[index] && !this.drawReq[index]))
         const targetTop = el.offsetTop + el.offsetHeight
         const screenH = this.screenH
         if (screenH - targetTop - pos.y >= 0) {
+          index && (this.drawArr[index] = false)
           fn()
         }
       },
@@ -261,7 +261,7 @@
         })
       },
       getMyIncomePieData() {
-        if(!this.drawReq[0]) return
+        if (!this.drawReq[0]) return
         this.drawReq[0] = false
         Trade.getMyIncomePid().then(res => {
           if (res.error === ERR_OK) {
@@ -796,6 +796,7 @@
   .trade-box
     fill-box(fixed)
     background: $color-F8F8F8
+
   .trade-scroll
     fill-box()
     background: $fff
