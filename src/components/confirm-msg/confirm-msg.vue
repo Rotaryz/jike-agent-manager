@@ -1,11 +1,14 @@
 <template>
-  <article class="mask-wrapper" :class="isShow?'show':''" @click="hide">
-    <div class="content-wrapper" @click.stop>
-      <div class="title">{{title}}</div>
-      <div class="explain">{{content}}</div>
-      <div class="btn" @click="confirm">{{confirmTxt}}</div>
-    </div>
-  </article>
+  <transition name="fade">
+    <article class="mask-wrapper" v-show="isShow" @click="hide">
+      <div class="content-wrapper" @click.stop>
+        <div class="title">{{title}}</div>
+        <div class="explain">{{content}}</div>
+        <div class="btn" @click="confirm">{{confirmTxt}}</div>
+      </div>
+    </article>
+  </transition>
+
 </template>
 
 <script type="text/ecmascript-6">
@@ -43,12 +46,7 @@
   .mask-wrapper
     fill-box(fixed)
     background: $color-mask-bg
-    z-index: -1
-    opacity: 0
     transition: all 0.3s
-    &.show
-      z-index: 999
-      opacity: 1
     .content-wrapper
       width: 300px
       margin: 174px auto
