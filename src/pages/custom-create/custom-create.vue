@@ -93,9 +93,6 @@
     },
     mounted() {
     },
-    beforeEach(to, from, next) {
-      console.log('sss')
-    },
     computed: {
       count() {
         return this.form.note ? this.form.note.length : 0
@@ -122,8 +119,6 @@
         let tabRightList = this.industryList[this.tabLeftIndex].industry[this.tabRightIndex]
         this.form.industry = tabLeftList.name + ' ' + tabRightList.name
         this.selecIndustry = true
-        // this.tabLeftIndex = 0
-        // this.tabRightIndex = 0
       },
       getCustomMsg() { // 获取客户信息
         Custom.getCustomMsg(this.id)
