@@ -712,7 +712,7 @@
           },
           tooltip: {
             trigger: 'axis',
-            formatter: '新增团队成员：{c}',
+            formatter: '团队分销收入：{c}',
             axisPointer: {
               type: 'none'
             }
