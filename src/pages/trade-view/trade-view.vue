@@ -68,7 +68,7 @@
         </div>
       </div>
       <!--核心数据指标-->
-      <div class="pie-box line-box line-box-change">
+      <div class="pie-box line-box-change">
         <div id="myDataBar"></div>
         <div class="pie-list">
           <div class="list">
@@ -99,6 +99,9 @@
       </div>
       <div class="pie-box line-box">
         <div id="myMember"></div>
+        <div class="title-box">
+          <div class="sub-title">新增团队成员</div>
+        </div>
       </div>
       <!--我的团队分销收入-->
       <div class="echarts-title-box">
@@ -114,6 +117,9 @@
       </div>
       <div class="pie-box line-box">
         <div id="myMemberMoney"></div>
+        <div class="title-box">
+          <div class="sub-title">我的团队分销收入</div>
+        </div>
       </div>
     </div>
     <toast ref="toast"></toast>
@@ -121,8 +127,8 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import { ERR_OK } from 'common/js/config'
-  import { Trade } from 'api'
+  import {ERR_OK} from 'common/js/config'
+  import {Trade} from 'api'
   import Toast from 'components/toast/toast'
 
   export default {
@@ -252,15 +258,23 @@
             splitLine: {
               show: true,
               lineStyle: {
-                color: '#E6E6E6'
+                color: '#E6E6E6',
+                width: 0.5
               }
             },
             axisLabel: {
               color: '#343439'
             },
+            axisTick: {
+              lineStyle: {
+                color: '#c4c4c4',
+                width: 0.5
+              }
+            },
             axisLine: {
               lineStyle: {
-                color: '#c4c4c4'
+                color: '#c4c4c4',
+                width: 0.5
               }
             }
           },
@@ -277,28 +291,54 @@
             splitLine: {
               show: true,
               lineStyle: {
-                color: '#E6E6E6'
+                color: '#E6E6E6',
+                width: 0.5
+              }
+            },
+            axisTick: {
+              lineStyle: {
+                color: '#c4c4c4',
+                width: 0.5
               }
             },
             axisLabel: {
+              formatter: '{value}',
               color: '#343439'
             },
             axisLine: {
               lineStyle: {
-                color: '#c4c4c4'
+                color: '#c4c4c4',
+                width: 0.5
               }
             }
           },
           series: [{
             data: this.incomeData.y,
             type: 'line',
+            smooth: true,
             showSymbol: false,
+            smoothMonotone: 'x',
+            areaStyle: {
+              color: {
+                type: 'linear',
+                x: 0,
+                x2: 0,
+                y: 0,
+                y2: 1,
+                colorStops: [{
+                  offset: 0, color: 'rgba(197,169,112,0.55)'
+                }, {
+                  offset: 1, color: 'rgba(197,169,112,0.05)'
+                }],
+                globalCoord: false
+              }
+            },
             itemStyle: {
               normal: {
-                color: '#C5A970',
+                color: 'rgba(197,169,112,0.55)',
                 borderWidth: 2,
                 lineStyle: {
-                  color: '#C5A970',
+                  color: 'rgba(197,169,112,0.55)',
                   width: 3
                 }
               }
@@ -319,7 +359,7 @@
             {
               name: '',
               type: 'pie',
-              radius: '45%',
+              radius: '50%',
               center: ['50%', '40%'],
               data: this.incomePie,
               itemStyle: {
@@ -354,10 +394,17 @@
             axisLabel: {
               color: '#343439'
             },
+            axisTick: {
+              lineStyle: {
+                color: '#c4c4c4',
+                width: 0.5
+              }
+            },
             data: this.incomeBar.x,
             axisLine: {
               lineStyle: {
-                color: '#c4c4c4'
+                color: '#c4c4c4',
+                width: 0.5
               }
             }
           },
@@ -365,16 +412,25 @@
             type: 'value',
             axisLine: {
               lineStyle: {
-                color: '#c4c4c4'
+                color: '#c4c4c4',
+                width: 0.5
               }
             },
             axisLabel: {
+              formatter: '{value}',
               color: '#343439'
+            },
+            axisTick: {
+              lineStyle: {
+                color: '#c4c4c4',
+                width: 0.5
+              }
             },
             splitLine: {
               show: true,
               lineStyle: {
-                color: '#E6E6E6'
+                color: '#E6E6E6',
+                width: 0.5
               }
             }
           },
@@ -460,6 +516,7 @@
           grid: {
             left: '3%',
             right: '4%',
+            bottom: '5%',
             containLabel: true
           },
           xAxis: {
@@ -467,17 +524,25 @@
             boundaryGap: false,
             data: this.newMemberData.x,
             splitLine: {
-              show: false,
+              show: true,
               lineStyle: {
-                color: '#E6E6E6'
+                color: '#E6E6E6',
+                width: 0.5
               }
             },
             axisLabel: {
               color: '#343439'
             },
+            axisTick: {
+              lineStyle: {
+                color: '#c4c4c4',
+                width: 0.5
+              }
+            },
             axisLine: {
               lineStyle: {
-                color: '#c4c4c4'
+                color: '#c4c4c4',
+                width: 0.5
               }
             }
           },
@@ -494,15 +559,24 @@
             splitLine: {
               show: true,
               lineStyle: {
-                color: '#E6E6E6'
+                color: '#E6E6E6',
+                width: 0.5
               }
             },
             axisLabel: {
+              formatter: '{value}',
               color: '#343439'
             },
             axisLine: {
               lineStyle: {
-                color: '#c4c4c4'
+                color: '#c4c4c4',
+                width: 0.5
+              }
+            },
+            axisTick: {
+              lineStyle: {
+                color: '#c4c4c4',
+                width: 0.5
               }
             }
           },
@@ -510,13 +584,29 @@
             data: this.newMemberData.y,
             type: 'line',
             smooth: true,
+            smoothMonotone: 'x',
             showSymbol: false,
+            areaStyle: {
+              color: {
+                type: 'linear',
+                x: 0,
+                x2: 0,
+                y: 0,
+                y2: 1,
+                colorStops: [{
+                  offset: 0, color: 'rgba(197,169,112,0.55)'
+                }, {
+                  offset: 1, color: 'rgba(197,169,112,0.05)'
+                }],
+                globalCoord: false
+              }
+            },
             itemStyle: {
               normal: {
-                color: '#C5A970',
+                color: 'rgba(197,169,112,0.55)',
                 borderWidth: 2,
                 lineStyle: {
-                  color: '#C5A970',
+                  color: 'rgba(197,169,112,0.55)',
                   width: 3
                 }
               }
@@ -527,34 +617,42 @@
       drawMemberMoney() {
         let myChart = this.$echarts.init(document.getElementById('myMemberMoney'))
         myChart.setOption({
+          grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '5%',
+            containLabel: true
+          },
           xAxis: {
-            grid: {
-              left: '3%',
-              right: '4%',
-              bottom: '3%',
-              containLabel: true
-            },
             type: 'category',
             boundaryGap: false,
             data: this.TeamIncomeData.x,
             splitLine: {
-              show: false,
+              show: true,
               lineStyle: {
-                color: '#E6E6E6'
+                color: '#E6E6E6',
+                width: 0.5
               }
             },
             axisLabel: {
               color: '#343439'
             },
+            axisTick: {
+              lineStyle: {
+                color: '#c4c4c4',
+                width: 0.5
+              }
+            },
             axisLine: {
               lineStyle: {
-                color: '#c4c4c4'
+                color: '#c4c4c4',
+                width: 0.5
               }
             }
           },
           tooltip: {
             trigger: 'axis',
-            formatter: '团队分销收入：{c}',
+            formatter: '新增团队成员：{c}',
             axisPointer: {
               type: 'none'
             }
@@ -565,7 +663,8 @@
             splitLine: {
               show: true,
               lineStyle: {
-                color: '#E6E6E6'
+                color: '#E6E6E6',
+                width: 0.5
               }
             },
             axisLabel: {
@@ -573,26 +672,45 @@
               color: '#343439'
             },
             axisLine: {
-              show: false,
               lineStyle: {
-                color: '#c4c4c4'
+                color: '#c4c4c4',
+                width: 0.5
               }
             },
             axisTick: {
-              show: false
+              lineStyle: {
+                color: '#c4c4c4',
+                width: 0.5
+              }
             }
           },
           series: [{
             data: this.TeamIncomeData.y,
             type: 'line',
             smooth: true,
+            smoothMonotone: 'x',
             showSymbol: false,
+            areaStyle: {
+              color: {
+                type: 'linear',
+                x: 0,
+                x2: 0,
+                y: 0,
+                y2: 1,
+                colorStops: [{
+                  offset: 0, color: 'rgba(197,169,112,0.55)'
+                }, {
+                  offset: 1, color: 'rgba(197,169,112,0.05)'
+                }],
+                globalCoord: false
+              }
+            },
             itemStyle: {
               normal: {
                 color: '#C5A970',
                 borderWidth: 2,
                 lineStyle: {
-                  color: '#C5A970',
+                  color: 'rgba(197,169,112,0.55)',
                   width: 3
                 }
               }
@@ -740,12 +858,11 @@
     .data-item-active
       color: $color-C3A66C
       background $color-343439
-      border-1px(rgba(0,0,0,0))
+      border-1px(rgba(0, 0, 0, 0))
 
   .pie-box
     position: relative
-    background: linear-gradient(rgba(255, 255, 255, .1) 0%, #fff 100%)
-    height: 305px
+    height: 320px
     border-bottom: 10px solid #eee
     #myPie
       width: 100%
@@ -756,13 +873,7 @@
       width: 100%
       height: 300px
       margin: 0 auto
-      padding: 0px 10px 0
-      top: -5px
-    #myAddLine
-      width: 100%
-      height: 300px
-      margin: 20px auto
-      padding: 35px 0px 0
+      padding: 0 20px 0
     #myBar
       width: 100%
       height: 300px
@@ -771,24 +882,19 @@
     #myDataBar
       width: 100%
       height: 280px
-      margin: 0px auto
+      margin: 0 auto
       top: -25px
       padding: 0 10px 0
     #myMember
       width: 100%
-      height: 305px
-      margin: 0px auto
-      padding: 0 10px 0
+      height: 300px
+      margin: 0 auto
+      padding: 0 20px 0
     #myMemberMoney
       width: 100%
-      height: 305px
-      margin: 0px auto
-      padding: 0 10px 0
-    #mySuccess
-      width: 100%
       height: 300px
-      margin: 20px auto
-      padding: 35px 20px 0
+      margin: 0 auto
+      padding: 0 20px 0
     .title-box
       position: absolute
       width: 100%
