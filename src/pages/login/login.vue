@@ -116,7 +116,7 @@
         this._checkProject(index)
       },
       showSelect() {
-        this.isShowSelect = !this.isShowSelect
+        // this.isShowSelect = !this.isShowSelect todo
       },
       _check() {
         if (!utils.checkIsPhoneNumber(this.phoneNumber)) {
