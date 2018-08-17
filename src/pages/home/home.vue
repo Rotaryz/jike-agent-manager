@@ -164,7 +164,7 @@
           grid: {
             left: '3%',
             right: '4%',
-            bottom: '3%',
+            bottom: '5%',
             containLabel: true
           },
           xAxis: {
@@ -174,15 +174,24 @@
             splitLine: {
               show: true,
               lineStyle: {
-                color: '#E6E6E6'
+                color: '#E6E6E6',
+                width: 0.5
               }
             },
             axisLabel: {
-              color: '#343439'
+              color: '#343439',
+              align: 'right'
+            },
+            axisTick: {
+              lineStyle: {
+                color: '#c4c4c4',
+                width: 0.5
+              }
             },
             axisLine: {
               lineStyle: {
-                color: '#c4c4c4'
+                color: '#c4c4c4',
+                width: 0.5
               }
             }
           },
@@ -199,28 +208,54 @@
             splitLine: {
               show: true,
               lineStyle: {
-                color: '#E6E6E6'
+                color: '#E6E6E6',
+                width: 0.5
+              }
+            },
+            axisTick: {
+              lineStyle: {
+                color: '#c4c4c4',
+                width: 0.5
               }
             },
             axisLabel: {
+              formatter: '{value}',
               color: '#343439'
             },
             axisLine: {
               lineStyle: {
-                color: '#c4c4c4'
+                color: '#c4c4c4',
+                width: 0.5
               }
             }
           },
           series: [{
             data: this.incomeData.y,
             type: 'line',
+            smooth: true,
             showSymbol: false,
+            smoothMonotone: 'x',
+            areaStyle: {
+              color: {
+                type: 'linear',
+                x: 0,
+                x2: 0,
+                y: 0,
+                y2: 1,
+                colorStops: [{
+                  offset: 0, color: 'rgba(197,169,112,0.55)'
+                }, {
+                  offset: 1, color: 'rgba(197,169,112,0.05)'
+                }],
+                globalCoord: false
+              }
+            },
             itemStyle: {
               normal: {
-                color: '#C5A970',
+                color: 'rgba(197,169,112,0.55)',
                 borderWidth: 2,
                 lineStyle: {
-                  color: '#C5A970',
+                  color: 'rgba(197,169,112,0.55)',
                   width: 3
                 }
               }
