@@ -2,7 +2,7 @@
   <div class="award-box">
     <div class="trade-bg"></div>
     <div class="award-con">
-      <div class="award-img" ></div>
+      <div class="award-img"></div>
       <div class="echarts-title mt-35">
         <div class="line"></div>
         <div class="text">推荐步骤</div>
@@ -24,7 +24,8 @@
           <div class="text">2.推荐团队分红</div>
           <img src="./top03.png" alt="" class="text-img">
         </div>
-        <div class="main-text"><span>享受被推荐人团队业绩的</span><span class="color-text">3%</span><span>，其成员开单后，立马到账9元/单！</span></div>
+        <div class="main-text"><span>享受被推荐人团队业绩的</span><span class="color-text">3%</span><span>，其成员开单后，立马到账9元/单！</span>
+        </div>
       </div>
       <div class="echarts-title mt-35">
         <div class="line"></div>
@@ -48,9 +49,10 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import { Account } from 'api'
-  import { ERR_OK } from 'common/js/config'
+  import {Account} from 'api'
+  import {ERR_OK} from 'common/js/config'
   import Toast from 'components/toast/toast'
+
   export default {
     name: 'agent-award',
     data() {
@@ -88,6 +90,7 @@
     box-sizing: border-box
     -moz-box-sizing: border-box
     -webkit-box-sizing: border-box
+
   .award-box
     fill-box()
 
@@ -99,14 +102,17 @@
     top: 0
     z-index: 1
     background: #fff
+
   .award-con
     position: relative
     z-index: 2
+
   .award-img
     height: 172px
-    display: block
     width: 100%
     icon-image(pic-banner_)
+    display: block
+
   .echarts-title
     layout(row)
     align-items: center
@@ -123,12 +129,16 @@
 
   .info-box
     layout(row)
+
   .mt-35
     margin-top: 35px
+
   .mt-15
     margin-top: 15px
+
   .mt-50
     margin-top: 50px
+
   .top-box
     margin-top: 35px
     padding: 0 21px 0 15px
@@ -147,8 +157,10 @@
       .text-img
         width: 65px
         display: block
+
   .top-title-mt
     margin-top: 20px
+
   .main-text
     font-size: $font-size-14
     color: $color-666
@@ -156,8 +168,10 @@
     line-height: 22px
     .color-text
       color: $color-C3A66C
+
   .question-box
     padding: 25px 15px 100px
+
   .question-con
     background: #f8f8f8
     padding: 20px 15px
@@ -178,6 +192,7 @@
       border-bottom: 0.5px solid #4A90E2
       display: inline-block
       margin-top: 10px
+
   .jump-btn
     height: 65px
     position: fixed
@@ -197,6 +212,7 @@
       line-height: 45px
       font-size: $font-size-16
       font-family: $font-family-regular
+
   .wzz
     width: 100%
 

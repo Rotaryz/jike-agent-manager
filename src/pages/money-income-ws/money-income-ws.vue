@@ -194,10 +194,10 @@
         })
       },
       rebuildScroll() {
-        this.nextTick(() => {
+        setTimeout(() => {
           this.$refs.scroll.destroy()
           this.$refs.scroll.initScroll()
-        })
+        }, 30)
       }
     },
     watch: {
