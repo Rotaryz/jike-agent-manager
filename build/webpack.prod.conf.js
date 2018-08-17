@@ -117,6 +117,11 @@ const webpackConfig = merge(baseWebpackConfig, {
         from: path.resolve(__dirname, '../static'),
         to: config.build.assetsSubDirectory,
         ignore: ['.*']
+      },
+      {
+        from: path.resolve(__dirname, '../static/MP_verify_FF1M1Tc3v6iKV0pK.txt'),
+        to: '',
+        ignore: ['.*']
       }
     ])
   ]
