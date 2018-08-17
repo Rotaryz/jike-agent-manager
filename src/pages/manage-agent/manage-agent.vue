@@ -1,67 +1,64 @@
 <template>
   <div class="team-box">
-    <div class="trade-scroll">
-      <scroll ref="scroll"
-              :probeType="probeType"
-              :bcColor="bcColor"
-              :data="dataArray"
-              :showNoMore="false"
-              :listenScroll="listenScroll"
-              :pullUpLoad="pullUpLoadObj"
-              @pullingUp="onPullingUp">
-        <!--<div class="team-top">-->
-          <!--<div class="title">最大幅度的奖励政策</div>-->
-          <!--<div class="text">推荐代理商加盟，最高一次性奖励9万元，</div>-->
-          <!--<div class="text">另外还有被推荐团队的长期分红！</div>-->
-        <!--</div>-->
-        <div class="award-img"  @click="jumpAward"></div>
-        <div class="select-tab border-bottom-1px">
-          <div class="tab" :class="menuIdx * 1 === 0 ? 'select-tab-active' : ''" @click="switchTab(0)"><span>推荐成功</span><span v-if="successTotal * 1 !== 0">({{successTotal}})</span></div>
-          <div class="tab" :class="menuIdx * 1 === 1 ? 'select-tab-active' : ''" @click="switchTab(1)"><span>推荐记录</span><span v-if="allTotal * 1 !== 0">({{allTotal}})</span></div>
-          <div class="line" :style="'transform:translate3d('+ (100 * menuIdx) + '%, 0, 0)'">
-            <div class="chilen-line"></div>
-          </div>
+    <div class="agent-scroll-top">
+      <div class="award-img"  @click="jumpAward"></div>
+      <div class="select-tab border-bottom-1px">
+        <div class="tab" :class="menuIdx * 1 === 0 ? 'select-tab-active' : ''" @click="switchTab(0)"><span>推荐成功</span><span v-if="successTotal * 1 !== 0">({{successTotal}})</span></div>
+        <div class="tab" :class="menuIdx * 1 === 1 ? 'select-tab-active' : ''" @click="switchTab(1)"><span>推荐记录</span><span v-if="allTotal * 1 !== 0">({{allTotal}})</span></div>
+        <div class="line" :style="'transform:translate3d('+ (100 * menuIdx) + '%, 0, 0)'">
+          <div class="chilen-line"></div>
         </div>
-        <div class="agent-success" v-if="menuIdx * 1 === 0 && successList.length !== 0">
-          <div class="scale-list">
-            <div class="scale-one">名称</div>
-            <div class="scale-two">代理级别</div>
-            <div class="scale-thr">推荐奖励/元</div>
-          </div>
-          <ul class="team-list">
-            <li class="item border-bottom-1px" v-for="(item, index) in successList" v-bind:key="index">
-              <div class="item-one">{{item.name}}</div>
-              <div class="item-two">{{item.level_name}}</div>
-              <div class="item-thr">{{item.money}}</div>
-            </li>
-          </ul>
-        </div>
-        <div class="null-box"  v-if="menuIdx * 1 === 0 && successList.length === 0">
-          <img src="./pic-nodata@2x.png" class="null-box-img">
-          <div class="null-box-text">暂还没有数据</div>
-        </div>
-        <div class="agent-success" v-if="menuIdx * 1 === 1 && allList.length !== 0">
-          <div class="scale-list">
-            <div class="scale-one">名称</div>
-            <div class="scale-two">代理级别</div>
-            <div class="scale-thr">推荐状态</div>
-          </div>
-          <ul class="team-list">
-            <li class="item border-bottom-1px" v-for="(item, index) in allList" v-bind:key="index">
-              <div class="item-one">{{item.name}}</div>
-              <div class="item-two">{{item.level_name}}</div>
-              <div class="item-thr ing" v-if="item.check_status * 1 === 0">待审核</div>
-              <div class="item-thr success" v-if="item.check_status * 1 === 1">审核通过</div>
-              <div class="item-thr fails" v-if="item.check_status * 1 === 2">审核不通过</div>
-            </li>
-          </ul>
-        </div>
-        <div class="null-box"  v-if="menuIdx * 1 === 1 && allList.length === 0">
-          <img src="./pic-nodata@2x.png" class="null-box-img">
-          <div class="null-box-text">暂还没有数据</div>
-        </div>
-      </scroll>
+      </div>
+      <div class="scale-list" v-if="menuIdx * 1 === 0">
+        <div class="scale-one">名称</div>
+        <div class="scale-two">代理级别</div>
+        <div class="scale-thr">推荐奖励/元</div>
+      </div>
+      <div class="scale-list" v-if="menuIdx * 1 === 1">
+        <div class="scale-one">名称</div>
+        <div class="scale-two">代理级别</div>
+        <div class="scale-thr">推荐状态</div>
+      </div>
     </div>
+      <div class="agent-scroll">
+        <scroll ref="scroll"
+                :probeType="probeType"
+                :bcColor="bcColor"
+                :data="dataArray"
+                :showNoMore="false"
+                :listenScroll="listenScroll"
+                :pullUpLoad="pullUpLoadObj"
+                @pullingUp="onPullingUp">
+          <div class="agent-success" v-if="menuIdx * 1 === 0 && successList.length !== 0">
+            <ul class="team-list">
+              <li class="item border-bottom-1px" v-for="(item, index) in successList" v-bind:key="index">
+                <div class="item-one">{{item.name}}</div>
+                <div class="item-two">{{item.level_name}}</div>
+                <div class="item-thr">{{item.money}}</div>
+              </li>
+            </ul>
+          </div>
+          <div class="null-box"  v-if="menuIdx * 1 === 0 && successList.length === 0">
+            <img src="./pic-nodata@2x.png" class="null-box-img">
+            <div class="null-box-text">暂还没有数据</div>
+          </div>
+          <div class="agent-success" v-if="menuIdx * 1 === 1 && allList.length !== 0">
+            <ul class="team-list">
+              <li class="item border-bottom-1px" v-for="(item, index) in allList" v-bind:key="index">
+                <div class="item-one">{{item.name}}</div>
+                <div class="item-two">{{item.level_name}}</div>
+                <div class="item-thr ing" v-if="item.check_status * 1 === 0">待审核</div>
+                <div class="item-thr success" v-if="item.check_status * 1 === 1">审核通过</div>
+                <div class="item-thr fails" v-if="item.check_status * 1 === 2">审核不通过</div>
+              </li>
+            </ul>
+          </div>
+          <div class="null-box"  v-if="menuIdx * 1 === 1 && allList.length === 0">
+            <img src="./pic-nodata@2x.png" class="null-box-img">
+            <div class="null-box-text">暂还没有数据</div>
+          </div>
+        </scroll>
+      </div>
     <div class="jump-btn border-top-1px">
       <router-link class="btn" to="/agent-entering">推荐代理商加盟</router-link>
     </div>
@@ -227,6 +224,18 @@
     box-sizing: border-box
     -moz-box-sizing: border-box
     -webkit-box-sizing: border-box
+
+
+  .agent-scroll-top
+    background: #fff
+
+  .agent-scroll
+    position: absolute
+    left: 0
+    right: 0
+    top: 258px
+    bottom: 65px
+    overflow: hidden
   .team-box
     fill-box(fixed)
   .trade-scroll
@@ -370,9 +379,9 @@
     display: block
   .award-img
     height: 172px
-    display: block
     width: 100%
     icon-image(pic-banner_)
+    display: block
   .wzz
     width: 100%
 

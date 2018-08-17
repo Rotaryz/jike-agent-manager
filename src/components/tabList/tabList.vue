@@ -5,7 +5,7 @@
       <div class="tab">
         <div class="tab-left">
           <ul>
-            <li class="list" :class="tabLeftIndex == i && 'on'" v-for="(val, i) in industryList" v-if="val&&val.parent_id === 0" :key="i" @click="tabLeftClick(i)">{{ val&&val.name }}</li>
+            <li class="list border-bottom-1px" :class="tabLeftIndex == i && 'on'" v-for="(val, i) in industryList" v-if="val&&val.parent_id === 0" :key="i" @click="tabLeftClick(i)">{{ val&&val.name }}</li>
           </ul>
         </div>
         <div class="tab-right">
@@ -66,6 +66,7 @@
   @import "~common/stylus/mixin"
 
   .tab-bg
+    font-family: PingFang-SC-Regular
     position: fixed
     left: 0
     right: 0
@@ -81,45 +82,50 @@
       top: 20%
       margin: 0 auto
       width: 80%
-      height: 360px
+      height: 415px
       background: $color-white
       text-align: center
+      overflow: hidden
+      border-radius: 8px
       transition: all 0.3s
       opacity: 0
     .title
-      height: 40px
-      line-height: 40px
+      height: 45px
+      line-height: 45px
+      background: $color-C3A66C
       font-size: 16px
       color: $color-white
-      background-image: linear-gradient(180deg, #2D2C28 0%, #3D3834 100%)
 
     .tab
-      height: 280px
+      height: 325px
       overflow:hidden
       display: flex
       font-size: $font-size-14
+      color: $color-20202E
       .tab-left
-        width: 80px
+        width: 115px
         height: 100%
         overflow-y: scroll
         background: $color-F3F3F3
         .list
-          padding: 8px 0
+          height: 40px
+          line-height: 40px
+          border-bottom-1px(#E1E1E1)
           overflow: hidden
           text-overflow: ellipsis
           white-space: nowrap
           &.on
-            background: $color-white
             color: $color-C3A66C
       .tab-right
         flex: 1
         height: 100%
         overflow-y: scroll
         .list
-          padding: 8px 0
-          border-bottom-1px($color-E3E6E9)
+          height: 40px
+          line-height: 40px
+          border-bottom-1px(#E1E1E1)
           text-align: left
-          margin-left: 10px
+          margin-left: 22px
           overflow: hidden
           text-overflow: ellipsis
           white-space: nowrap
@@ -127,15 +133,16 @@
             color: $color-C3A66C
     .confirm-btn
       box-sizing: border-box
-      height: 40px
+      height: 45px
       display: flex
-      line-height: 40px
-      border-top-1px($color-E3E6E9)
+      line-height: 45px
+      border-top-1px($color-CFCFCF)
+      font-size: 16px
       .pop-btn
         width: 50%
         box-sizing: border-box
-        border-right-1px($color-E3E6E9)
-        color: $color-C1C3C3
+        border-right-1px($color-CFCFCF)
+        color: $color-A6A6A6
         &.right
           border-right: 0
           color: $color-C3A66C
