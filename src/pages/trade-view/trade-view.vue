@@ -57,7 +57,7 @@
         </div>
       </div>
       <!--我的收入占比-->
-      <div class="pie-box pie-box-change">
+      <div class="pie-box pie-box-change" ref="pie">
         <div id="myPie"></div>
         <div class="my-pie-moeny">累计收入：¥{{pieMoney || 0}}</div>
       </div>
@@ -68,7 +68,7 @@
         </div>
       </div>
       <!--核心数据指标-->
-      <div class="pie-box line-box-change">
+      <div class="pie-box line-box-change" ref="bar">
         <div id="myDataBar"></div>
         <div class="pie-list">
           <div class="list">
@@ -97,7 +97,7 @@
              :class="newAddIndex * 1 ===index ? 'data-item-active' : ''">{{item}}
         </div>
       </div>
-      <div class="pie-box line-box">
+      <div class="pie-box line-box" ref="addmember">
         <div id="myMember"></div>
         <div class="title-box">
           <div class="sub-title">新增团队成员</div>
@@ -115,7 +115,7 @@
              :class="teamIncomeIndex * 1 ===index ? 'data-item-active' : ''">{{item}}
         </div>
       </div>
-      <div class="pie-box line-box">
+      <div class="pie-box line-box" ref="team">
         <div id="myMemberMoney"></div>
         <div class="title-box">
           <div class="sub-title">我的团队分销收入</div>
@@ -130,9 +130,11 @@
   import {ERR_OK} from 'common/js/config'
   import {Trade} from 'api'
   import Toast from 'components/toast/toast'
+  import drawAnimation from 'common/mixins/draw-animation'
 
   export default {
     name: 'trade-view',
+    mixins: [drawAnimation],
     data() {
       return {
         incomeList: ['近3天', '近7天', '近15天'],
@@ -167,6 +169,13 @@
       this.getTeamIncomeData(2)
     },
     mounted() {
+      const args = [
+        {el: this.$refs.pie, fn: this.drawPie, action: true},
+        {el: this.$refs.bar, fn: this.drawDataBar, action: true},
+        {el: this.$refs.addmember, fn: this.drawMember, action: true},
+        {el: this.$refs.team, fn: this.drawMemberMoney, action: true}
+      ]
+      this._drawAction(args)
     },
     methods: {
       getData() {
@@ -188,21 +197,23 @@
           }
         })
       },
-      getNewMemberData(time) {
+      getNewMemberData(time, cb) {
         Trade.getNewMember({time_type: time}).then(res => {
           if (res.error === ERR_OK) {
             this.newMemberData = res.data
-            this.drawMember()
+            // this.drawMember()
+            cb && cb()
           } else {
             this.$refs.toast.show(res.message)
           }
         })
       },
-      getTeamIncomeData(time) {
+      getTeamIncomeData(time, cb) {
         Trade.getTeamIncome({time_type: time}).then(res => {
           if (res.error === ERR_OK) {
             this.TeamIncomeData = res.data
-            this.drawMemberMoney()
+            // this.drawMemberMoney()
+            cb && cb()
           } else {
             this.$refs.toast.show(res.message)
           }
@@ -213,7 +224,7 @@
           if (res.error === ERR_OK) {
             this.incomePie = res.data.rate
             this.pieMoney = res.data.grand_total
-            this.drawPie()
+            // this.drawPie()
           } else {
             this.$refs.toast.show(res.message)
           }
@@ -223,7 +234,7 @@
         Trade.getMyBar().then(res => {
           if (res.error === ERR_OK) {
             this.incomeBar = res.data
-            this.drawDataBar()
+            // this.drawDataBar()
           } else {
             this.$refs.toast.show(res.message)
           }
@@ -235,11 +246,11 @@
       },
       selectNewAdd(index) {
         this.newAddIndex = index
-        this.getNewMemberData(index + 1)
+        this.getNewMemberData(index + 1, this.drawMember)
       },
       selectTeamIncome(index) {
         this.teamIncomeIndex = index
-        this.getTeamIncomeData(index + 1)
+        this.getTeamIncomeData(index + 1, this.drawMemberMoney)
       },
       drawLine() {
         let myChart = this.$echarts.init(document.getElementById('myLine'))
