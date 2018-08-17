@@ -53,8 +53,8 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import { ERR_OK } from 'common/js/config'
-  import { Trade } from 'api'
+  import {ERR_OK} from 'common/js/config'
+  import {Trade} from 'api'
   import Toast from 'components/toast/toast'
 
   export default {
@@ -132,6 +132,7 @@
           grid: {
             left: '3%',
             right: '4%',
+            bottom: '5%',
             containLabel: true
           },
           xAxis: {
@@ -141,15 +142,24 @@
             splitLine: {
               show: true,
               lineStyle: {
-                color: '#E6E6E6'
+                color: '#E6E6E6',
+                width: 0.5
               }
             },
             axisLabel: {
-              color: '#343439'
+              color: '#343439',
+              align: 'right'
+            },
+            axisTick: {
+              lineStyle: {
+                color: '#c4c4c4',
+                width: 0.5
+              }
             },
             axisLine: {
               lineStyle: {
-                color: '#c4c4c4'
+                color: '#c4c4c4',
+                width: 0.5
               }
             }
           },
@@ -166,28 +176,54 @@
             splitLine: {
               show: true,
               lineStyle: {
-                color: '#E6E6E6'
+                color: '#E6E6E6',
+                width: 0.5
+              }
+            },
+            axisTick: {
+              lineStyle: {
+                color: '#c4c4c4',
+                width: 0.5
               }
             },
             axisLabel: {
+              formatter: '{value}',
               color: '#343439'
             },
             axisLine: {
               lineStyle: {
-                color: '#c4c4c4'
+                color: '#c4c4c4',
+                width: 0.5
               }
             }
           },
           series: [{
             data: this.incomeData.y,
             type: 'line',
+            smooth: true,
             showSymbol: false,
+            smoothMonotone: 'x',
+            areaStyle: {
+              color: {
+                type: 'linear',
+                x: 0,
+                x2: 0,
+                y: 0,
+                y2: 1,
+                colorStops: [{
+                  offset: 0, color: 'rgba(197,169,112,0.55)'
+                }, {
+                  offset: 1, color: 'rgba(197,169,112,0.05)'
+                }],
+                globalCoord: false
+              }
+            },
             itemStyle: {
               normal: {
-                color: '#C5A970',
+                color: 'rgba(197,169,112,0.55)',
                 borderWidth: 2,
                 lineStyle: {
-                  color: '#C5A970',
+                  color: 'rgba(197,169,112,0.55)',
                   width: 3
                 }
               }
@@ -202,6 +238,7 @@
           grid: {
             left: '3%',
             right: '4%',
+            bottom: '5%',
             containLabel: true
           },
           xAxis: {
@@ -211,15 +248,24 @@
             splitLine: {
               show: true,
               lineStyle: {
-                color: '#E6E6E6'
+                color: '#E6E6E6',
+                width: 0.5
               }
             },
             axisLabel: {
-              color: '#343439'
+              color: '#343439',
+              align: 'right'
+            },
+            axisTick: {
+              lineStyle: {
+                color: '#c4c4c4',
+                width: 0.5
+              }
             },
             axisLine: {
               lineStyle: {
-                color: '#c4c4c4'
+                color: '#c4c4c4',
+                width: 0.5
               }
             }
           },
@@ -236,28 +282,54 @@
             splitLine: {
               show: true,
               lineStyle: {
-                color: '#E6E6E6'
+                color: '#E6E6E6',
+                width: 0.5
+              }
+            },
+            axisTick: {
+              lineStyle: {
+                color: '#c4c4c4',
+                width: 0.5
               }
             },
             axisLabel: {
+              formatter: '{value}',
               color: '#343439'
             },
             axisLine: {
               lineStyle: {
-                color: '#c4c4c4'
+                color: '#c4c4c4',
+                width: 0.5
               }
             }
           },
           series: [{
             data: this.accountData.y,
             type: 'line',
+            smooth: true,
             showSymbol: false,
+            smoothMonotone: 'x',
+            areaStyle: {
+              color: {
+                type: 'linear',
+                x: 0,
+                x2: 0,
+                y: 0,
+                y2: 1,
+                colorStops: [{
+                  offset: 0, color: 'rgba(197,169,112,0.55)'
+                }, {
+                  offset: 1, color: 'rgba(197,169,112,0.05)'
+                }],
+                globalCoord: false
+              }
+            },
             itemStyle: {
               normal: {
-                color: '#C5A970',
+                color: 'rgba(197,169,112,0.55)',
                 borderWidth: 2,
                 lineStyle: {
-                  color: '#C5A970',
+                  color: 'rgba(197,169,112,0.55)',
                   width: 3
                 }
               }
@@ -375,13 +447,13 @@
       border: 0px solid #e4e4e4
       color: $color-C3A66C
       background $color-343439
-      border-1px(rgba(0,0,0,0))
+      border-1px(rgba(0, 0, 0, 0))
 
   .pie-box
     background: $color-FFFFFF !important
     position: relative
     background: linear-gradient(rgba(255, 255, 255, .1) 0%, #fff 100%)
-    height: 305px
+    height: 325px
     border-bottom: 10px solid #eee
     #myPie
       width: 100%
@@ -392,14 +464,14 @@
       width: 100%
       height: 320px
       margin: 0 auto
-      padding: 0px 10px 0
+      padding: 0px 20px 0
       box-sizing: border-box
       top: -15px
     #myTwoLine
       width: 100%
       height: 320px
       margin: 0 auto
-      padding: 0px 10px 0
+      padding: 0px 20px 0
       box-sizing: border-box
       top: -15px
     #myAddLine
