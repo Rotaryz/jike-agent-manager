@@ -5,6 +5,7 @@
         ref="scroll"
         :listenScroll="listenScroll"
         :probeType="probeType"
+        bcColor="#fff"
         @scroll="scroll">
         <div class="trade-bg"></div>
         <div class="trade-top">
