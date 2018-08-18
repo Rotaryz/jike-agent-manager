@@ -5,7 +5,7 @@
       <div class="explain">累计收入/元</div>
       <ul class="data-wrapper">
         <li class="data-item">
-          <div class="top">{{incomeInfo?incomeInfo.yesterday_income:0}}</div>
+          <div class="top">{{incomeInfo?incomeInfo.today_income:0}}</div>
           <div class="bottom">本日收入/元</div>
         </li>
         <li class="data-item">
