@@ -14,14 +14,14 @@
           <div class="arrow-right"></div>
         </div>
       </label>
-      <!--<router-link class="item-wrapper border-bottom-1px" to="/change-project">-->
-        <!--<div class="left">当前项目</div>-->
-        <!--<div class="middle"></div>-->
-        <!--<div class="right project-right">-->
-          <!--<div>{{projectName}}(切换)</div>-->
-          <!--<div class="arrow-right"></div>-->
-        <!--</div>-->
-      <!--</router-link>-->
+      <router-link class="item-wrapper border-bottom-1px" to="/change-project">
+        <div class="left">当前项目</div>
+        <div class="middle"></div>
+        <div class="right project-right">
+          <div>{{projectName}}(切换)</div>
+          <div class="arrow-right"></div>
+        </div>
+      </router-link>
       <div class="item-wrapper border-bottom-1px">
         <div class="left">当前项目</div>
         <div class="middle"></div>
