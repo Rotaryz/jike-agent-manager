@@ -47,6 +47,7 @@
     fill-box(fixed)
     background: $color-mask-bg
     transition: all 0.3s
+    z-index: 99
     .content-wrapper
       width: 300px
       margin: 174px auto

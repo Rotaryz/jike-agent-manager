@@ -1,5 +1,5 @@
 <template>
-  <div class="weui_loading_toast" style="display: block;" id="loading" v-if="isShow">
+  <div class="weui_loading_toast" style="display: block;" id="loading" v-show="isShow">
     <div class="weui_mask_transparent"></div>
     <div class="weui_toast">
       <div class="weui_loading">
@@ -80,7 +80,7 @@
   .weui_loading {
     position: absolute;
     width: 0px;
-    z-index: 2000000000;
+    z-index: 999
     left: 50%;
     top: 38%;
   }

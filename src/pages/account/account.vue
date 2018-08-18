@@ -189,7 +189,7 @@
             this.$refs.cropper.replace(event.target.result)
             this.visible = true
           }
-          reader.readAsDataURL(file)
+          file && reader.readAsDataURL(file)
         }
       },
       _getBlobBydataURI(dataURI, type) {
