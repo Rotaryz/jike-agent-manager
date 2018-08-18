@@ -30,7 +30,7 @@
     },
     created() {
       console.log(process.env)
-      this._checkAuthorize()
+      // this._checkAuthorize()
     },
     methods: {
       _checkAuthorize() {
@@ -43,7 +43,6 @@
         if (to.path === HOME_ROUTE || to.path === DEFAULT_ROUTE) {
           this.routerArr = []
           this.entryAnimation = 'out'
-          window.history.pushState(null, null)
           return true
         }
         return false

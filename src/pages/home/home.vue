@@ -136,7 +136,7 @@
       }
     },
     created() {
-      if (!this.hasToken) return
+      if (!storage.has('token')) return
       this.tabIndex = this.homeTabIdx
       this._getProject()
       this._getHomeInfo()
@@ -283,10 +283,7 @@
       }
     },
     computed: {
-      ...mapGetters(['homeTabIdx']),
-      hasToken() {
-        return storage.has('token')
-      }
+      ...mapGetters(['homeTabIdx'])
     }
   }
 </script>
