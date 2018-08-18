@@ -5,24 +5,24 @@
       <div class="title">代理商管理系统</div>
     </header>
     <form action="" class="content">
-      <section class="input-wrapper mobile">
+      <section class="input-wrapper mobile border-bottom-1px">
         <div class="option">手机号</div>
         <input class="input" type="number" placeholder="请输入手机号码" maxlength="11" v-model="phoneNumber">
         <div class="get-code" v-if="allowGetCode" @click="getCode">获取验证码</div>
         <div class="get-code coding" v-else>重新获取{{codeSeconds}}s</div>
       </section>
-      <section class="input-wrapper">
+      <section class="input-wrapper border-bottom-1px">
         <div class="option">验证码</div>
         <input class="input" type="number" placeholder="请输入验证码" maxlength="11" v-model="authCode">
       </section>
-      <section class="input-wrapper more" @click="showSelect">
+      <section class="input-wrapper more border-bottom-1px" @click="showSelect">
         <div class="option">{{project[selectIndex].name}}</div>
         <div class="icon-more"></div>
       </section>
       <div class="btn-login" @click="login">
         <span>登录</span>
         <ul class="more-wrapper" :class="isShowSelect?'show':''">
-          <li class="more-item" v-for="(item,index) in project" :key="index" @click.stop="changeProject(index)">
+          <li class="more-item border-bottom-1px" v-for="(item,index) in project" :key="index" @click.stop="changeProject(index)">
             <div>{{item.name}}</div>
             <div class="icon" :class="selectIndex===index?'active':''"></div>
           </li>
@@ -116,7 +116,7 @@
         this._checkProject(index)
       },
       showSelect() {
-        // this.isShowSelect = !this.isShowSelect todo
+        // this.isShowSelect = !this.isShowSelect // todo
       },
       _check() {
         if (!utils.checkIsPhoneNumber(this.phoneNumber)) {
@@ -192,18 +192,17 @@
         align-items: center
         margin-bottom: 19.4px
         height: 41px
-        border-bottom: 0.5px solid $color-E4E4E4
         &:last-child
           margin-bottom: 0
         &.mobile
           .get-code
+            font-family: $font-family-light
             padding: 5.5px 5px
             font-size: $font-size-12
             color: $color-C3A66C
-            border-radius: 31px
-            border: 0.5px solid $color-C3A66C
+            border-1px($color-C3A66C, 31px)
             &.coding
-              border-color: $color-C1C3C3
+              border-1px($color-C1C3C3, 31px)
               color: $color-C1C3C3
         &.more
           justify-content: space-between
@@ -244,7 +243,7 @@
         position: relative
         .more-wrapper
           position: absolute
-          top: -47px
+          top: -90px
           left: 0
           right: 0
           background: $color-FFFFFF
@@ -257,9 +256,9 @@
           overflow: hidden
           opacity: 0
           transition: all 0.3s
+          border-1px($color-col-line)
           &.show
             height: 120px
-            border: 0.5px solid $color-E4E4E4
             opacity: 1
           .more-item
             height: 59px
@@ -267,16 +266,17 @@
             align-items: center
             justify-content: space-between
             padding: 0 15px
-            border-bottom: 0.5px solid $color-E4E4E4
             &:last-child
-              border: none
+              border-none()
             .icon
               width: 20px
               height: 20px
               border-radius: 50%
               border: 0.5px solid $color-C3A66C
+              box-sizing: border-box
               &.active
                 icon-image(icon-select_recommender)
+                border: none
     .footer
       font-family: $font-family-regular
       font-size: $font-size-12
