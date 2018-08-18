@@ -187,9 +187,10 @@
         console.log(e)
       },
       confirmLevel(e) {
+        console.log(e)
         this.levelName = e[0].value
         let index = e[0].index * 1
-        this.level = index + 1
+        this.level = this.selectList[index].level
         this.levelMoney = this.selectList[index].agent_price
       },
       selcetAddress() {
@@ -477,6 +478,7 @@
     background: $color-FFFFFF
     width: 100%
     left: 0
+    z-index: 199
     padding: 10px 15px
     .btn
       color: $color-FFFFFF
@@ -495,7 +497,7 @@
     height: 100%
     left: 0
     top: 0
-    z-index: 22
+    z-index: 211
     .show-bg
       position: absolute
       width: 100%

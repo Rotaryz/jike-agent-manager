@@ -282,6 +282,8 @@
       align-items: center
       .item-one
         width: 46%
+        height: 60px
+        line-height: 60px
         padding-right: 15px
         no-wrap()
         font-size: $font-size-14
