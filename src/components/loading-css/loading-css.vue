@@ -1,20 +1,11 @@
 <template>
-  <div class="weui_loading_toast" style="display: block;" id="loading" v-show="isShow">
+  <div class="weui_loading_toast" style="display: block" id="loading" v-show="isShow">
     <div class="weui_mask_transparent"></div>
     <div class="weui_toast">
-      <div class="weui_loading">
-        <div class="weui_loading_leaf weui_loading_leaf_0"></div>
-        <div class="weui_loading_leaf weui_loading_leaf_1"></div>
-        <div class="weui_loading_leaf weui_loading_leaf_2"></div>
-        <div class="weui_loading_leaf weui_loading_leaf_3"></div>
-        <div class="weui_loading_leaf weui_loading_leaf_4"></div>
-        <div class="weui_loading_leaf weui_loading_leaf_5"></div>
-        <div class="weui_loading_leaf weui_loading_leaf_6"></div>
-        <div class="weui_loading_leaf weui_loading_leaf_7"></div>
-        <div class="weui_loading_leaf weui_loading_leaf_8"></div>
-        <div class="weui_loading_leaf weui_loading_leaf_9"></div>
-        <div class="weui_loading_leaf weui_loading_leaf_10"></div>
-        <div class="weui_loading_leaf weui_loading_leaf_11"></div>
+      <div class="weui-loading-box">
+        <div class="wrapper">
+          <div class="weui-loading"></div>
+        </div>
       </div>
       <p class="weui_toast_content">{{content}}</p>
     </div>
@@ -25,13 +16,18 @@
   export default {
     data() {
       return {
-        content: '加载中',
+        content: '数据加载中',
         isShow: false
       }
     },
     methods: {
-      show() {
-        this.isShow = true
+      show(content) {
+        if (content) {
+          this.content = content
+        }
+        if (!this.isShow) {
+          this.isShow = true
+        }
       },
       hide() {
         this.isShow = false
@@ -41,414 +37,77 @@
 </script>
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
-  .weui_mask_transparent {
-    position: fixed;
-    z-index: 1001;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-  }
 
-  .weui_loading_toast .weui_toast {
-    width: 7.6rem;
-    min-height: 7.6rem;
-  }
+  .weui_mask_transparent
+    position: fixed
+    z-index: 1001
+    width: 100%
+    height: 100%
+    top: 0
+    left: 0
 
-  .weui_toast {
-    position: fixed;
-    z-index: 1003;
-    top: 180px;
-    left: 50%;
-    -webkit-transform: translateX(-50%);
-    transform: translateX(-50%);
-    background: rgba(40, 40, 40, 0.75);
-    text-align: center;
-    border-radius: 5px;
-    color: #FFFFFF;
-  }
+  .weui_loading_toast .weui_toast
+    width: 7.6rem
+    min-height: 7.6rem
 
-  .weui_toast_content {
-    margin: 15px 0;
-  }
+  .weui_toast
+    position: fixed
+    z-index: 1003
+    top: 180px
+    left: 50%
+    -webkit-transform: translateX(-50%)
+    transform: translateX(-50%)
+    background: rgba(40, 40, 40, 0.75)
+    text-align: center
+    border-radius: 5px
+    color: #FFFFFF
 
-  .weui_loading_toast .weui_toast_content {
-    margin-top: 64%;
-    font-size: 14px;
-  }
+  .weui_toast_content
+    margin: 15px 0
 
-  .weui_loading {
-    position: absolute;
-    width: 0px;
-    z-index: 999
-    left: 50%;
-    top: 38%;
-  }
+  .weui_loading_toast .weui_toast_content
+    margin-top: 64%
+    font-size: 14px
 
-  .weui_loading_leaf {
-    position: absolute;
-    top: -1px;
-    opacity: 0.25;
-  }
+  .weui_loading
+    position: absolute
+    width: 0px
+    z-index: 9999
+    left: 50%
+    top: 38%
 
-  .weui_loading_leaf:before {
-    content: " ";
-    position: absolute;
-    width: 8.14px;
-    height: 2.08px;
-    background: #d1d1d5;
-    box-shadow: rgba(0, 0, 0, 0.0980392) 0px 0px 1px;
-    border-radius: 1px;
-    -webkit-transform-origin: left 50% 0px;
-    -ms-transform-origin: left 50% 0px;
-    transform-origin: left 50% 0px;
-  }
+  .wrapper
+    position: absolute
+    top: 28px
+    left: 0
+    right: 0
+    bottom: 0
 
-  .weui_loading_leaf_0 {
-    -webkit-animation: opacity-60-25-0-12 1.25s linear infinite;
-    animation: opacity-60-25-0-12 1.25s linear infinite;
-  }
+  .weui-loading
+    width: 38px
+    height: 38px
+    display: inline-block
+    vertical-align: middle
+    animation: weuiLoading 1s steps(12, end) infinite
+    background: transparent url("data:image/svg+xml;charset=utf8, %3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 100 100'%3E%3Cpath fill='none' d='M0 0h100v100H0z'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='%23E9E9E9' rx='5' ry='5' transform='translate(0 -30)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='%23989697' rx='5' ry='5' transform='rotate(30 105.98 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='%239B999A' rx='5' ry='5' transform='rotate(60 75.98 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='%23A3A1A2' rx='5' ry='5' transform='rotate(90 65 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='%23ABA9AA' rx='5' ry='5' transform='rotate(120 58.66 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='%23B2B2B2' rx='5' ry='5' transform='rotate(150 54.02 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='%23BAB8B9' rx='5' ry='5' transform='rotate(180 50 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='%23C2C0C1' rx='5' ry='5' transform='rotate(-150 45.98 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='%23CBCBCB' rx='5' ry='5' transform='rotate(-120 41.34 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='%23D2D2D2' rx='5' ry='5' transform='rotate(-90 35 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='%23DADADA' rx='5' ry='5' transform='rotate(-60 24.02 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='%23E2E2E2' rx='5' ry='5' transform='rotate(-30 -5.98 65)'/%3E%3C/svg%3E") no-repeat
+    background-size: 100%
 
-  .weui_loading_leaf_0:before {
-    -webkit-transform: rotate(0deg) translate(7.92px, 0px);
-    -ms-transform: rotate(0deg) translate(7.92px, 0px);
-    transform: rotate(0deg) translate(7.92px, 0px);
-  }
+    &.weui-loading_transparent,
+    .weui-btn_loading.weui-btn_primary &,
+    .weui-btn_loading.weui-btn_warn &
+      background-image: url("data:image/svg+xml;charset=utf8, %3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 100 100'%3E%3Cpath fill='none' d='M0 0h100v100H0z'/%3E%3Crect xmlns='http://www.w3.org/2000/svg' width='7' height='20' x='46.5' y='40' fill='rgba(255,255,255,.56)' rx='5' ry='5' transform='translate(0 -30)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='rgba(255,255,255,.5)' rx='5' ry='5' transform='rotate(30 105.98 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='rgba(255,255,255,.43)' rx='5' ry='5' transform='rotate(60 75.98 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='rgba(255,255,255,.38)' rx='5' ry='5' transform='rotate(90 65 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='rgba(255,255,255,.32)' rx='5' ry='5' transform='rotate(120 58.66 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='rgba(255,255,255,.28)' rx='5' ry='5' transform='rotate(150 54.02 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='rgba(255,255,255,.25)' rx='5' ry='5' transform='rotate(180 50 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='rgba(255,255,255,.2)' rx='5' ry='5' transform='rotate(-150 45.98 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='rgba(255,255,255,.17)' rx='5' ry='5' transform='rotate(-120 41.34 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='rgba(255,255,255,.14)' rx='5' ry='5' transform='rotate(-90 35 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='rgba(255,255,255,.1)' rx='5' ry='5' transform='rotate(-60 24.02 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='rgba(255,255,255,.03)' rx='5' ry='5' transform='rotate(-30 -5.98 65)'/%3E%3C/svg%3E")
 
-  .weui_loading_leaf_1 {
-    -webkit-animation: opacity-60-25-1-12 1.25s linear infinite;
-    animation: opacity-60-25-1-12 1.25s linear infinite;
-  }
+  @-webkit-keyframes weuiLoading
+    0%
+      transform: rotate3d(0, 0, 1, 0deg)
 
-  .weui_loading_leaf_1:before {
-    -webkit-transform: rotate(30deg) translate(7.92px, 0px);
-    -ms-transform: rotate(30deg) translate(7.92px, 0px);
-    transform: rotate(30deg) translate(7.92px, 0px);
-  }
+    100%
+      transform: rotate3d(0, 0, 1, 360deg)
 
-  .weui_loading_leaf_2 {
-    -webkit-animation: opacity-60-25-2-12 1.25s linear infinite;
-    animation: opacity-60-25-2-12 1.25s linear infinite;
-  }
+  @keyframes weuiLoading
+    0%
+      transform: rotate3d(0, 0, 1, 0deg)
 
-  .weui_loading_leaf_2:before {
-    -webkit-transform: rotate(60deg) translate(7.92px, 0px);
-    -ms-transform: rotate(60deg) translate(7.92px, 0px);
-    transform: rotate(60deg) translate(7.92px, 0px);
-  }
-
-  .weui_loading_leaf_3 {
-    -webkit-animation: opacity-60-25-3-12 1.25s linear infinite;
-    animation: opacity-60-25-3-12 1.25s linear infinite;
-  }
-
-  .weui_loading_leaf_3:before {
-    -webkit-transform: rotate(90deg) translate(7.92px, 0px);
-    -ms-transform: rotate(90deg) translate(7.92px, 0px);
-    transform: rotate(90deg) translate(7.92px, 0px);
-  }
-
-  .weui_loading_leaf_4 {
-    -webkit-animation: opacity-60-25-4-12 1.25s linear infinite;
-    animation: opacity-60-25-4-12 1.25s linear infinite;
-  }
-
-  .weui_loading_leaf_4:before {
-    -webkit-transform: rotate(120deg) translate(7.92px, 0px);
-    -ms-transform: rotate(120deg) translate(7.92px, 0px);
-    transform: rotate(120deg) translate(7.92px, 0px);
-  }
-
-  .weui_loading_leaf_5 {
-    -webkit-animation: opacity-60-25-5-12 1.25s linear infinite;
-    animation: opacity-60-25-5-12 1.25s linear infinite;
-  }
-
-  .weui_loading_leaf_5:before {
-    -webkit-transform: rotate(150deg) translate(7.92px, 0px);
-    -ms-transform: rotate(150deg) translate(7.92px, 0px);
-    transform: rotate(150deg) translate(7.92px, 0px);
-  }
-
-  .weui_loading_leaf_6 {
-    -webkit-animation: opacity-60-25-6-12 1.25s linear infinite;
-    animation: opacity-60-25-6-12 1.25s linear infinite;
-  }
-
-  .weui_loading_leaf_6:before {
-    -webkit-transform: rotate(180deg) translate(7.92px, 0px);
-    -ms-transform: rotate(180deg) translate(7.92px, 0px);
-    transform: rotate(180deg) translate(7.92px, 0px);
-  }
-
-  .weui_loading_leaf_7 {
-    -webkit-animation: opacity-60-25-7-12 1.25s linear infinite;
-    animation: opacity-60-25-7-12 1.25s linear infinite;
-  }
-
-  .weui_loading_leaf_7:before {
-    -webkit-transform: rotate(210deg) translate(7.92px, 0px);
-    -ms-transform: rotate(210deg) translate(7.92px, 0px);
-    transform: rotate(210deg) translate(7.92px, 0px);
-  }
-
-  .weui_loading_leaf_8 {
-    -webkit-animation: opacity-60-25-8-12 1.25s linear infinite;
-    animation: opacity-60-25-8-12 1.25s linear infinite;
-  }
-
-  .weui_loading_leaf_8:before {
-    -webkit-transform: rotate(240deg) translate(7.92px, 0px);
-    -ms-transform: rotate(240deg) translate(7.92px, 0px);
-    transform: rotate(240deg) translate(7.92px, 0px);
-  }
-
-  .weui_loading_leaf_9 {
-    -webkit-animation: opacity-60-25-9-12 1.25s linear infinite;
-    animation: opacity-60-25-9-12 1.25s linear infinite;
-  }
-
-  .weui_loading_leaf_9:before {
-    -webkit-transform: rotate(270deg) translate(7.92px, 0px);
-    -ms-transform: rotate(270deg) translate(7.92px, 0px);
-    transform: rotate(270deg) translate(7.92px, 0px);
-  }
-
-  .weui_loading_leaf_10 {
-    -webkit-animation: opacity-60-25-10-12 1.25s linear infinite;
-    animation: opacity-60-25-10-12 1.25s linear infinite;
-  }
-
-  .weui_loading_leaf_10:before {
-    -webkit-transform: rotate(300deg) translate(7.92px, 0px);
-    -ms-transform: rotate(300deg) translate(7.92px, 0px);
-    transform: rotate(300deg) translate(7.92px, 0px);
-  }
-
-  .weui_loading_leaf_11 {
-    -webkit-animation: opacity-60-25-11-12 1.25s linear infinite;
-    animation: opacity-60-25-11-12 1.25s linear infinite;
-  }
-
-  .weui_loading_leaf_11:before {
-    -webkit-transform: rotate(330deg) translate(7.92px, 0px);
-    -ms-transform: rotate(330deg) translate(7.92px, 0px);
-    transform: rotate(330deg) translate(7.92px, 0px);
-  }
-
-  @-webkit-keyframes opacity-60-25-0-12 {
-    0% {
-      opacity: 0.25;
-    }
-    0.01% {
-      opacity: 0.25;
-    }
-    0.02% {
-      opacity: 1;
-    }
-    60.01% {
-      opacity: 0.25;
-    }
-    100% {
-      opacity: 0.25;
-    }
-  }
-
-  @-webkit-keyframes opacity-60-25-1-12 {
-    0% {
-      opacity: 0.25;
-    }
-    8.34333% {
-      opacity: 0.25;
-    }
-    8.35333% {
-      opacity: 1;
-    }
-    68.3433% {
-      opacity: 0.25;
-    }
-    100% {
-      opacity: 0.25;
-    }
-  }
-
-  @-webkit-keyframes opacity-60-25-2-12 {
-    0% {
-      opacity: 0.25;
-    }
-    16.6767% {
-      opacity: 0.25;
-    }
-    16.6867% {
-      opacity: 1;
-    }
-    76.6767% {
-      opacity: 0.25;
-    }
-    100% {
-      opacity: 0.25;
-    }
-  }
-
-  @-webkit-keyframes opacity-60-25-3-12 {
-    0% {
-      opacity: 0.25;
-    }
-    25.01% {
-      opacity: 0.25;
-    }
-    25.02% {
-      opacity: 1;
-    }
-    85.01% {
-      opacity: 0.25;
-    }
-    100% {
-      opacity: 0.25;
-    }
-  }
-
-  @-webkit-keyframes opacity-60-25-4-12 {
-    0% {
-      opacity: 0.25;
-    }
-    33.3433% {
-      opacity: 0.25;
-    }
-    33.3533% {
-      opacity: 1;
-    }
-    93.3433% {
-      opacity: 0.25;
-    }
-    100% {
-      opacity: 0.25;
-    }
-  }
-
-  @-webkit-keyframes opacity-60-25-5-12 {
-    0% {
-      opacity: 0.270958333333333;
-    }
-    41.6767% {
-      opacity: 0.25;
-    }
-    41.6867% {
-      opacity: 1;
-    }
-    1.67667% {
-      opacity: 0.25;
-    }
-    100% {
-      opacity: 0.270958333333333;
-    }
-  }
-
-  @-webkit-keyframes opacity-60-25-6-12 {
-    0% {
-      opacity: 0.375125;
-    }
-    50.01% {
-      opacity: 0.25;
-    }
-    50.02% {
-      opacity: 1;
-    }
-    10.01% {
-      opacity: 0.25;
-    }
-    100% {
-      opacity: 0.375125;
-    }
-  }
-
-  @-webkit-keyframes opacity-60-25-7-12 {
-    0% {
-      opacity: 0.479291666666667;
-    }
-    58.3433% {
-      opacity: 0.25;
-    }
-    58.3533% {
-      opacity: 1;
-    }
-    18.3433% {
-      opacity: 0.25;
-    }
-    100% {
-      opacity: 0.479291666666667;
-    }
-  }
-
-  @-webkit-keyframes opacity-60-25-8-12 {
-    0% {
-      opacity: 0.583458333333333;
-    }
-    66.6767% {
-      opacity: 0.25;
-    }
-    66.6867% {
-      opacity: 1;
-    }
-    26.6767% {
-      opacity: 0.25;
-    }
-    100% {
-      opacity: 0.583458333333333;
-    }
-  }
-
-  @-webkit-keyframes opacity-60-25-9-12 {
-    0% {
-      opacity: 0.687625;
-    }
-    75.01% {
-      opacity: 0.25;
-    }
-    75.02% {
-      opacity: 1;
-    }
-    35.01% {
-      opacity: 0.25;
-    }
-    100% {
-      opacity: 0.687625;
-    }
-  }
-
-  @-webkit-keyframes opacity-60-25-10-12 {
-    0% {
-      opacity: 0.791791666666667;
-    }
-    83.3433% {
-      opacity: 0.25;
-    }
-    83.3533% {
-      opacity: 1;
-    }
-    43.3433% {
-      opacity: 0.25;
-    }
-    100% {
-      opacity: 0.791791666666667;
-    }
-  }
-
-  @-webkit-keyframes opacity-60-25-11-12 {
-    0% {
-      opacity: 0.895958333333333;
-    }
-    91.6767% {
-      opacity: 0.25;
-    }
-    91.6867% {
-      opacity: 1;
-    }
-    51.6767% {
-      opacity: 0.25;
-    }
-    100% {
-      opacity: 0.895958333333333;
-    }
-  }
+    100%
+      transform: rotate3d(0, 0, 1, 360deg)
 </style>
