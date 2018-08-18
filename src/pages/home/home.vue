@@ -32,7 +32,7 @@
           <div class="bottom">今日收入/元</div>
         </li>
         <li class="data-item">
-          <div class="top zt">{{userInfo?userInfo.sale_count:0}}</div>
+          <div class="top zt">{{userInfo?userInfo.account_sale:0}}</div>
           <div class="bottom">今日销量/个</div>
         </li>
       </ul>

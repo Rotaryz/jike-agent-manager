@@ -31,6 +31,7 @@
     </form>
     <footer class="footer">商机 · 智能 · 裂变 · 创业</footer>
     <toast ref="toast"></toast>
+    <loading ref="loader"></loading>
   </div>
 </template>
 
@@ -42,12 +43,14 @@
   import { Jwt } from 'api'
   import { ERR_OK } from 'common/js/config'
   import { mapActions } from 'vuex'
+  import Loading from 'components/loading-css/loading-css'
 
   const project = PROJECT_ARR
   export default {
     name: 'Login',
     components: {
-      Toast
+      Toast,
+      Loading
     },
     data() {
       return {
@@ -81,8 +84,10 @@
         this.allowLogin = false
         if (!this._check()) return
         this.updateHomeTab(0)
+        this.$refs.loader.show()
         Jwt.login(this.phoneNumber, this.authCode).then(res => {
           this.allowLogin = true
+          this.$refs.loader.hide()
           if (res.error !== ERR_OK) {
             this.$refs.toast.show(res.message)
             return

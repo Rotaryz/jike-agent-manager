@@ -22,14 +22,14 @@
           <div class="arrow-right"></div>
         </div>
       </router-link>
-      <div class="item-wrapper border-bottom-1px">
-        <div class="left">当前项目</div>
-        <div class="middle"></div>
-        <div class="right project-right">
-          <div>{{projectName}}(切换)</div>
-          <div class="arrow-right"></div>
-        </div>
-      </div>
+      <!--<div class="item-wrapper border-bottom-1px">-->
+        <!--<div class="left">当前项目</div>-->
+        <!--<div class="middle"></div>-->
+        <!--<div class="right project-right">-->
+          <!--<div>{{projectName}}(切换)</div>-->
+          <!--<div class="arrow-right"></div>-->
+        <!--</div>-->
+      <!--</div>-->
       <div class="item-wrapper border-bottom-1px">
         <div class="left">代理商名称</div>
         <div class="middle"></div>
@@ -80,6 +80,7 @@
     </section>
     <toast ref="toast"></toast>
     <confirm-msg ref="confirmMsg" @confirm="confirm"></confirm-msg>
+    <loading ref="loader"></loading>
   </div>
 </template>
 
@@ -92,13 +93,15 @@
   import storage from 'storage-controller'
   import { PROJECT_ARR } from 'common/js/constant'
   import { mapActions } from 'vuex'
+  import Loading from 'components/loading-css/loading-css'
 
   export default {
     name: 'Account',
     components: {
       Toast,
       ConfirmMsg,
-      VueCropper
+      VueCropper,
+      Loading
     },
     data() {
       return {
@@ -151,7 +154,8 @@
         window.location.href = `tel:'${this.phoneNumber}`
       },
       cropImage() {
-        this.loading = true
+        // this.loading = true
+        this.$refs.loader.show()
         let src = this.$refs.cropper.getCroppedCanvas().toDataURL()
         let $Blob = this._getBlobBydataURI(src, 'image/png')
         let formData = new FormData()
@@ -164,12 +168,14 @@
               }
               this.$refs.toast.show('上传成功')
               this.avatarUrl = src
-              this.loading = false
+              // this.loading = false
+              this.$refs.loader.hide()
               this.visible = false
             })
             return false
           }
-          this.loading = false
+          this.$refs.loader.hide()
+          // this.loading = false
           this.visible = false
           this.$refs.toast.show(res.message)
         })
