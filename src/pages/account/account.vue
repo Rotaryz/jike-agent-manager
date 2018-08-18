@@ -14,22 +14,22 @@
           <div class="arrow-right"></div>
         </div>
       </label>
-      <router-link class="item-wrapper border-bottom-1px" to="/change-project">
-        <div class="left">当前项目</div>
-        <div class="middle"></div>
-        <div class="right project-right">
-          <div>{{projectName}}(切换)</div>
-          <div class="arrow-right"></div>
-        </div>
-      </router-link>
-      <!--<div class="item-wrapper border-bottom-1px">-->
+      <!--<router-link class="item-wrapper border-bottom-1px" to="/change-project">-->
         <!--<div class="left">当前项目</div>-->
         <!--<div class="middle"></div>-->
         <!--<div class="right project-right">-->
           <!--<div>{{projectName}}(切换)</div>-->
           <!--<div class="arrow-right"></div>-->
         <!--</div>-->
-      <!--</div>-->
+      <!--</router-link>-->
+      <div class="item-wrapper border-bottom-1px">
+        <div class="left">当前项目</div>
+        <div class="middle"></div>
+        <div class="right project-right">
+          <div>{{projectName}}(切换)</div>
+          <div class="arrow-right"></div>
+        </div>
+      </div>
       <div class="item-wrapper border-bottom-1px">
         <div class="left">代理商名称</div>
         <div class="middle"></div>
