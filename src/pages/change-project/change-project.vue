@@ -2,7 +2,7 @@
   <div class="change-project">
     <div class="f3"></div>
     <ul class="info-wrapper" v-if="projectList.length">
-      <li class="item-wrapper border-bottom-1px" @click="selectProject(index)" v-for="(item,index) in projectList" :key="index">
+      <li class="item-wrapper border-bottom-1px" @click="selectProject(item)" v-for="(item,index) in projectList" :key="index">
         <div class="left" v-if="item.image_url">
           <img class="logo-img" :src="item.image_url" alt="">
         </div>
@@ -14,7 +14,7 @@
         </div>
         <div class="right">
           <div class="arrow-right" v-if="isFromLogin"></div>
-          <div class="select" v-else :class="selectTab===index?'active':''"></div>
+          <div class="select" v-else :class="selectTab===(item.application - 1)?'active':''"></div>
         </div>
       </li>
     </ul>
@@ -52,9 +52,9 @@
       _getParams() {
         this.isFromLogin = this.$route.query.isFromLogin
       },
-      selectProject(idx) {
-        this.selectTab = idx
-        const obj = PROJECT_ARR.find(val => val.application === idx + 1)
+      selectProject(item) {
+        this.selectTab = item.application - 1
+        const obj = PROJECT_ARR.find(val => val.application === item.application)
         storage.set('project', obj.project)
         this.$router.replace({path: '/home', query: {changeProject: true}})
       },
