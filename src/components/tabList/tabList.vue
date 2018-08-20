@@ -1,6 +1,6 @@
 <template>
   <transition name="fade">
-    <div class="tab-bg" v-show="show" @click="tabCancel">
+    <div class="tab-bg" v-show="tabShow" @click="tabCancel">
       <div class="tab-list" @click.stop>
         <h3 class="title">行业类型</h3>
         <div class="tab">
@@ -25,13 +25,13 @@
 <script type="text/ecmascript-6">
   export default {
     props: [
-      'tabLeftIndex', // 左边tab栏选中
-      'tabRightIndex', // 右边tab栏选中
-      'industryList',
-      'show'
+      'industryList'
     ],
     data() {
       return {
+        tabLeftIndex: 0, // 左边tab栏选中
+        tabRightIndex: 0, // 右边tab栏选中
+        tabShow: false
       }
     },
     computed: {
@@ -46,16 +46,27 @@
     },
     methods: {
       tabLeftClick(num) { // 左tab栏点击
-        this.$emit('tabLeftClick', num)
+        this.tabLeftIndex = num
+        if (!this.industryList[num].industry[this.tabRightIndex]) {
+          this.tabRightIndex = 0
+        }
       },
       tabRightClick(num) { // 右tab栏点击
-        this.$emit('tabRightClick', num)
+        this.tabRightIndex = num
       },
       tabCancel() { // 取消选择职业类型
         this.$emit('tabCancel')
+        this.tabShow = false
       },
       tabConfirm() { // 确定选择职业类型
-        this.$emit('tabConfirm')
+        this.tabShow = false
+        let tabLeftList = this.industryList[this.tabLeftIndex]
+        let tabRightList = this.industryList[this.tabLeftIndex].industry[this.tabRightIndex]
+        let data = tabLeftList.name + ' ' + tabRightList.name
+        this.$emit('tabConfirm', data)
+      },
+      show() {
+        this.tabShow = true
       }
     },
     watch: {

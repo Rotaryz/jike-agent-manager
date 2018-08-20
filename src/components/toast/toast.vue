@@ -46,4 +46,5 @@
       line-height: 16px
       font-size: 14px
       color: #FFFFFF
+      white-space: nowrap
 </style>
