@@ -13,7 +13,8 @@
           <div class="explain">{{item.description}}</div>
         </div>
         <div class="right">
-          <div class="select" :class="selectTab===index?'active':''"></div>
+          <div class="arrow-right"></div>
+          <!--<div class="select" :class="selectTab===index?'active':''"></div>-->
         </div>
       </li>
     </ul>
@@ -74,6 +75,12 @@
 <style scoped lang="stylus" rel="stylesheet/stylus">
   @import "~common/stylus/variable"
   @import '~common/stylus/mixin'
+
+  .arrow-right
+    margin-left: 5.5px
+    width: 9.4px
+    height: 9.4px
+    icon-image(icon-arrow_home)
 
   .change-project
     fill-box(fixed)

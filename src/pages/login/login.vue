@@ -15,10 +15,10 @@
         <div class="option">验证码</div>
         <input class="input" type="number" placeholder="请输入验证码" maxlength="11" v-model="authCode">
       </section>
-      <section class="input-wrapper more border-bottom-1px" @click="showSelect">
-        <div class="option">{{project[selectIndex].name}}</div>
-        <div class="icon-more"></div>
-      </section>
+      <!--<section class="input-wrapper more border-bottom-1px" @click="showSelect">-->
+        <!--<div class="option">{{project[selectIndex].name}}</div>-->
+        <!--<div class="icon-more"></div>-->
+      <!--</section>-->
       <div class="btn-login" @click="login">
         <span>登录</span>
         <ul class="more-wrapper" :class="isShowSelect?'show':''">
@@ -93,7 +93,7 @@
             return
           }
           this._saveAuthInfo(res)
-          this.$router.replace({path: '/'})
+          this.$router.push({path: '/change-project'})
         })
       },
       getCode() {
@@ -120,9 +120,9 @@
         this.selectIndex = index
         this._checkProject(index)
       },
-      showSelect() {
-        // this.isShowSelect = !this.isShowSelect // todo
-      },
+      // showSelect() {
+      //   // this.isShowSelect = !this.isShowSelect // todo
+      // },
       _check() {
         if (!utils.checkIsPhoneNumber(this.phoneNumber)) {
           this.$refs.toast.show('请输入正确的手机号码')
