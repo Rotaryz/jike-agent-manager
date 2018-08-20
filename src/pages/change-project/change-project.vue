@@ -13,8 +13,8 @@
           <div class="explain">{{item.description}}</div>
         </div>
         <div class="right">
-          <div class="arrow-right"></div>
-          <!--<div class="select" :class="selectTab===index?'active':''"></div>-->
+          <div class="arrow-right" v-if="isFromLogin"></div>
+          <div class="select" v-else :class="selectTab===index?'active':''"></div>
         </div>
       </li>
     </ul>
@@ -38,15 +38,20 @@
     data() {
       return {
         selectTab: 0,
-        projectList: []
+        projectList: [],
+        isFromLogin: false
       }
     },
     created() {
+      this._getParams()
       this._getProjectList()
       this._getProject()
     },
     methods: {
       ...mapActions(['updateHomeTab']),
+      _getParams() {
+        this.isFromLogin = this.$route.query.isFromLogin
+      },
       selectProject(idx) {
         this.selectTab = idx
         const obj = PROJECT_ARR.find(val => val.application === idx + 1)
