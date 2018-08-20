@@ -33,6 +33,7 @@
   import { ERR_OK } from 'common/js/config'
   import Toast from 'components/toast/toast'
   import EmptyData from 'components/empty-data/empty-data'
+  import { mapMutations } from 'vuex'
 
   const LIMIT = 10
 
@@ -69,6 +70,7 @@
       }
     },
     methods: {
+      ...mapMutations(['SELEC_CUSTOM']),
       _checkEmpty() {
         this.showEmpty = !this.dataArray.length
       },
@@ -78,7 +80,7 @@
             if (res.error !== ERR_OK) {
               this.$refs.toast.show(res.message)
             } else {
-              this.$store.commit('SELEC_CUSTOM', res.data)
+              this.SELEC_CUSTOM(res.data)
               this.$router.back()
             }
           })
