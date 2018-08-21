@@ -84,7 +84,7 @@
               </div>
               <div class="list">
                 <div class="icon two"></div>
-                <div class="text">加盟推荐</div>
+                <div class="text">推荐加盟</div>
               </div>
               <div class="list">
                 <div class="icon thr"></div>
@@ -518,7 +518,7 @@
               }
             },
             {
-              name: '加盟推荐',
+              name: '推荐加盟',
               type: 'bar',
               stack: '总量',
               barWidth: 24,

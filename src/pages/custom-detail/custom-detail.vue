@@ -11,15 +11,15 @@
       <div class="top-main">
         <div class="top-data">
           <div class="money">
-            <p class="count">{{ msg.total_paid }}</p>
+            <p class="count">{{ msg.total_paid || 0}}</p>
             总交易额/元
           </div>
           <div class="buy-count">
-            <p class="count">{{ msg.total_account }}</p>
+            <p class="count">{{ msg.total_account || 0}}</p>
             购买个数/个
           </div>
           <div class="open-count">
-            <p class="count">{{ msg.open_num }}</p>
+            <p class="count">{{ msg.open_num || 0}}</p>
             开通个数/个
           </div>
         </div>

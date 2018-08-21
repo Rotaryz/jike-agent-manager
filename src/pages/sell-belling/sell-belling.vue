@@ -5,12 +5,12 @@
         <div class="left">
           <div class="list border-bottom-1px">
             <p class="name">购买客户</p>
-            <input type="text" class="input" v-if="(this.$store.state.customName === '')" :class="(this.$store.state.customName !== '') && 'readonly'" :readonly="(this.$store.state.customName !== '')" v-model="form.name" placeholder="请输入客户名称">
+            <input type="text" class="input" v-if="!custom.name" :class="custom.name && 'readonly'" :readonly="custom.name" v-model="form.name" placeholder="请输入客户名称">
             <div class="readonly" v-else>{{form.name}}</div>
           </div>
           <div class="list border-bottom-1px">
             <p class="name">手机号码</p>
-            <input type="number" class="input" v-if="(this.$store.state.customMobile === '')" :class="(this.$store.state.customName !== '') && 'readonly'" :readonly="(this.$store.state.customName !== '')" v-model="mobile" placeholder="请输入手机号码">
+            <input type="number" class="input" v-if="!custom.mobile" :class="custom.mobile && 'readonly'" :readonly="custom.mobile" v-model="mobile" placeholder="请输入手机号码">
             <div class="readonly" v-else>{{form.mobile}}</div>
           </div>
         </div>
@@ -66,25 +66,20 @@
         <div class="btn" @click="submit">立即开通</div>
       </div>
     </div>
-    <div class="pop" v-if="popShow">
-      <div class="pop-main">
-        <p class="tip">确定为客户开通{{form.num}}个{{isWD?'AI微店':'AI名片'}}吗？</p>
-        <div class="confirm-btn">
-          <span class="pop-btn" @click="cancel">取消</span>
-          <span class="pop-btn right" @click="confirm">确定</span>
+    <transition name="fade">
+      <div class="pop" v-if="popShow">
+        <div class="pop-main">
+          <p class="tip">确定为客户开通{{form.num}}个{{isWD?'AI微店':'AI名片'}}吗？</p>
+          <div class="confirm-btn">
+            <span class="pop-btn" @click="cancel">取消</span>
+            <span class="pop-btn right" @click="confirm">确定</span>
+          </div>
         </div>
       </div>
-    </div>
-
-    <div class="gray-tip" v-if="grayTip">恭喜您，已成功开单了~</div>
-
+    </transition>
     <tab-list
-      :show="tabShow"
-      :tabLeftIndex="tabLeftIndex"
-      :tabRightIndex="tabRightIndex"
+      ref="tabList"
       :industryList="industryList"
-      @tabLeftClick="tabLeftClick"
-      @tabRightClick="tabRightClick"
       @tabCancel="tabCancel"
       @tabConfirm="tabConfirm"
     ></tab-list>
@@ -106,6 +101,7 @@
   import utils, { cityData } from 'common/js/utils'
   import storage from 'storage-controller'
   import { WEI_SHANG, PROJECT_ARR } from 'common/js/constant'
+  import { mapState, mapMutations } from 'vuex'
 
   export default {
     name: 'sell-belling',
@@ -126,7 +122,6 @@
         },
         popShow: false, // 弹出确认窗口
         grayTip: false, // 提交成功提示
-        tabShow: false, // 职业类型选择框
         tabLeftIndex: 0, // 左边tab栏列表
         tabRightIndex: 0, // 右边tab栏列表
         industryList: '',
@@ -144,27 +139,29 @@
       this._getAccountInfo()
     },
     beforeDestroy() {
-      this.$store.commit('SELEC_CUSTOM', {name: '', mobile: '', address: '', industry: '', id: ''})
+      this.SELEC_CUSTOM({custom: {}})
     },
     mounted() {
       this.initialForm() // 防止开发的时候出现清掉store数据之前拿到数据的问题
     },
     computed: {
+      ...mapState(['custom']),
       count() {
         return this.form.note ? this.form.note.length : 0
       },
       areaClass() {
         let black = this.selecArea ? 'black' : ''
-        let readonly = (this.$store.state.customAddress !== '') ? 'readonly' : ''
+        let readonly = (this.custom.address) ? 'readonly' : ''
         return `${black} ${readonly}`.trim()
       },
       industryClass() {
         let black = this.selecIndustry ? 'black' : ''
-        let readonly = (this.$store.state.customIndustry !== '') ? 'readonly' : ''
+        let readonly = (this.custom.industry) ? 'readonly' : ''
         return `${black} ${readonly}`.trim()
       }
     },
     methods: {
+      ...mapMutations(['SELEC_CUSTOM']),
       _getProject() {
         const project = storage.get('project')
         const obj = PROJECT_ARR.find(val => val.project === project)
@@ -231,30 +228,26 @@
               this.$refs.toast.show(res.message)
               return
             }
-            this.grayTip = true
-            let id = this.$route.query.id
+            this.$refs.toast.show('恭喜您，已成功开单了~')
+            let id = storage.get('agentinfo').id
             setTimeout(() => {
-              this.grayTip = false
-              // 提交后清掉store中不用的数据
-              this.$store.commit('SELEC_CUSTOM', {name: '', mobile: '', address: '', industry: '', id: ''})
               this.$router.push({path: '/sell-record', query: {id}})
-            }, 1000)
+              this.SELEC_CUSTOM({custom: {}}) // 提交后清掉store中不用的数据
+            }, 1500)
           })
       },
       cancel() { // 确认窗的取消按钮
         this.popShow = false
       },
       selecTrade() {
-        if (this.$store.state.customIndustry !== '') {
-          return
+        if (!this.custom.industry) {
+          this.$refs.tabList.show()
         }
-        this.tabShow = true
       },
       selectAddress() {
-        if (this.$store.state.customAddress !== '') {
-          return
+        if (!this.custom.address) {
+          this.$refs.picker.show()
         }
-        this.$refs.picker.show()
       },
       tabLeftClick(num) { // 左tab栏点击
         this.tabLeftIndex = num
@@ -265,13 +258,9 @@
       tabCancel() { // 取消选择职业类型
         this.tabLeftIndex = 0
         this.tabRightIndex = 0
-        this.tabShow = false
       },
-      tabConfirm() { // 确定选择职业类型
-        this.tabShow = false
-        let tabLeftList = this.industryList[this.tabLeftIndex]
-        let tabRightList = this.industryList[this.tabLeftIndex].industry[this.tabRightIndex]
-        this.form.industry = tabLeftList.name + ' ' + tabRightList.name
+      tabConfirm(data) { // 确定选择职业类型
+        this.form.industry = data
         this.selecIndustry = true
       },
       handlePickerCancel(e) {
@@ -287,35 +276,31 @@
         this.form.address = str
         this.selecArea = true
       },
-      initialForm() {
-        this.form.agent_merchant_id = this.$store.state.customName !== '' ? this.$store.state.customId : null
-        this.form.name = this.$store.state.customName
-        this.form.mobile = this.$store.state.customMobile
-        this.mobile = this.$store.state.customMobile
-        if (this.$store.state.customAddress !== '') {
+      initialForm() { // 初始化表单数据
+        this.form.agent_merchant_id = this.custom.name ? this.custom.id : null
+        this.form.name = this.custom.name || ''
+        this.form.mobile = this.custom.mobile || ''
+        this.mobile = this.custom.mobile || ''
+        if (this.custom.address) {
           this.selecArea = true
-          this.form.address = this.$store.state.customAddress
+          this.form.address = this.custom.address
         }
-        if (this.$store.state.customIndustry !== '') {
+        if (this.custom.industry) {
           this.selecIndustry = true
-          this.form.industry = this.$store.state.customIndustry
+          this.form.industry = this.custom.industry
         }
       }
     },
     watch: {
-      total_price(cur, prev) {
-        let value = cur
-        value = value.match(/\d+(\.\d{0,2})?/) ? value.match(/\d+(\.\d{0,2})?/)[0] : ''
-        this.total_price = value
-        this.form.total_price = value
+      total_price(val, oldVal) { // 用户输入保留两位小数
+        val = val.match(/\d+(\.\d{0,2})?/) ? val.match(/\d+(\.\d{0,2})?/)[0] : ''
+        this.total_price = val
+        this.form.total_price = val
       },
-      mobile(cur, prev) {
-        let num = cur
-        num = num.match(/\d{0,11}/) ? num.match(/\d{0,11}/)[0] : ''
-        this.mobile = num
-        this.form.mobile = num
-      },
-      'form.name': (val, oldVal) => {
+      mobile(val, oldVal) { // 防止输入超过11位
+        val = val.match(/\d{0,11}/) ? val.match(/\d{0,11}/)[0] : ''
+        this.mobile = val
+        this.form.mobile = val
       }
     },
     components: {
@@ -390,7 +375,7 @@
               &:before
                 content:'*'
                 display: block
-                left: -6px
+                left: -7px
                 col-center()
         .right
           position: absolute
@@ -501,7 +486,7 @@
           &:before
             content:'*'
             display: block
-            left: -6px
+            left: -7px
             col-center()
   .f8
     height: 8px

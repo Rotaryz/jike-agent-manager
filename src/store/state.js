@@ -1,5 +1,6 @@
 const state = {
   argument: {},
+  custom: {},
   customName: '',
   customMobile: '',
   customAddress: '',

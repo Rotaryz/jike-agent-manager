@@ -34,12 +34,8 @@
       <div class="btn" @click="saveCustomMsg">保存</div>
     </footer>
     <tab-list
-      :show="tabShow"
-      :tabLeftIndex="tabLeftIndex"
-      :tabRightIndex="tabRightIndex"
+      ref="tabList"
       :industryList="industryList"
-      @tabLeftClick="tabLeftClick"
-      @tabRightClick="tabRightClick"
       @tabCancel="tabCancel"
       @tabConfirm="tabConfirm"
     ></tab-list>
@@ -76,7 +72,6 @@
         mobile: '',
         data: {},
         id: '',
-        tabShow: false, // 职业类型选择框
         tabLeftIndex: 0, // 左边tab栏列表
         tabRightIndex: 0, // 右边tab栏列表
         industryList: [],
@@ -100,7 +95,7 @@
     },
     methods: {
       selecTrade() {
-        this.tabShow = true
+        this.$refs.tabList.show()
       },
       tabLeftClick(num) { // 左tab栏点击
         this.tabLeftIndex = num
@@ -111,13 +106,9 @@
       tabCancel() { // 取消选择职业类型
         this.tabLeftIndex = 0
         this.tabRightIndex = 0
-        this.tabShow = false
       },
-      tabConfirm() { // 确定选择职业类型
-        this.tabShow = false
-        let tabLeftList = this.industryList[this.tabLeftIndex]
-        let tabRightList = this.industryList[this.tabLeftIndex].industry[this.tabRightIndex]
-        this.form.industry = tabLeftList.name + ' ' + tabRightList.name
+      tabConfirm(data) { // 确定选择职业类型
+        this.form.industry = data
         this.selecIndustry = true
       },
       getCustomMsg() { // 获取客户信息

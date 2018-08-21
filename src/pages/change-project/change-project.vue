@@ -2,7 +2,7 @@
   <div class="change-project">
     <div class="f3"></div>
     <ul class="info-wrapper" v-if="projectList.length">
-      <li class="item-wrapper border-bottom-1px" @click="selectProject(index)" v-for="(item,index) in projectList" :key="index">
+      <li class="item-wrapper border-bottom-1px" @click="selectProject(item)" v-for="(item,index) in projectList" :key="index">
         <div class="left" v-if="item.image_url">
           <img class="logo-img" :src="item.image_url" alt="">
         </div>
@@ -13,7 +13,8 @@
           <div class="explain">{{item.description}}</div>
         </div>
         <div class="right">
-          <div class="select" :class="selectTab===index?'active':''"></div>
+          <div class="arrow-right" v-if="isFromLogin"></div>
+          <div class="select" v-else :class="selectTab===(item.application - 1)?'active':''"></div>
         </div>
       </li>
     </ul>
@@ -37,18 +38,23 @@
     data() {
       return {
         selectTab: 0,
-        projectList: []
+        projectList: [],
+        isFromLogin: false
       }
     },
     created() {
+      this._getParams()
       this._getProjectList()
       this._getProject()
     },
     methods: {
       ...mapActions(['updateHomeTab']),
-      selectProject(idx) {
-        this.selectTab = idx
-        const obj = PROJECT_ARR.find(val => val.application === idx + 1)
+      _getParams() {
+        this.isFromLogin = this.$route.query.isFromLogin
+      },
+      selectProject(item) {
+        this.selectTab = item.application - 1
+        const obj = PROJECT_ARR.find(val => val.application === item.application)
         storage.set('project', obj.project)
         this.$router.replace({path: '/home', query: {changeProject: true}})
       },
@@ -74,6 +80,12 @@
 <style scoped lang="stylus" rel="stylesheet/stylus">
   @import "~common/stylus/variable"
   @import '~common/stylus/mixin'
+
+  .arrow-right
+    margin-left: 5.5px
+    width: 9.4px
+    height: 9.4px
+    icon-image(icon-arrow_home)
 
   .change-project
     fill-box(fixed)

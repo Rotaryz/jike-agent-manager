@@ -15,18 +15,18 @@
         <div class="option">验证码</div>
         <input class="input" type="number" placeholder="请输入验证码" maxlength="11" v-model="authCode">
       </section>
-      <section class="input-wrapper more border-bottom-1px" @click="showSelect">
-        <div class="option">{{project[selectIndex].name}}</div>
-        <div class="icon-more"></div>
-      </section>
+      <!--<section class="input-wrapper more border-bottom-1px" @click="showSelect">-->
+        <!--<div class="option">{{project[selectIndex].name}}</div>-->
+        <!--<div class="icon-more"></div>-->
+      <!--</section>-->
       <div class="btn-login" @click="login">
         <span>登录</span>
-        <ul class="more-wrapper" :class="isShowSelect?'show':''">
-          <li class="more-item border-bottom-1px" v-for="(item,index) in project" :key="index" @click.stop="changeProject(index)">
-            <div>{{item.name}}</div>
-            <div class="icon" :class="selectIndex===index?'active':''"></div>
-          </li>
-        </ul>
+        <!--<ul class="more-wrapper" :class="isShowSelect?'show':''">-->
+          <!--<li class="more-item border-bottom-1px" v-for="(item,index) in project" :key="index" @click.stop="changeProject(index)">-->
+            <!--<div>{{item.name}}</div>-->
+            <!--<div class="icon" :class="selectIndex===index?'active':''"></div>-->
+          <!--</li>-->
+        <!--</ul>-->
       </div>
     </form>
     <footer class="footer">商机 · 智能 · 裂变 · 创业</footer>
@@ -93,7 +93,7 @@
             return
           }
           this._saveAuthInfo(res)
-          this.$router.replace({path: '/'})
+          this.$router.push({path: '/change-project', query: {isFromLogin: true}})
         })
       },
       getCode() {
@@ -112,17 +112,17 @@
           }
         })
       },
-      changeProject(index) {
-        this.isShowSelect = false
-        if (this.selectIndex === index) {
-          return
-        }
-        this.selectIndex = index
-        this._checkProject(index)
-      },
-      showSelect() {
-        // this.isShowSelect = !this.isShowSelect // todo
-      },
+      // changeProject(index) {
+      //   this.isShowSelect = false
+      //   if (this.selectIndex === index) {
+      //     return
+      //   }
+      //   this.selectIndex = index
+      //   this._checkProject(index)
+      // },
+      // showSelect() {
+      //   // this.isShowSelect = !this.isShowSelect // todo
+      // },
       _check() {
         if (!utils.checkIsPhoneNumber(this.phoneNumber)) {
           this.$refs.toast.show('请输入正确的手机号码')
