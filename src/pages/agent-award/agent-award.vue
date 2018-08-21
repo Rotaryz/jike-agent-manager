@@ -36,7 +36,7 @@
           <div class="title">Q: 推荐资格有限制时间吗？</div>
           <div class="text">目前推荐资格均和代理商身份是绑定的，代理商的身份是长期有效的，所以推荐资格也是长期有效的。</div>
           <div class="title mt-15">Q: 为了拿到更多的推荐奖励，我想升级代理商等级怎么办？</div>
-          <div class="text">升级代理商等级可以直接拨打赞播招商热线4</div>
+          <div class="text">升级代理商等级可以直接拨打赞播招商热线</div>
           <div class="phone" @click="phoneCall">{{mobile}}</div>
         </div>
       </div>
