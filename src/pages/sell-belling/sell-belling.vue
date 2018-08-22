@@ -229,9 +229,10 @@
               return
             }
             this.$refs.toast.show('恭喜您，已成功开单了~')
-            let id = storage.get('agentinfo').id
+            this.form.name = ''
+            this.form.mobile = ''
             setTimeout(() => {
-              this.$router.push({path: '/sell-record', query: {id}})
+              this.$router.push({path: '/sell-record'})
               this.SELEC_CUSTOM({custom: {}}) // 提交后清掉store中不用的数据
             }, 1500)
           })
@@ -277,7 +278,7 @@
         this.selecArea = true
       },
       initialForm() { // 初始化表单数据
-        this.form.agent_merchant_id = this.custom.name ? this.custom.id : null
+        this.form.agent_merchant_id = this.custom.id || ''
         this.form.name = this.custom.name || ''
         this.form.mobile = this.custom.mobile || ''
         this.mobile = this.custom.mobile || ''
