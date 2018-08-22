@@ -271,7 +271,7 @@
           },
           tooltip: {
             trigger: 'axis',
-            formatter: '活跃度：{c}',
+            formatter: '账号销量：{c}',
             axisPointer: {
               type: 'none'
             }
