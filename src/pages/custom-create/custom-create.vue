@@ -143,6 +143,11 @@
       },
       saveCustomMsg() { // 保存客户资料
         let form = this.form
+        form.name = form.name.replace(/^ +| +$/g, '')
+        if (!form.name || form.name === '') {
+          this.$refs.toast.show('请输入客户名称')
+          return
+        }
         if (form.address === '请选择所在的地区') {
           form.address = ''
         }

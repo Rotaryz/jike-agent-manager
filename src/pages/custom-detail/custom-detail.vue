@@ -64,7 +64,7 @@
   import Toast from 'components/toast/toast'
   import EmptyData from 'components/empty-data/empty-data'
   import storage from 'storage-controller'
-  import { WEI_SHANG, PROJECT_ARR } from 'common/js/constant'
+  import { WEI_SHANG } from 'common/js/constant'
 
   export default {
     name: 'custom-detail',
