@@ -89,6 +89,7 @@
     },
     created() {
       this.id = this.$route.query.id
+      this._getProject()
       this.getCustomMsg(res => {
         this.dataArray = res.data.agent_sale_records
         this._checkEmpty()
@@ -107,8 +108,6 @@
     methods: {
       _getProject() {
         const project = storage.get('project')
-        const obj = PROJECT_ARR.find(val => val.project === project)
-        this.form.title = obj.name
         this.isWD = project === WEI_SHANG.project
       },
       _checkEmpty() {
