@@ -53,6 +53,7 @@
         </div>
       </scroll>
     </div>
+    <toast ref="toast"></toast>
   </div>
 </template>
 
