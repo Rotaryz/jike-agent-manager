@@ -68,6 +68,7 @@
         color: $color-343439
         line-height: 1.6
         padding 16px 22.5px 26px
+        word-break: break-all
       .btn
         display: block
         border: 0.5px solid rgba(32, 32, 46, 0.10)

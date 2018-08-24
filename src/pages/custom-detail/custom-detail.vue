@@ -25,7 +25,7 @@
         </div>
       </div>
       <div class="list-sec">
-        <h3 class="title"><span class="name">AI微店购买记录</span></h3>
+        <h3 class="title"><span class="name">AI{{isWD?'微店':'名片'}}购买记录</span></h3>
         <div class="tab">
           <p class="custom">日期</p>
           <p class="count">购买个数/个</p>
@@ -63,6 +63,8 @@
   import { ERR_OK } from 'common/js/config'
   import Toast from 'components/toast/toast'
   import EmptyData from 'components/empty-data/empty-data'
+  import storage from 'storage-controller'
+  import { WEI_SHANG } from 'common/js/constant'
 
   export default {
     name: 'custom-detail',
@@ -81,11 +83,13 @@
         id: null,
         agentId: '',
         msg: '',
-        showEmpty: false
+        showEmpty: false,
+        isWD: true
       }
     },
     created() {
       this.id = this.$route.query.id
+      this._getProject()
       this.getCustomMsg(res => {
         this.dataArray = res.data.agent_sale_records
         this._checkEmpty()
@@ -102,6 +106,10 @@
       }
     },
     methods: {
+      _getProject() {
+        const project = storage.get('project')
+        this.isWD = project === WEI_SHANG.project
+      },
       _checkEmpty() {
         this.showEmpty = !this.dataArray.length
       },

@@ -23,12 +23,12 @@
         </div>
       </router-link>
       <!--<div class="item-wrapper border-bottom-1px">-->
-        <!--<div class="left">当前项目</div>-->
-        <!--<div class="middle"></div>-->
-        <!--<div class="right project-right">-->
-          <!--<div>{{projectName}}(切换)</div>-->
-          <!--<div class="arrow-right"></div>-->
-        <!--</div>-->
+      <!--<div class="left">当前项目</div>-->
+      <!--<div class="middle"></div>-->
+      <!--<div class="right project-right">-->
+      <!--<div>{{projectName}}(切换)</div>-->
+      <!--<div class="arrow-right"></div>-->
+      <!--</div>-->
       <!--</div>-->
       <div class="item-wrapper border-bottom-1px">
         <div class="left">代理商名称</div>
@@ -46,9 +46,9 @@
         <div class="right new-right">{{userInfo?userInfo.address:''}}</div>
       </div>
       <div class="item-wrapper border-bottom-1px" @click="callPhone">
-        <div class="left">AI商城数量</div>
+        <div class="left">AI{{isWD?'微店':'名片'}}数量</div>
         <div class="right project-right">
-          <div v-if="userInfo">{{userInfo.usable_account?userInfo.usable_account:0}}/{{userInfo.total_account?userInfo.total_account:0}}</div>
+          <div v-if="userInfo">{{userInfo.sale_count || 0}}/{{userInfo.total_account || 0}}</div>
           <div v-else>0/0</div>
           <div class="arrow-right"></div>
         </div>
@@ -91,7 +91,7 @@
   import { UpLoad, Account } from 'api'
   import { ERR_OK } from 'common/js/config'
   import storage from 'storage-controller'
-  import { PROJECT_ARR } from 'common/js/constant'
+  import { PROJECT_ARR, WEI_SHANG } from 'common/js/constant'
   import { mapActions } from 'vuex'
   import Loading from 'components/loading-css/loading-css'
 
@@ -114,7 +114,8 @@
         status: false,
         avatarUrl: '',
         userInfo: null,
-        projectName: ''
+        projectName: '',
+        isWD: true
       }
     },
     created() {
@@ -127,6 +128,7 @@
         const project = storage.get('project')
         const obj = PROJECT_ARR.find(val => val.project === project)
         obj && (this.projectName = obj.name)
+        this.isWD = project === WEI_SHANG.project
       },
       _getAccountInfo() {
         Account.getAccountInfo().then(res => {
@@ -143,7 +145,7 @@
         let usable = 0
         let total = 0
         if (this.userInfo) {
-          usable = this.userInfo.usable_account || 0
+          usable = this.userInfo.sale_count || 0
           total = this.userInfo.total_account || 0
         }
         const content = `数值为“${usable}/${total}”，若需要增加最大开通数，请联系平台客服。电话：${this.phoneNumber}`

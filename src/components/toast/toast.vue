@@ -29,7 +29,7 @@
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
   .toast
-    position: absolute
+    position: fixed
     left: 50%
     transform: translateX(-50%)
     z-index: 9999

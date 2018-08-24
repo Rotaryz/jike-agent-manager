@@ -76,7 +76,7 @@
         this.$router.push({path: '/sell-detail', query: {id}})
       },
       getRecordList(limit, page, callback) { // 获取销售记录列表
-        Custom.getRecordList(limit, page, this.$route.query.id)
+        Custom.getRecordList(limit, page)
           .then(res => {
             if (res.error !== ERR_OK) {
               this.$refs.toast.show(res.message)
