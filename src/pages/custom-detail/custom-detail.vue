@@ -192,6 +192,7 @@
           overflow: hidden
           -webkit-line-clamp: 2
           -webkit-box-orient: vertical
+          line-height: 1.1
         .icon
           bg-image('./icon-arrow_customer')
           width: 16px
