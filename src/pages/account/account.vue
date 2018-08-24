@@ -48,7 +48,7 @@
       <div class="item-wrapper border-bottom-1px" @click="callPhone">
         <div class="left">AI{{isWD?'微店':'名片'}}数量</div>
         <div class="right project-right">
-          <div v-if="userInfo">{{userInfo.total_account - userInfo.usable_account}}/{{userInfo.total_account}}</div>
+          <div v-if="userInfo">{{userInfo.sale_count || 0}}/{{userInfo.total_account || 0}}</div>
           <div v-else>0/0</div>
           <div class="arrow-right"></div>
         </div>
@@ -145,8 +145,8 @@
         let usable = 0
         let total = 0
         if (this.userInfo) {
-          usable = this.userInfo.total_account - this.userInfo.usable_account
-          total = this.userInfo.total_account
+          usable = this.userInfo.sale_count || 0
+          total = this.userInfo.total_account || 0
         }
         const content = `数值为“${usable}/${total}”，若需要增加最大开通数，请联系平台客服。电话：${this.phoneNumber}`
         const confirmTxt = `立即拨打`
