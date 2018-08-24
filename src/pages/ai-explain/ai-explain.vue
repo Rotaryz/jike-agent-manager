@@ -17,7 +17,7 @@
       </div>
       <div class="big-title title-mt">1. 我的收入</div>
       <div class="big-small text-mt">总收入=账号销售收入。代理商在开单销售页录入客户购买账号的收入（客户购买金额）。</div>
-      <div class="big-small text-mt-small">B. 账号销售收入：代理商在开单销售页录入客户购买账号的收入（客户购买金额）。</div>
+      <!--<div class="big-small text-mt-small">B. 账号销售收入：代理商在开单销售页录入客户购买账号的收入（客户购买金额）。</div>-->
       <div class="big-title title-mt-two">2、我的账号销量</div>
       <div class="big-small text-mt">账号销量为代理商在开单销售页录入的客户购买账号的个数。</div>
     </div>

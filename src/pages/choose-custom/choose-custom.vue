@@ -172,6 +172,10 @@
         line-height: 60px
         border-bottom-1px($color-E3E6E9)
         .name
+          width: 200px
+          text-overflow: ellipsis
+          overflow: hidden
+          white-space: nowrap
           color: $color-343439
         .call
           color: $color-AA905D
