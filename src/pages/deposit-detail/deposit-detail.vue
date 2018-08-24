@@ -2,23 +2,23 @@
   <div class="deposit-detail">
     <div class="f3"></div>
     <section class="info-wrapper" v-if="orderInfo">
-      <div class="item-wrapper">
+      <div class="item-wrapper border-bottom-1px">
         <div class="left">支出金额</div>
         <div class="right">{{orderInfo.total}}</div>
       </div>
-      <div class="item-wrapper">
+      <div class="item-wrapper border-bottom-1px">
         <div class="left">类型</div>
         <div class="right">{{orderInfo.type}}</div>
       </div>
-      <div class="item-wrapper">
+      <div class="item-wrapper border-bottom-1px">
         <div class="left">时间</div>
         <div class="right">{{orderInfo.created_at}}</div>
       </div>
-      <div class="item-wrapper">
+      <div class="item-wrapper border-bottom-1px">
         <div class="left">余额</div>
         <div class="right">{{orderInfo.after_remaining}}</div>
       </div>
-      <div class="remark">
+      <div class="remark border-bottom-1px">
         <div class="left">备注</div>
         <div class="right">
           <div class="top">{{orderInfo.note}}</div>
@@ -81,7 +81,6 @@
       font-family: $font-family-regular
       .item-wrapper
         height: 60px
-        border-bottom: 0.5px solid $color-E4E4E4
         line-height: 60px
         layout(row, block, nowrap)
         .left
@@ -96,7 +95,6 @@
           justify-content: flex-end
           margin-right: 15px
       .remark
-        border-bottom: 0.5px solid $color-E4E4E4
         padding: 20.5px 0
         layout(row, block, nowrap)
         justify-content: space-between
