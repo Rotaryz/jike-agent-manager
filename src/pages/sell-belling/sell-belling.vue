@@ -5,7 +5,7 @@
         <div class="left">
           <div class="list border-bottom-1px">
             <p class="name">购买客户</p>
-            <input type="text" class="input" v-if="!custom.name" :class="custom.name && 'readonly'" :readonly="custom.name" v-model="form.name" placeholder="请输入客户名称">
+            <input type="text" class="input" maxlength="15" v-if="!custom.name" :class="custom.name && 'readonly'" :readonly="custom.name" v-model="form.name" placeholder="请输入客户名称">
             <div class="readonly" v-else>{{form.name}}</div>
           </div>
           <div class="list border-bottom-1px">
@@ -130,7 +130,8 @@
         mobile: '',
         isWD: true,
         selecArea: false,
-        selecIndustry: false
+        selecIndustry: false,
+        request: false
       }
     },
     created() {
@@ -188,7 +189,7 @@
           })
       },
       submit() { // 点击提交
-        if (!this.form.name) {
+        if (!this.form.name || this.form.name.replace(/^\s+|\s+$/g, '') === '') {
           this.$refs.toast.show('请输入客户名称')
           return
         }
@@ -214,6 +215,9 @@
         this.popShow = true
       },
       confirm() { // 确认窗的确定按钮，发送数据给后台
+        if (this.request) {
+          return
+        }
         this.popShow = false
         let form = this.form
         if (form.address === '请选择所在的地区') {
@@ -222,6 +226,7 @@
         if (form.industry === '请选择所属的行业') {
           form.industry = ''
         }
+        this.request = true
         Custom.openBill(form)
           .then(res => {
             if (res.error !== ERR_OK) {
@@ -233,6 +238,7 @@
             this.form.mobile = ''
             setTimeout(() => {
               this.$router.push({path: '/sell-record'})
+              this.request = false
               this.SELEC_CUSTOM({custom: {}}) // 提交后清掉store中不用的数据
             }, 1500)
           })

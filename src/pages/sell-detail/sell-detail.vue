@@ -121,6 +121,9 @@
         height: 60px
         line-height: 60px
         flex: 1
+        overflow : hidden
+        text-overflow: ellipsis
+        white-space: nowrap
       .name
         width: 80px
 
