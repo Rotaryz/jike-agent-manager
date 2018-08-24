@@ -2,19 +2,19 @@
   <div class="entering-box">
     <div class="entering-con">
       <div class="entering-list">
-        <div class="item-box">
+        <div class="item-box border-bottom-1px">
           <div class="item-left">
             *代理商名称
           </div>
           <input type="text" class="item-input" v-model="name" placeholder="请输入代理商的名称"/>
         </div>
-        <div class="item-box">
+        <div class="item-box border-bottom-1px">
           <div class="item-left">
             *手机号码
           </div>
           <input type="number" class="item-input" v-model="phone" placeholder="请输入负责人的手机号码"/>
         </div>
-        <div class="item-box" @click="selcetAddress">
+        <div class="item-box border-bottom-1px" @click="selcetAddress">
           <div class="item-left">
             所在地区
           </div>
@@ -24,7 +24,7 @@
             <img src="./icon-arrow_home@2x.png" alt="">
           </div>
         </div>
-        <div class="item-box"  @click="selcetLevel">
+        <div class="item-box border-bottom-1px"  @click="selcetLevel">
           <div class="item-left">
             *代理级别
           </div>
@@ -34,7 +34,7 @@
             <img src="./icon-arrow_home@2x.png" alt="">
           </div>
         </div>
-        <div class="item-box">
+        <div class="item-box border-bottom-1px">
           <div class="item-left">
             *是否已付款
           </div>
@@ -55,7 +55,7 @@
             </div>
           </div>
         </div>
-        <div class="item-box item-two" v-if="levelMoney.length !== 0">
+        <div class="item-box item-two border-bottom-1px " v-if="levelMoney.length !== 0">
           <div class="item-left">
             付款金额
           </div>
@@ -337,10 +337,9 @@
     layout(row)
     align-items: center
     height: 55px
-    border-bottom: 0.5px solid #e3e6e9
     position: relative
     &:last-child
-      border-bottom: 0
+      border-none()
     .item-left
       font-size: $font-size-14
       font-family: $font-family-regular
