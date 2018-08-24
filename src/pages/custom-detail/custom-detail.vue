@@ -2,7 +2,7 @@
   <div class="custom-detail">
     <header class="header">
       <h3 class="company" @click="jump( msg.agent_merchant_id )">
-        {{ msg.name }}
+        <p class="name">{{ msg.name }}</p>
         <i class="icon"></i>
       </h3>
       <p class="call">{{ msg.mobile }}</p>
@@ -186,14 +186,21 @@
         display: flex
         justify-content: center
         align-items: center
-      .icon
-        bg-image('./icon-arrow_customer')
-        width: 16px
-        height: 16px
-        background-size:100% 100%
-        background-repeat: no-repeat
-        display: inline-block
-        margin-left: 2px
+        padding: 0 15px
+        .name
+          display: -webkit-box
+          overflow: hidden
+          -webkit-line-clamp: 2
+          -webkit-box-orient: vertical
+        .icon
+          bg-image('./icon-arrow_customer')
+          width: 16px
+          height: 16px
+          background-size:100% 100%
+          background-repeat: no-repeat
+          display: inline-block
+          margin-left: 2px
+          flex: 0 0 auto
       .call
         font-size: $font-size-16
         color: #766B55

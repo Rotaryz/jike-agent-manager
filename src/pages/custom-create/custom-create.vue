@@ -3,7 +3,7 @@
     <ul class="input-list">
       <li class="list border-bottom-1px">
         <div class="name">客户</div>
-        <input class="input" type="text" v-model="form.name" placeholder="请输入公司名">
+        <input class="input" type="text" v-model="form.name" maxlength="15" placeholder="请输入公司名">
       </li>
       <li class="list border-bottom-1px">
         <div class="name">手机号码</div>
@@ -77,7 +77,8 @@
         industryList: [],
         cityData,
         selecArea: false,
-        selecIndustry: false
+        selecIndustry: false,
+        request: false
       }
     },
     created() {
@@ -142,8 +143,11 @@
           })
       },
       saveCustomMsg() { // 保存客户资料
+        if (this.request) {
+          return
+        }
         let form = this.form
-        form.name = form.name.replace(/^ +| +$/g, '')
+        form.name = form.name.replace(/^\s+|\s+$/g, '')
         if (!form.name || form.name === '') {
           this.$refs.toast.show('请输入客户名称')
           return
@@ -154,6 +158,7 @@
         if (form.industry === '请选择所属的行业') {
           form.industry = ''
         }
+        this.request = true
         Custom.createCustom(form)
           .then(res => {
             if (res.error !== ERR_OK) {
@@ -163,13 +168,13 @@
             this.$refs.toast.show('保存成功')
             setTimeout(() => {
               this.$router.back()
+              this.request = false
             }, 1500)
           })
       },
       handlePickerCancel(e) {
       },
       handlePickerConfirm(e) {
-        console.log(e)
         let arr = []
         e.map(item => {
           if (item.value) {
