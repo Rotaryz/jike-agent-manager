@@ -1,46 +1,46 @@
 <template>
   <div class="sell-detail">
     <ul class="input-list">
-      <li class="list">
+      <li class="list border-bottom-1px">
         <div class="name">客户</div>
         <p class="msg">{{form.name}}</p>
       </li>
-      <li class="list">
+      <li class="list border-bottom-1px">
         <div class="name">手机号码</div>
         <p class="msg">{{form.mobile}}</p>
       </li>
-      <li class="list">
+      <li class="list border-bottom-1px">
         <div class="name">所在地区</div>
         <p class="msg">{{form.address}}</p>
         <div class="icon"></div>
       </li>
-      <li class="list">
+      <li class="list border-bottom-1px">
         <div class="name">所属行业</div>
         <p class="msg">{{form.industry}}</p>
         <div class="icon"></div>
       </li>
     </ul>
-    <ul class="input-list">
+    <ul class="input-list border-bottom-1px">
       <li class="list">
         <div class="name">商品名称</div>
         <p class="msg">{{form.title}}</p>
       </li>
-      <li class="list">
+      <li class="list border-bottom-1px">
         <div class="name">购买单价</div>
         <p class="msg">{{form.price}}</p>
       </li>
-      <li class="list">
+      <li class="list border-bottom-1px">
         <div class="name">数量</div>
-        <p class="msg">{{form.num}}</p>
+        <p class="msg border-bottom-1px">{{form.num}}</p>
         <div class="icon"></div>
       </li>
-      <li class="list">
+      <li class="list border-bottom-1px">
         <div class="name">销售总价</div>
         <p class="msg">{{form.total_price}}</p>
         <div class="icon"></div>
       </li>
     </ul>
-    <div class="remark">
+    <div class="remark border-bottom-1px">
       <div class="name">卖家备注</div>
       <p class="remarkTxt">{{ form.note }}</p>
     </div>
@@ -111,7 +111,7 @@
   .input-list
     .list
       margin: 0 15px
-      border-bottom: 1px solid $color-E3E6E9
+      border-bottom-1px($color-E3E6E9)
       color: $color-666666
       font-size: $font-size-14
       layout(row,block,nowrap)
@@ -129,7 +129,7 @@
 
   .remark
     margin: 0 15px
-    border-bottom: 1px solid $color-E3E6E9
+    border-bottom-1px($color-E3E6E9)
     color: $color-666666
     font-size: $font-size-14
     padding: 22px 0
