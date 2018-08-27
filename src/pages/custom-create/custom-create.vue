@@ -279,6 +279,7 @@
       margin-top: 8px
       padding: 20px 15px
       color: $color-666666
+      margin-bottom: 65px
       background: $color-white
       font-size: $font-size-14
       line-height: $font-size-14
