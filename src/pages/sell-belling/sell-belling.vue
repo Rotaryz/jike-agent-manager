@@ -44,7 +44,7 @@
       </li>
       <li class="list border-bottom-1px">
         <div class="name before">购买数量</div>
-        <input class="input" type="number" v-model="form.num" placeholder="请输入购买数量">
+        <input class="input" type="number" :value="form.num" @input="numHandle" placeholder="请输入购买数量">
         <div>套</div>
       </li>
       <li class="list">
@@ -208,6 +208,7 @@
           this.$refs.toast.show('请输入购买AI微店的总价')
           return
         }
+        Number(this.form.num.replace(/\D/g, ''))
         if (this.form.usable_account === 0 || (this.form.num > this.form.usable_account)) {
           this.$refs.toast.show('库存不足')
           return
@@ -295,6 +296,14 @@
         if (this.custom.industry) {
           this.selecIndustry = true
           this.form.industry = this.custom.industry
+        }
+      },
+      numHandle(e) {
+        if (e.data && e.data !== null) {
+          this.form.num = this.form.num + e.data.replace(/\D/g, '')
+          e.target.value = this.form.num
+        } else {
+          this.form.num = e.currentTarget.value
         }
       }
     },
