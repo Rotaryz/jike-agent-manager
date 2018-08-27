@@ -233,6 +233,8 @@
           .then(res => {
             if (res.error !== ERR_OK) {
               this.$refs.toast.show(res.message)
+              this.request = false
+              this.popShow = false
               return
             }
             this.$refs.toast.show('恭喜您，已成功开单了~')
