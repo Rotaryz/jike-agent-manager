@@ -44,7 +44,7 @@
       </li>
       <li class="list border-bottom-1px">
         <div class="name before">购买数量</div>
-        <input class="input" type="number" :value="form.num" @input="numHandle" placeholder="请输入购买数量">
+        <input class="input" type="number" v-model="form.num" placeholder="请输入购买数量">
         <div>套</div>
       </li>
       <li class="list">
@@ -102,7 +102,6 @@
   import storage from 'storage-controller'
   import { WEI_SHANG, PROJECT_ARR } from 'common/js/constant'
   import { mapState, mapMutations } from 'vuex'
-
   export default {
     name: 'sell-belling',
     props: {},
@@ -189,6 +188,10 @@
           })
       },
       submit() { // 点击提交
+        if (this.form.usable_account === 0 || (this.form.num > this.form.usable_account)) {
+          this.$refs.toast.show('库存不足')
+          return
+        }
         if (!this.form.name || this.form.name.replace(/^\s+|\s+$/g, '') === '') {
           this.$refs.toast.show('请输入客户名称')
           return
@@ -201,16 +204,14 @@
           return
         }
         if (!this.form.num) {
-          this.$refs.toast.show('请输入购买AI微店的数量')
+          this.$refs.toast.show('请输入购买数量')
+          return
+        } else if (!(/^\d*$/g.test(this.form.num)) || this.form.num < 0) {
+          this.$refs.toast.show('购买数量只支持整数')
           return
         }
         if (!this.total_price) {
-          this.$refs.toast.show('请输入购买AI微店的总价')
-          return
-        }
-        Number(this.form.num.replace(/\D/g, ''))
-        if (this.form.usable_account === 0 || (this.form.num > this.form.usable_account)) {
-          this.$refs.toast.show('库存不足')
+          this.$refs.toast.show('请输入销售总价')
           return
         }
         this.popShow = true
