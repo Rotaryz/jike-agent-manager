@@ -3,7 +3,7 @@ import storage from 'storage-controller'
 import CITY_JSON from 'common/js/city'
 
 const REGPASS = /^[a-zA-Z0-9]{6,18}$/
-const REGPHONE = /^1[3|4|5|6|7|8][0-9]{9}$/
+const REGPHONE = /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/
 // const LOSE_EFFICACY = 10000
 // const DISABLE = 110002
 // const DELETE = 1 // TODO
