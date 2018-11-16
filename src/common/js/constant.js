@@ -10,4 +10,10 @@ export const ZHI_TUI = {
   application: 2
 }
 
-export const PROJECT_ARR = [WEI_SHANG, ZHI_TUI]
+export const ZHI_DIAN = {
+  name: '赞播AI智店',
+  project: 'zhidian',
+  application: 3
+}
+
+export const PROJECT_ARR = [WEI_SHANG, ZHI_TUI, ZHI_DIAN]

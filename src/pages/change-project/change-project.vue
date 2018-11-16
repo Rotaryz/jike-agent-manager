@@ -8,6 +8,7 @@
         </div>
         <div class="left wd" v-else-if="+item.application === 1">WD</div>
         <div class="left zt" v-else-if="+item.application === 2">ZT</div>
+        <div class="left zd" v-else-if="+item.application === 3">ZD</div>
         <div class="middle">
           <div class="name">{{item.title}}</div>
           <div class="explain">{{item.description}}</div>
@@ -117,6 +118,8 @@
             background-image: linear-gradient(-134deg, #AE2358 0%, #C86DD7 100%)
           &.zt
             background-image: linear-gradient(45deg, rgba(35, 158, 174, 0.73) 0%, #53A0FD 47%, #7351EC 100%)
+          &.zd
+            background-image: linear-gradient(-134deg, #F7412E 0%, #FB6900 51%, rgba(255,47,38,0.77) 100%)
         .middle
           flex: 1
           margin-left: 10px
