@@ -149,7 +149,7 @@
           usable = this.userInfo.sale_count || 0
           total = this.userInfo.total_account || 0
         }
-        const content = `数值为“${usable}/${total}”，若需要增加最大开通数，请联系平台客服。电话：${this.phoneNumber}`
+        const content = `账号数量剩余  ${total - usable}  个，若需要增加最大开通数，请联系平台客服。电话：${this.phoneNumber}`
         const confirmTxt = `立即拨打`
         this.$refs.confirmMsg.show({content, confirmTxt})
       },
