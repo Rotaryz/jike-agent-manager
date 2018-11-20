@@ -46,7 +46,7 @@
         <div class="right new-right">{{userInfo?userInfo.address:''}}</div>
       </div>
       <div class="item-wrapper border-bottom-1px" @click="callPhone">
-        <div class="left">AI{{isWD?'微店':'名片'}}数量</div>
+        <div class="left">{{projectName.substring(2)}}数量</div>
         <div class="right project-right">
           <div v-if="userInfo">{{userInfo.sale_count || 0}}/{{userInfo.total_account || 0}}</div>
           <div v-else>0/0</div>
@@ -121,6 +121,7 @@
     created() {
       this._getAccountInfo()
       this._getProject()
+      console.log(this.projectName)
     },
     methods: {
       ...mapActions(['updateHomeTab']),
