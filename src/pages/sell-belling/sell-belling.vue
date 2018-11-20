@@ -69,7 +69,7 @@
     <transition name="fade">
       <div class="pop" v-if="popShow">
         <div class="pop-main">
-          <p class="tip">确定为客户开通{{form.num}}个{{isWD?'AI微店':'AI名片'}}吗？</p>
+          <p class="tip">确定为客户开通{{form.num}}个{{projectName}}吗？</p>
           <div class="confirm-btn">
             <span class="pop-btn" @click="cancel">取消</span>
             <span class="pop-btn right" @click="confirm">确定</span>
@@ -130,7 +130,8 @@
         isWD: true,
         selecArea: false,
         selecIndustry: false,
-        request: false
+        request: false,
+        projectName: ''
       }
     },
     created() {
@@ -167,6 +168,7 @@
         const obj = PROJECT_ARR.find(val => val.project === project)
         this.form.title = obj.name
         this.isWD = project === WEI_SHANG.project
+        this.projectName = obj.name.substring(2)
       },
       _getAccountInfo() {
         Account.getAccountInfo().then(res => {
