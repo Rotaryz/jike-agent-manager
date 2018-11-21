@@ -25,7 +25,7 @@
         </div>
       </div>
       <div class="list-sec">
-        <h3 class="title"><span class="name">AI{{isWD?'微店':'名片'}}购买记录</span></h3>
+        <h3 class="title"><span class="name">{{projectName}}购买记录</span></h3>
         <div class="tab">
           <p class="custom">日期</p>
           <p class="count">购买个数/个</p>
@@ -64,7 +64,7 @@
   import Toast from 'components/toast/toast'
   import EmptyData from 'components/empty-data/empty-data'
   import storage from 'storage-controller'
-  import { WEI_SHANG } from 'common/js/constant'
+  import { PROJECT_ARR, WEI_SHANG } from 'common/js/constant'
 
   export default {
     name: 'custom-detail',
@@ -84,7 +84,8 @@
         agentId: '',
         msg: '',
         showEmpty: false,
-        isWD: true
+        isWD: true,
+        projectName: ''
       }
     },
     created() {
@@ -108,6 +109,8 @@
     methods: {
       _getProject() {
         const project = storage.get('project')
+        const obj = PROJECT_ARR.find(val => val.project === project)
+        this.projectName = obj && obj.name.substring(2)
         this.isWD = project === WEI_SHANG.project
       },
       _checkEmpty() {

@@ -121,14 +121,13 @@
     created() {
       this._getAccountInfo()
       this._getProject()
-      console.log(this.projectName)
     },
     methods: {
       ...mapActions(['updateHomeTab']),
       _getProject() {
         const project = storage.get('project')
         const obj = PROJECT_ARR.find(val => val.project === project)
-        obj && (this.projectName = obj.name)
+        this.projectName = obj && obj.name
         this.isWD = project === WEI_SHANG.project
       },
       _getAccountInfo() {
